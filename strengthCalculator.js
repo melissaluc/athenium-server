@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 require('dotenv').config();
 
+//  Import user UI inputs & backenddb : body weight, gender, age, exercise, lift weight, reps 
 
 // Define an async function to use async/await syntax
 (async () => {
@@ -14,8 +15,7 @@ require('dotenv').config();
     await page.goto(process.env.StrengthCalc_URL);
     
     // Set the viewport size
-    // await page.setViewport({ width: 900, height: 760 });
-    await page.setViewport({ width: 900, height: 1200 });
+    await page.setViewport({ width: 900, height: 760 });
 
     await page.waitForSelector("div.calculator *", { timeout: 5000 })
 
