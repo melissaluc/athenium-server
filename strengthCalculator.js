@@ -15,7 +15,7 @@ require('dotenv').config();
     await page.goto(process.env.StrengthCalc_URL);
     
     // Set the viewport size
-    await page.setViewport({ width: 900, height: 760 });
+    await page.setViewport({ width: 900, height: 1200 });
 
     await page.waitForSelector("div.calculator *", { timeout: 5000 })
 
@@ -91,6 +91,8 @@ require('dotenv').config();
         return acc;
         
     }, {});
+
+    console.log(tabularData)
     
     const deleteButton = await page.$('button.delete');
     await deleteButton.click();
@@ -132,7 +134,6 @@ require('dotenv').config();
     // Wait for the liftresult section to appear after the page reloads
     try {
         await page.waitForSelector('.section-box.liftresult', { timeout: 10000 });
-        const results = await page.$('.section-box.liftresult');
         const result = await page.evaluate(()=>{
             const oneRepMax = document.querySelector('.section-box.liftresult div#liftResults .content').innerText.match(/\b\d+(\.\d+)?\b/g)[0];
             const compare = document.querySelector('.section-box.liftresult div#liftResults div.columns > :first-child p strong').innerText.match(/\b\d+(\.\d+)?\b/g)[0];
@@ -150,6 +151,7 @@ require('dotenv').config();
         console.log(result)
     } catch (err) {
         console.log(err)
+        await browser.close();
     }
     
     // Close the browser
