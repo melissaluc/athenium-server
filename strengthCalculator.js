@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 require('dotenv').config();
 const fs = require("fs");
 //  TODO: Import user UI inputs & backenddb : body weight, gender, age, exercise, lift weight, reps 
-// TODO: figure out how get all exercises
+
 // Define an async function to use async/await syntax
 (async () => {
     // Launch a new browser instance
@@ -73,21 +73,25 @@ const fs = require("fs");
 
 
     const exerciseElements = await page.$$("section.modal-card-body.is-paddingless > div:first-child span.media-content");
-    // console.log(exerciseElements)
-    // const exerciseElementsHTML = await page.evaluate(element => element.outerHTML, exerciseElements[0])
-    //     console.log(exerciseElementsHTML )
-
 
     const exercisePairs = await Promise.all(exerciseElements.map(async exerciseElement => {
         const exerciseElementHTML = await page.evaluate(element => element.outerHTML, exerciseElement)
         console.log("\n",exerciseElementHTML)
 
-        // const bodyPartElement = await exerciseElement.$("span")
-        // const exerciseNameElement = await exerciseElement.$(".mr-1")
+        const regex = /<span class="mr-1">([^<]+)<\/span>\s*<span class="tag is-small">([^<]+)<\/span>/;
+        const match = exerciseElementHTML.match(regex);
 
-        const exerciseName = await exerciseElement.$eval('.mr-1', element => element.innerText.trim());
-        const bodyPart = await exerciseElement.$eval('.tag.is-small', element => element.innerText.trim());
-        return { exerciseName, bodyPart };
+        if (match) {
+            const exerciseName = match[1].trim();
+            const bodyPart = match[2].trim();
+            console.log("Exercise Name:", exerciseName);
+            console.log("Body Part:", bodyPart);
+            return { exerciseName, bodyPart };
+          } else {
+            console.log("No match found.");
+            
+          }
+
 
         // console.log(bodyPart, exerciseName)
         return { bodyPart, exerciseName };
@@ -145,40 +149,40 @@ const fs = require("fs");
 
 
 
-    // const exerciseValue = tabularData.Chest[1].toLowerCase().replace(/ /g, "-");
+    const exerciseValue = tabularData.Chest[1].toLowerCase().replace(/ /g, "-");
 
-    // await page.evaluate((value) => {
-    //     document.querySelector('div.calculator__form input[name="exercise"]').value = value;
-    // }, exerciseValue);
-
-    
-    // await page.waitForSelector('button[type="submit"]')
-    // const submitButton = await page.$('button[type="submit"]')
-    // await submitButton.click()
+    await page.evaluate((value) => {
+        document.querySelector('div.calculator__form input[name="exercise"]').value = value;
+    }, exerciseValue);
 
     
-    // // Wait for the liftresult section to appear after the page reloads
-    // try {
-    //     await page.waitForSelector('.section-box.liftresult', { timeout: 10000 });
-    //     const result = await page.evaluate(()=>{
-    //         const oneRepMax = document.querySelector('.section-box.liftresult div#liftResults .content').innerText.match(/\b\d+(\.\d+)?\b/g)[0];
-    //         const compare = document.querySelector('.section-box.liftresult div#liftResults div.columns > :first-child p strong').innerText.match(/\b\d+(\.\d+)?\b/g)[0];
-    //         const lift = document.querySelector('.section-box.liftresult div#liftResults div.columns > :last-child p strong').innerText.match(/\b\d+(\.\d+)?\b/g)[0];
-    //         // Extract table headers
-    //         const strengthBoundsTableCols = Array.from(document.querySelectorAll('.section-box.liftresult .liftresult__standards table thead tr th'));
-    //         const strengthBoundsTableRows = Array.from(document.querySelectorAll('.section-box.liftresult .liftresult__standards table tbody tr td'));
-    //         const headers = strengthBoundsTableCols.map(th => th.textContent.replace(/['".]/g, "").trim());
-    //         const rows = strengthBoundsTableRows.map(tr => parseInt(tr.textContent.replace(/['".]/g, "").trim()));
-    //         const zipped = headers.map((header, index) => [header, rows[index]])
-    //         const strengthBounds = Object.fromEntries(zipped);
+    await page.waitForSelector('button[type="submit"]')
+    const submitButton = await page.$('button[type="submit"]')
+    await submitButton.click()
 
-    //         return {oneRepMax: parseFloat(oneRepMax), strongerThanPercent: parseFloat(compare), xBW: parseFloat(lift), strengthBounds: strengthBounds}
-    //     })
-    //     console.log(result)
-    // } catch (err) {
-    //     console.log(err)
-    //     await browser.close();
-    // }
+    
+    // Wait for the liftresult section to appear after the page reloads
+    try {
+        await page.waitForSelector('.section-box.liftresult', { timeout: 10000 });
+        const result = await page.evaluate(()=>{
+            const oneRepMax = document.querySelector('.section-box.liftresult div#liftResults .content').innerText.match(/\b\d+(\.\d+)?\b/g)[0];
+            const compare = document.querySelector('.section-box.liftresult div#liftResults div.columns > :first-child p strong').innerText.match(/\b\d+(\.\d+)?\b/g)[0];
+            const lift = document.querySelector('.section-box.liftresult div#liftResults div.columns > :last-child p strong').innerText.match(/\b\d+(\.\d+)?\b/g)[0];
+            // Extract table headers
+            const strengthBoundsTableCols = Array.from(document.querySelectorAll('.section-box.liftresult .liftresult__standards table thead tr th'));
+            const strengthBoundsTableRows = Array.from(document.querySelectorAll('.section-box.liftresult .liftresult__standards table tbody tr td'));
+            const headers = strengthBoundsTableCols.map(th => th.textContent.replace(/['".]/g, "").trim());
+            const rows = strengthBoundsTableRows.map(tr => parseInt(tr.textContent.replace(/['".]/g, "").trim()));
+            const zipped = headers.map((header, index) => [header, rows[index]])
+            const strengthBounds = Object.fromEntries(zipped);
+
+            return {oneRepMax: parseFloat(oneRepMax), strongerThanPercent: parseFloat(compare), xBW: parseFloat(lift), strengthBounds: strengthBounds}
+        })
+        console.log(result)
+    } catch (err) {
+        console.log(err)
+        await browser.close();
+    }
     
     // Close the browser
     await browser.close();
