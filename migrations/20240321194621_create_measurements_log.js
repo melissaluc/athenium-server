@@ -5,7 +5,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('measurements_log', (table) => {
         table.uuid('uid').primary();
-        table.uuid('user_id').references('user_id').inTable('users');
+        table.uuid('user_id').references('user_id').inTable('users').onDelete('CASCADE');
         table.double('weight_kg').notNullable();
         table.double('musclemass_kg').notNullable();
         table.double('bf_percentage').notNullable();
@@ -32,5 +32,8 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-    return knex.schema.dropTable('measurements_log');
-};
+    return knex.schema.alterTable('measurements_log', function(table) {
+      table.dropForeign(['user_id']);
+
+    });
+  };
