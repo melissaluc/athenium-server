@@ -14,23 +14,25 @@ const getMeasurementsByUserId = async (req,res) => {
 const updateMeasurement = async (req, res) => {
     try {
         const { userId } = req.params;
-        const {dateSelected, newMeasurements} = req.body
-        const dateSelectedConverted = new Date(dateSelected*1000).toISOString()
-        const measurements = await measurementService.updateByUserId(userId, dateSelectedConverted , newMeasurements);
+        const { dateSelected, newMeasurements } = req.body;
+        // Convert UNIX timestamp to ISO 8601 format
+        // const dateSelectedConverted = new Date(dateSelected * 1000).toISOString();
+        
+        const measurements = await measurementService.updateByUserId(userId, dateSelected, newMeasurements);
         res.json(measurements);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
 
+
 const createMeasurement = async (req, res) => {
+    console.log(req.body)
     try {
-        const measurement = req.body;
-        if (!validateMeasurementInput(measurement)) {
-            return res.status(400).json({ error: 'Invalid input' });
-        }
-        const newMeasurement = await measurementService.createMeasurement(measurement);
-        res.status(201).json(newMeasurement);
+        const {dateSelected, newMeasurements} = req.body;
+        const {userId} = req.params
+        const measurement= await measurementService.createMeasurementByUser(userId, dateSelected, newMeasurements);
+        res.status(201).json(measurement);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

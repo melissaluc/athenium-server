@@ -5,8 +5,8 @@ const getByUserId = async (id) => {
     return measurementModel.getMeasurementsByUserId(id);
 };
 
-const createUser = async (user) => {
-    return measurementModel.createUser(user);
+const createMeasurementByUser = async (userId, dateSelected, measurements) => {
+    return measurementModel.createMeasurement(userId, dateSelected, measurements);
 };
 
 const updateByUserId = async (id, dateSelected, measurements) => {
@@ -17,6 +17,6 @@ const updateByUserId = async (id, dateSelected, measurements) => {
 
 module.exports = {
     getByUserId,
-    createUser,
+    createMeasurementByUser,
     updateByUserId,
 };
