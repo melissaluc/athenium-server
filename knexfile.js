@@ -1,21 +1,23 @@
-// Update with your config settings.
+
+require('dotenv').config();
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+
 module.exports = {
   development: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       database: process.env.DEV_DB_NAME,
-      user:     process.env.DEV_DB_USER,
+      user: process.env.DEV_DB_USER,
       password: process.env.DEV_DB_PASSWORD,
-      host:process.env.DEV_DB_HOST,
-      port:process.env.DEV_DB_PORT
+      host: process.env.DEV_DB_HOST,
+      port: process.env.DEV_DB_PORT
     }
   },
   staging: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       database: process.env.STAGING_DB_NAME,
       user: process.env.STAGING_DB_USER,
@@ -30,7 +32,7 @@ module.exports = {
     }
   },
   production: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       database: process.env.PRODUCTION_DB_NAME,
       user: process.env.PRODUCTION_DB_USER,
