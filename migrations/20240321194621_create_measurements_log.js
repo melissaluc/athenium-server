@@ -6,9 +6,6 @@ exports.up = function(knex) {
     return knex.schema.createTable('measurements_log', (table) => {
         table.uuid('uid').primary();
         table.uuid('user_id').references('user_id').inTable('users').onDelete('CASCADE');
-        table.double('weight_kg').notNullable();
-        table.double('musclemass_kg').notNullable();
-        table.double('bf_percentage').notNullable();
         table.double('neck_cm').notNullable();
         table.double('shoulder_cm').notNullable();
         table.double('chest_cm').notNullable();

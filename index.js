@@ -52,8 +52,8 @@ app.use(express.static('public'));
 // const trackerRouter = require('./routes/tracker.js');
 // app.use('/api/v1/tracker', trackerRouter);
 
-// const workoutsRouter = require('./routes/workoutsLog.js');
-// app.use('/api/v1/workouts', workoutsRouter);
+const workoutsRouter = require('./routes/workouts.js');
+app.use('/api/v1/workouts', workoutsRouter);
 
 // const goalsRouter = require('./routes/goalsLog.js');
 // app.use('/api/v1/goals', goalsRouter);
