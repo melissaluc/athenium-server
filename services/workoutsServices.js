@@ -1,8 +1,8 @@
 const workoutModel = require('../models/workoutModel.js');
 
 
-const getWorkoutByUserId = async (id) => {
-    return workoutModel.getMeasurementsByUserId(id);
+const getWorkoutsByUserId = async (id) => {
+    return workoutModel.getWorkoutsByUserId(id);
 };
 
 const createWorkoutByUser = async (userId, dateSelected, measurements) => {
@@ -19,7 +19,7 @@ const deleteWorkout = async (id, dateSelected, measurements) => {
 
 
 module.exports = {
-    getWorkoutByUserId,
+    getWorkoutsByUserId,
     createWorkoutByUser,
     updateByUserId,
     deleteWorkout

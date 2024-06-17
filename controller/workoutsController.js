@@ -3,8 +3,8 @@ const workoutsService = require('../services/workoutsServices');
 const getWorkoutsByUserId = async (req,res) => {
     try {
         const { userId } = req.params; 
-        const measurements = await workoutsService.getByUserId(userId);
-        res.json(measurements);
+        const workouts = await workoutsService.getWorkoutsByUserId(userId);
+        res.json(workouts);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -42,7 +42,7 @@ const deleteWorkout = async (req, res) => {
     try {
         const {dateSelected, newMeasurements} = req.body;
         const {userId} = req.params
-        const measurement= await workoutsService.createMeasurementByUser(userId, dateSelected, newMeasurements);
+        const measurement= await workoutsService.deleteWorkoutByUser(userId, dateSelected, newMeasurements);
         res.status(201).json(measurement);
     } catch (err) {
         res.status(500).json({ error: err.message });
