@@ -11,14 +11,15 @@ const getWorkoutsByUserId = async (req,res) => {
 }
 
 const updateWorkout = async (req, res) => {
+    // Only updates workout details and not exercises
     try {
         const { userId } = req.params;
-        const { dateSelected, newMeasurements } = req.body;
+        const newWorkout = req.body;
         // Convert UNIX timestamp to ISO 8601 format
         // const dateSelectedConverted = new Date(dateSelected * 1000).toISOString();
         
-        const measurements = await workoutsService.updateByUserId(userId, dateSelected, newMeasurements);
-        res.json(measurements);
+        const workout = await workoutsService.updateWorkout(userId, newWorkout);
+        res.json(workout);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

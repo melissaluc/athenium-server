@@ -105,7 +105,23 @@ const createWorkout = async (userId, workout) => {
     }
 };
 
-const updateUser = (userId, dateSelected, measurement) => {
+const updateWorkout = (userId, workout) => {
+
+    workout.updated_on = new Date().toISOString();
+    const { uid, workout_name, description, updated_on } = workout;
+    console.log('uid in update',uid)
+    return knex('workouts_log')
+        .where({ user_id: userId })
+        .andWhere({uid : uid})
+        .update({         
+            workout_name,
+            description,
+            updated_on
+        })
+        .returning('*');
+};
+
+const addExercises = (userId, dateSelected, measurement) => {
 
     measurement.updated_on = new Date().toISOString();
 
@@ -119,5 +135,5 @@ const updateUser = (userId, dateSelected, measurement) => {
 module.exports = {
     getWorkoutsByUserId,
     createWorkout,
-    updateUser
+    updateWorkout
 };
