@@ -11,12 +11,10 @@ const getWorkoutsByUserId = async (req,res) => {
 }
 
 const updateWorkout = async (req, res) => {
-    // Only updates workout details and not exercises
+    // Updates workout details, add/delete/update exercises
     try {
         const { userId } = req.params;
         const newWorkout = req.body;
-        // Convert UNIX timestamp to ISO 8601 format
-        // const dateSelectedConverted = new Date(dateSelected * 1000).toISOString();
         
         const workout = await workoutsService.updateWorkout(userId, newWorkout);
         res.json(workout);
@@ -24,7 +22,6 @@ const updateWorkout = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
-
 
 const createWorkout = async (req, res) => {
     console.log(req.body)
@@ -37,6 +34,7 @@ const createWorkout = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
 
 const deleteWorkout = async (req, res) => {
     console.log(req.body)

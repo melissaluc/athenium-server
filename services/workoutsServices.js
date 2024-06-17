@@ -10,7 +10,9 @@ const createWorkout = async (userId, workout) => {
 };
 
 const updateWorkout = async (id, workout) => {
+        
     return workoutModel.updateWorkout(id,workout);
+
 };
 
 const deleteWorkout = async (id, dateSelected, measurements) => {

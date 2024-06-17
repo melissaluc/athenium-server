@@ -13,11 +13,10 @@ exports.seed = async function(knex) {
       workout_id: '00000000-0000-0000-0000-000000000001',
       exercise_name: "lat pull down",
       category: "strength",
-      muscle_group: "Back",
+      group: "Back",
       weight: 80,
       reps: 15,
       sets: 5,
-      order: 1,
       img_url: null
     },
     {
@@ -25,11 +24,10 @@ exports.seed = async function(knex) {
       workout_id: '00000000-0000-0000-0000-000000000001',
       exercise_name: "deadlift",
       category: "strength",
-      muscle_group: "Whole Body",
+      group: "Whole Body",
       weight: 150,
       reps: 15,
       sets: 5,
-      order: 2,
       img_url: null
     },
     {
@@ -37,11 +35,10 @@ exports.seed = async function(knex) {
       workout_id: '00000000-0000-0000-0000-000000000001',
       exercise_name: "T-rows",
       category: "strength",
-      muscle_group: "Back",
+      group: "Back",
       weight: 60,
       reps: 15,
       sets: 5,
-      order: 3,
       img_url: null
     },
     {
@@ -54,7 +51,6 @@ exports.seed = async function(knex) {
       sets: null,
       duration: null,
       distance: 10,
-      order: 4,
       img_url: null
     },
     {
@@ -67,7 +63,6 @@ exports.seed = async function(knex) {
       sets: null,
       duration: 60,
       distance: null,
-      order: 5,
       img_url: null
     }
   ]);
@@ -84,7 +79,6 @@ exports.seed = async function(knex) {
       sets: null,
       duration: null,
       distance: 10,
-      order: 1,
       img_url: null
     }
   ]);
