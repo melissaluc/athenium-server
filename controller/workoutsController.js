@@ -41,8 +41,8 @@ const deleteWorkout = async (req, res) => {
     try {
         const {uid: workoutId} = req.body;
         const {userId} = req.params
-        const measurement= await workoutsService.deleteWorkout(userId, workoutId);
-        res.status(201).json(measurement);
+        const workout= await workoutsService.deleteWorkout(userId, workoutId);
+        res.status(201).json(workout);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
