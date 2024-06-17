@@ -5,6 +5,7 @@ const knex = require("knex")(config.development);
 
 const { v4: uuidv4 } = require('uuid');
 
+
 const getWorkoutsByUserId = async (userId) => {
     try {
         const workouts = await knex('workouts_log')
@@ -127,7 +128,7 @@ const getWorkoutsByUserId = async (userId) => {
                 if (deletedExercises && deletedExercises.length > 0) {
                     await trx('workout_exercises')
                         .whereIn('uid', deletedExercises)
-                        .delete();
+                        .del();
                 }
     
                 // Handle updated exercises
@@ -172,21 +173,44 @@ const getWorkoutsByUserId = async (userId) => {
                 await trx.commit();
                 console.log("Transaction committed successfully.");
             });
-    
+            
             // Return updated workout data if needed
             const updatedWorkout = await knex('workouts_log')
-                .where({ user_id: userId, uid: workout_id })
-                .first();
+            .where({ user_id: userId, uid: workout_id })
+            .first();
             return updatedWorkout;
         } catch (error) {
             console.error('Error updating workout:', error);
             throw error;
         }
     };
+    
+    
+    const deleteWorkout = async (userId, workoutId) => {
+        try {
+            await knex.transaction(async (trx) => {
+                await trx('workout_exercises')
+                .where('workout_id', workoutId)
+                .del();
+                
+                await trx('workouts_log')
+                .where('user_id',userId)
+                .andWhere('uid', workoutId)
+                .del();
+                
+                await trx.commit();
+                console.log("Transaction committed successfully.");
+            })
+        } catch (error) {
+            console.error('Error deleting workout:', error);
+            throw error;
+        }
+    }
 
 module.exports = {
     getWorkoutsByUserId,
     createWorkout,
-    updateWorkout
+    updateWorkout,
+    deleteWorkout
 
 };

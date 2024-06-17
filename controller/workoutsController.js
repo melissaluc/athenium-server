@@ -39,9 +39,9 @@ const createWorkout = async (req, res) => {
 const deleteWorkout = async (req, res) => {
     console.log(req.body)
     try {
-        const {dateSelected, newMeasurements} = req.body;
+        const {uid: workoutId} = req.body;
         const {userId} = req.params
-        const measurement= await workoutsService.deleteWorkoutByUser(userId, dateSelected, newMeasurements);
+        const measurement= await workoutsService.deleteWorkout(userId, workoutId);
         res.status(201).json(measurement);
     } catch (err) {
         res.status(500).json({ error: err.message });
