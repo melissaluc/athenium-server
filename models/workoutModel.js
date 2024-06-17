@@ -40,7 +40,8 @@ const getWorkoutsByUserId = async (userId) => {
                 "created_on",
                 "updated_on"
                 )
-
+            
+            // Combine workouts with their exercises
             const combinedData = workouts.map(workout => {
 
                 return {
@@ -76,37 +77,28 @@ const getWorkoutsByUserId = async (userId) => {
     }
 }
 
-const createWorkout = async (userId, dateSelected, measurement) => {
+const createWorkout = async (userId, workout) => {
     try {
 
         const id = uuidv4();
-
-        // // Convert Unix timestamp (seconds) to ISO 8601 string
         // const createdOnDate = new Date(dateSelected * 1000).toISOString();
 
-        // Fetch the most recent measurements for the user
-        const prevMeasurements = await knex('measurements_log')
-            .select('weight_kg', 'musclemass_kg', 'bf_percentage')
-            .where('user_id', userId)
-            .orderBy('created_on', 'desc')
-            .limit(1)
-            .first(); 
-
         // Insert new measurement with previous values
-        const insertedMeasurement = await knex('measurements_log')
+        const insertedWorkout = await knex('workouts_log')
             .insert({
-                uid:id,
+                uid: id,
                 user_id: userId,
-                ...measurement,
-                created_on: dateSelected,
-                updated_on: knex.fn.now(),
-                weight_kg: prevMeasurements ? prevMeasurements.weight_kg : null,
-                musclemass_kg: prevMeasurements ? prevMeasurements.musclemass_kg : null,
-                bf_percentage: prevMeasurements ? prevMeasurements.bf_percentage : null
+                workout_name:workout.workout_name,
+                description:workout.description,
+                last_completed:workout.last_completed,
+                created_on:knex.fn.now(),
+                updated_on:knex.fn.now(),
+                frequency:workout.frequency,
+                tags:JSON.stringify(workout.tags),
             })
             .returning('*');
 
-        return insertedMeasurement;
+        return insertedWorkout;
     } catch (error) {
         console.error('Error logging measurement:', error);
         throw error; // Rethrow the error to handle it further up the chain

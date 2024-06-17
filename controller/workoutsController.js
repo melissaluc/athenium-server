@@ -28,10 +28,10 @@ const updateWorkout = async (req, res) => {
 const createWorkout = async (req, res) => {
     console.log(req.body)
     try {
-        const {dateSelected, newMeasurements} = req.body;
+        const newWorkout = req.body;
         const {userId} = req.params
-        const measurement= await workoutsService.createMeasurementByUser(userId, dateSelected, newMeasurements);
-        res.status(201).json(measurement);
+        const workout= await workoutsService.createWorkout(userId, newWorkout);
+        res.status(201).json(workout);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

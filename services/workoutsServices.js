@@ -5,8 +5,8 @@ const getWorkoutsByUserId = async (id) => {
     return workoutModel.getWorkoutsByUserId(id);
 };
 
-const createWorkoutByUser = async (userId, dateSelected, measurements) => {
-    return workoutModel.createMeasurement(userId, dateSelected, measurements);
+const createWorkout = async (userId, workout) => {
+    return workoutModel.createWorkout(userId, workout);
 };
 
 const updateByUserId = async (id, dateSelected, measurements) => {
@@ -20,7 +20,7 @@ const deleteWorkout = async (id, dateSelected, measurements) => {
 
 module.exports = {
     getWorkoutsByUserId,
-    createWorkoutByUser,
+    createWorkout,
     updateByUserId,
     deleteWorkout
 };
