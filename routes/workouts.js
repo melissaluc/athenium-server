@@ -8,8 +8,13 @@ const workoutsController = require('../controller/workoutsController');
 router.route('/:userId')
     .get(workoutsController.getWorkoutsByUserId)
     .post(workoutsController.createWorkout)
-    .patch(workoutsController.updateWorkout)
-    .delete(workoutsController.deleteWorkout)
+
+    
+router.route('/:userId/:workoutId')
+    .get(workoutsController.getWorkout) //get single workout
+    .delete(workoutsController.deleteWorkout) //delete single workout
+    .patch(workoutsController.updateWorkout) // update single workout
+
 
 
 
