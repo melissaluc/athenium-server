@@ -58,8 +58,8 @@ app.use('/api/v1/workouts', workoutsRouter);
 // const goalsRouter = require('./routes/goalsLog.js');
 // app.use('/api/v1/goals', goalsRouter);
 
-// const nutritionRouter = require('./routes/nutritionLog.js');
-// app.use('/api/v1/nutrition', nutritionRouter);
+const mealsRouter = require('./routes/meals.js');
+app.use('/api/v1/nutrition', mealsRouter);
 
 const measurementsRouter = require('./routes/measurements.js');
 app.use('/api/v1/measurements', measurementsRouter);
