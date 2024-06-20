@@ -55,8 +55,8 @@ app.use(express.static('public'));
 const workoutsRouter = require('./routes/workouts.js');
 app.use('/api/v1/workouts', workoutsRouter);
 
-// const goalsRouter = require('./routes/goalsLog.js');
-// app.use('/api/v1/goals', goalsRouter);
+const goalsRouter = require('./routes/goals.js');
+app.use('/api/v1/goals', goalsRouter);
 
 const mealsRouter = require('./routes/meals.js');
 app.use('/api/v1/nutrition', mealsRouter);
