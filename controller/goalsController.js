@@ -11,14 +11,14 @@ const getByUserId = async (req,res) => {
     }
 }
 
-const updateMeal = async (req, res) => {
+const updateGoal = async (req, res) => {
     try {
-        const { userId } = req.params;
-        const { dateSelected, newMeals } = req.body;
+        const { userId, goalId } = req.params;
+        const updatedGoal = req.body;
         // Convert UNIX timestamp to ISO 8601 format
         // const dateSelectedConverted = new Date(dateSelected * 1000).toISOString();
         
-        const goals = await goalService.updateByUserId(userId, dateSelected, newMeals);
+        const goals = await goalService.updateGoal(userId, goalId, updatedGoal);
         res.json(goals);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -26,12 +26,22 @@ const updateMeal = async (req, res) => {
 };
 
 
-const addFoodMeal = async (req, res) => {
-    console.log(req.body)
+const addGoal= async (req, res) => {
     try {
-        const {datetimestamp, goal_name, data:food} = req.body;
+        const newGoal = req.body;
+        console.log('addgoal',newGoal)
         const {userId} = req.params
-        const goal= await goalService.addFoodByUser(userId, datetimestamp, goal_name, food);
+        const goal= await goalService.addGoal(userId, newGoal);
+        res.status(201).json(goal);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+const deleteGoal = async (req, res) => {
+    try {
+        const {userId,goalId} = req.params
+        const goal= await goalService.deleteGoal(userId,goalId);
         res.status(201).json(goal);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -40,6 +50,7 @@ const addFoodMeal = async (req, res) => {
 
 module.exports = {
     getByUserId,
-    addFoodMeal,
-    updateMeal
+    addGoal,
+    updateGoal,
+    deleteGoal
 };

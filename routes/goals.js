@@ -7,11 +7,12 @@ const goalsController = require('../controller/goalsController');
 
 router.route('/:userId')
     .get(goalsController.getByUserId)
-    // .post(goalsController.addGoalMeal)
-    // .patch(goalsController.updateGoal)
-    // .delete(goalsController.deleteGoal)
+    .post(goalsController.addGoal)
 
-
+    
+router.route('/:userId/:goalId')
+    .delete(goalsController.deleteGoal)
+    .put(goalsController.updateGoal)
 
 
 module.exports = router;

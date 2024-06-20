@@ -5,6 +5,29 @@ const knex = require("knex")(config.development);
 
 const { v4: uuidv4 } = require('uuid');
 
+const putGoalById = async (userId, goalId, updatedGoal) => {
+    try {
+        const { start_date, updated_on, ...goalData } = updatedGoal;
+
+        // Convert Unix timestamp (seconds) to ISO 8601 string for updated_on
+        const isoUpdatedOn = new Date().toISOString();
+
+        // Update goal in the database
+        const updatedRows = await knex('goals_log')
+            .where({ user_id: userId, uid: goalId })
+            .update({
+                ...goalData,
+                updated_on: isoUpdatedOn,
+            })
+            .returning('*');
+
+        return updatedRows;
+    } catch (error) {
+        console.error('Error updating goal:', error);
+        throw error; // Rethrow the error to handle it further up the chain
+    }
+}
+
 const getGoalsByUserId = async (userId) => {
     try {
         const goals = await knex("goals_log")
@@ -37,54 +60,47 @@ const getGoalsByUserId = async (userId) => {
     }
 }
 
-const addFood= async (userId, datetimestamp, meal_name, food) => {
-    const {food_name, protein, carbs, fat, calories, quantity, uom} = food
+const addGoal= async (userId, newGoal) => {
+    console.log('newGoal modal',newGoal)
+    const {start_date,...goalData} = newGoal
+
     try {
 
         const id = uuidv4();
 
         // // Convert Unix timestamp (seconds) to ISO 8601 string
-        const planned_on = new Date(datetimestamp * 1000).toISOString().split('T')[0];
+        const isoStartDate = new Date(start_date * 1000).toISOString();
+        // const isoUpdatedOn = new Date(updated_on * 1000).toISOString();
 
         // Insert new measurement with previous values
-        const insertedFood = await knex('meals_log')
+        const insertedGoal = await knex('goals_log')
             .insert({
-                uid:id,
-                user_id: userId,
-                meal_name,
-                planned_on,
-                food_name,
-                protein,
-                carbs,
-                fat,
-                calories,
-                quantity,
-                uom,
+                ...goalData,
+                user_id:userId,
+                start_date:isoStartDate,
+                // updated_on:isoUpdatedOn,
                 created_on: knex.fn.now(),
                 updated_on: knex.fn.now(),
             })
             .returning('*');
 
-        return insertedFood;
+        return insertedGoal;
     } catch (error) {
-        console.error('Error logging food:', error);
+        console.error('Error logging goal:', error);
         throw error; // Rethrow the error to handle it further up the chain
     }
 };
 
-const updateUser = (userId, dateSelected, measurement) => {
-
-    measurement.updated_on = new Date().toISOString();
-
-    return knex('measurements_log')
+const deleteGoal = (userId, goalId) => {
+    return knex("goals_log")
         .where({ user_id: userId })
-        .andWhere({ created_on: dateSelected })
-        .update(measurement)
-        .returning('*');
+        .andWhere({uid: goalId})
+        .del()
 };
 
 module.exports = {
     getGoalsByUserId,
-    addFood,
-    updateUser
+    addGoal,
+    putGoalById,
+    deleteGoal
 };

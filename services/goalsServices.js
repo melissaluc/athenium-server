@@ -5,19 +5,23 @@ const getByUserId = async (id) => {
     return goalModel.getGoalsByUserId(id);
 };
 
-const addFoodByUser = async (userId, datetimestamp, goal_name, goal) => {
-    return goalModel.addFood(userId, datetimestamp, goal_name, goal);
+const addGoal = async (userId, newGoal) => {
+    return goalModel.addGoal(userId, newGoal);
 };
 
-const updateByUserId = async (id, dateSelected, goals) => {
-    return goalModel.updateUser(id, dateSelected, goals);
+const updateGoal = async (userId, goalId, updatedGoal) => {
+    return goalModel.putGoalById(userId, goalId, updatedGoal);
+};
+
+const deleteGoal= async (userId,goalId) => {
+    return goalModel.deleteGoal(userId,goalId);
 };
 
 
 
 module.exports = {
     getByUserId,
-    addFoodByUser,
-    updateByUserId,
-    // deleteGoal
+    addGoal,
+    updateGoal,
+    deleteGoal
 };
