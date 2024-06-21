@@ -21,10 +21,6 @@ app.use(express.urlencoded({ extended : true }));
 app.use(express.static('public'));
 
 
-
-
-
-
 //  Routes
 // Logs: Workouts, nutrition/meal planner, goals, measurements
 // Schedule: schedule (planned workout and meals)
@@ -35,7 +31,7 @@ app.use(express.static('public'));
 // Strength Level: calculate strength level
 // Exercises: exercises
 
-// http://localhost:5000/api/v1/measurements/39b17fed-61d6-492a-b528-4507290d5423
+// userid: 39b17fed-61d6-492a-b528-4507290d5423
 
 // const usersRouter = require('./routes/users.js');
 // app.use('/api/v1/users', usersRouter);
@@ -46,11 +42,8 @@ app.use(express.static('public'));
 // const exercisesRouter = require('./routes/exercises.js');
 // app.use('/api/v1/exercises', exercisesRouter);
 
-// const scheduleRouter = require('./routes/schedule.js');
-// app.use('/api/v1/schedule', scheduleRouter);
-
-// const trackerRouter = require('./routes/tracker.js');
-// app.use('/api/v1/tracker', trackerRouter);
+const scheduleRouter = require('./routes/schedule.js');
+app.use('/api/v1/schedule', scheduleRouter);
 
 const workoutsRouter = require('./routes/workouts.js');
 app.use('/api/v1/workouts', workoutsRouter);
