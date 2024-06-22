@@ -69,21 +69,25 @@ const fs = require("fs");
     }
 
 
-    const exerciseElements = await page.$$("section.modal-card-body.is-paddingless > div:first-child span.media-content");
+    // const exerciseElements = await page.$$("section.modal-card-body.is-paddingless > div:first-child span.media-content");
+    const exerciseElements = await page.$$("section.modal-card-body.is-paddingless > div:first-child a.media");
 
     const exercisePairs = await Promise.all(exerciseElements.map(async exerciseElement => {
         const exerciseElementHTML = await page.evaluate(element => element.outerHTML, exerciseElement)
-        console.log("\n",exerciseElementHTML)
-
-        const regex = /<span class="mr-1">([^<]+)<\/span>\s*<span class="tag is-small">([^<]+)<\/span>/;
-        const match = exerciseElementHTML.match(regex);
-
-        if (match) {
-            const exerciseName = match[1].trim();
-            const bodyPart = match[2].trim();
+    
+        const textRegex = /<span class="mr-1">([^<]+)<\/span>\s*<span class="tag is-small">([^<]+)<\/span>/;
+        const textMatch = exerciseElementHTML.match(textRegex);
+        const img_regex = /<img loading="lazy" src="(https:\/\/[^"]+)"/
+        const imgMatch = exerciseElementHTML.match(img_regex);
+        console.log(imgMatch)
+        
+        if (textMatch) {
+            const exerciseName = textMatch[1].trim();
+            const bodyPart = textMatch[2].trim();
+            const imgURL = imgMatch[1]
             console.log("Exercise Name:", exerciseName);
             console.log("Body Part:", bodyPart);
-            return { exerciseName, bodyPart };
+            return { exerciseName, bodyPart, imgURL };
           } else {
             console.log("No match found.");
             
@@ -92,33 +96,33 @@ const fs = require("fs");
         return { bodyPart, exerciseName };
     }));
     
-    const tabularData = exercisePairs.reduce((acc, { bodyPart, exerciseName }) => {
+    const tabularData = exercisePairs.reduce((acc, { bodyPart, exerciseName, imgURL }) => {
         if (!acc[bodyPart]) {
-            acc[bodyPart] = [exerciseName];
+            acc[bodyPart] = [{ exerciseName, imgURL }];
         } else {
-            acc[bodyPart].push(exerciseName);
+            acc[bodyPart].push({ exerciseName, imgURL }); 
         }
         return acc;
-        
     }, {});
+    
 
     
     // TODO: verify tabularData for completeness
     console.log(tabularData)
-    // const data = JSON.stringify(tabularData)
-    // // writing the JSON string content to a file
-    // fs.writeFile("workouts_data.json", data, (error) => {
-    //     // throwing the error
-    //     // in case of a writing problem
-    //     if (error) {
-    //     // logging the error
-    //     console.error(error);
+    const data = JSON.stringify(tabularData)
+    // writing the JSON string content to a file
+    fs.writeFile("workouts_data.json", data, (error) => {
+        // throwing the error
+        // in case of a writing problem
+        if (error) {
+        // logging the error
+        console.error(error);
     
-    //     throw error;
-    //     }
+        throw error;
+        }
     
-    //     console.log("data.json written correctly");
-    // });
+        console.log("data.json written correctly");
+    });
     
 
     await browser.close();

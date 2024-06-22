@@ -1,314 +1,1168 @@
 {
   "Chest": [
-    "Bench Press",
-    "Dumbbell Bench Press",
-    "Push Ups",
-    "Incline Bench Press",
-    "Incline Dumbbell Bench Press",
-    "Chest Press",
-    "Close Grip Bench Press",
-    "Machine Chest Fly",
-    "Decline Bench Press",
-    "Dumbbell Fly",
-    "Smith Machine Bench Press",
-    "Cable Fly",
-    "Floor Press",
-    "Incline Dumbbell Fly",
-    "Dumbbell Floor Press",
-    "Decline Dumbbell Bench Press",
-    "Paused Bench Press",
-    "One Arm Push Ups",
-    "Reverse Grip Bench Press",
-    "Diamond Push Ups",
-    "Close Grip Dumbbell Bench Press",
-    "Bench Pin Press",
-    "Wide Grip Bench Press",
-    "Decline Push Up",
-    "Close Grip Incline Bench Press",
-    "Incline Push Up",
-    "Close Grip Push Up",
-    "Archer Push Ups",
-    "Spoto Press",
-    "Decline Dumbbell Fly"
+    {
+      "exerciseName": "Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bench-press/icons/bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-bench-press/icons/dumbbell-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Push Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/push-ups/icons/push-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Incline Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/incline-bench-press/icons/incline-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Incline Dumbbell Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/incline-dumbbell-bench-press/icons/incline-dumbbell-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Chest Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/chest-press/icons/chest-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Close Grip Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/close-grip-bench-press/icons/close-grip-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Chest Fly",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-chest-fly/icons/machine-chest-fly-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Fly",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-fly/icons/dumbbell-fly-icon-32.png"
+    },
+    {
+      "exerciseName": "Decline Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/decline-bench-press/icons/decline-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Smith Machine Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/smith-machine-bench-press/icons/smith-machine-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Fly",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-fly/icons/cable-fly-icon-32.png"
+    },
+    {
+      "exerciseName": "Floor Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/floor-press/icons/floor-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Incline Dumbbell Fly",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/incline-dumbbell-fly/icons/incline-dumbbell-fly-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Floor Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-floor-press/icons/dumbbell-floor-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Paused Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/paused-bench-press/icons/paused-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Decline Dumbbell Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/decline-dumbbell-bench-press/icons/decline-dumbbell-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "One Arm Push Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/one-arm-push-ups/icons/one-arm-push-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Reverse Grip Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/reverse-grip-bench-press/icons/reverse-grip-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Diamond Push Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/diamond-push-ups/icons/diamond-push-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Close Grip Dumbbell Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/close-grip-dumbbell-bench-press/icons/close-grip-dumbbell-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Bench Pin Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bench-pin-press/icons/bench-pin-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Wide Grip Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/wide-grip-bench-press/icons/wide-grip-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Decline Push Up",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/decline-push-up/icons/decline-push-up-icon-32.png"
+    },
+    {
+      "exerciseName": "Close Grip Incline Bench Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/close-grip-incline-bench-press/icons/close-grip-incline-bench-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Incline Push Up",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/incline-push-up/icons/incline-push-up-icon-32.png"
+    },
+    {
+      "exerciseName": "Close Grip Push Up",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/close-grip-push-up/icons/close-grip-push-up-icon-32.png"
+    },
+    {
+      "exerciseName": "Archer Push Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/archer-push-ups/icons/archer-push-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Spoto Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/spoto-press/icons/spoto-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Decline Dumbbell Fly",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/decline-dumbbell-fly/icons/decline-dumbbell-fly-icon-32.png"
+    }
   ],
   "Legs": [
-    "Squat",
-    "Sled Leg Press",
-    "Front Squat",
-    "Hip Thrust",
-    "Leg Extension",
-    "Horizontal Leg Press",
-    "Hack Squat",
-    "Seated Leg Curl",
-    "Dumbbell Bulgarian Split Squat",
-    "Goblet Squat",
-    "Lying Leg Curl",
-    "Machine Calf Raise",
-    "Dumbbell Lunge",
-    "Box Squat",
-    "Vertical Leg Press",
-    "Bodyweight Squat",
-    "Bulgarian Split Squat",
-    "Seated Calf Raise",
-    "Smith Machine Squat",
-    "Hip Abduction",
-    "Good Morning",
-    "Zercher Squat",
-    "Barbell Lunge",
-    "Hip Adduction",
-    "Overhead Squat",
-    "Barbell Calf Raise",
-    "Dumbbell Squat",
-    "Split Squat",
-    "Dumbbell Calf Raise",
-    "Cable Pull Through",
-    "Standing Leg Curl",
-    "Landmine Squat",
-    "Barbell Reverse Lunge",
-    "Barbell Glute Bridge",
-    "Single Leg Press",
-    "Sled Press Calf Raise",
-    "Single Leg Squat",
-    "Belt Squat",
-    "Safety Bar Squat",
-    "Pistol Squat",
-    "Pause Squat",
-    "Barbell Hack Squat",
-    "Sumo Squat",
-    "Cable Kickback",
-    "Bodyweight Calf Raise",
-    "Lunge",
-    "Glute Bridge",
-    "Pin Squat",
-    "Dumbbell Front Squat",
-    "Walking Lunge",
-    "Dumbbell Split Squat",
-    "Reverse Lunge",
-    "Squat Jump",
-    "Nordic Hamstring Curl",
-    "Sissy Squat",
-    "Glute Ham Raise",
-    "Half Squat",
-    "Single Leg Seated Calf Raise",
-    "Cable Leg Extension",
-    "Side Lunge",
-    "Glute Kickback",
-    "Donkey Calf Raise",
-    "Dumbbell Walking Calf Raise",
-    "Side Leg Raise",
-    "Jefferson Squat",
-    "Floor Hip Abduction",
-    "Hip Extension",
-    "Floor Hip Extension"
+    {
+      "exerciseName": "Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/squat/icons/squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Sled Leg Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/sled-leg-press/icons/sled-leg-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Front Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/front-squat/icons/front-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Hip Thrust",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hip-thrust/icons/hip-thrust-icon-32.png"
+    },
+    {
+      "exerciseName": "Leg Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/leg-extension/icons/leg-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Horizontal Leg Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/horizontal-leg-press/icons/horizontal-leg-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Hack Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hack-squat/icons/hack-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Seated Leg Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/seated-leg-curl/icons/seated-leg-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Bulgarian Split Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-bulgarian-split-squat/icons/dumbbell-bulgarian-split-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Goblet Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/goblet-squat/icons/goblet-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Lying Leg Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/lying-leg-curl/icons/lying-leg-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-calf-raise/icons/machine-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Lunge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-lunge/icons/dumbbell-lunge-icon-32.png"
+    },
+    {
+      "exerciseName": "Box Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/box-squat/icons/box-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Bodyweight Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bodyweight-squat/icons/bodyweight-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Vertical Leg Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/vertical-leg-press/icons/vertical-leg-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Bulgarian Split Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bulgarian-split-squat/icons/bulgarian-split-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Seated Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/seated-calf-raise/icons/seated-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Smith Machine Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/smith-machine-squat/icons/smith-machine-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Hip Abduction",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hip-abduction/icons/hip-abduction-icon-32.png"
+    },
+    {
+      "exerciseName": "Good Morning",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/good-morning/icons/good-morning-icon-32.png"
+    },
+    {
+      "exerciseName": "Zercher Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/zercher-squat/icons/zercher-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Lunge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-lunge/icons/barbell-lunge-icon-32.png"
+    },
+    {
+      "exerciseName": "Hip Adduction",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hip-adduction/icons/hip-adduction-icon-32.png"
+    },
+    {
+      "exerciseName": "Overhead Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/overhead-squat/icons/overhead-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-calf-raise/icons/barbell-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-squat/icons/dumbbell-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Split Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/split-squat/icons/split-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-calf-raise/icons/dumbbell-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Pull Through",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-pull-through/icons/cable-pull-through-icon-32.png"
+    },
+    {
+      "exerciseName": "Standing Leg Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/standing-leg-curl/icons/standing-leg-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Landmine Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/landmine-squat/icons/landmine-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Reverse Lunge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-reverse-lunge/icons/barbell-reverse-lunge-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Glute Bridge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-glute-bridge/icons/barbell-glute-bridge-icon-32.png"
+    },
+    {
+      "exerciseName": "Single Leg Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/single-leg-press/icons/single-leg-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Sled Press Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/sled-press-calf-raise/icons/sled-press-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Single Leg Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/single-leg-squat/icons/single-leg-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Belt Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/belt-squat/icons/belt-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Safety Bar Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/safety-bar-squat/icons/safety-bar-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Pistol Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/pistol-squat/icons/pistol-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Pause Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/pause-squat/icons/pause-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Hack Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-hack-squat/icons/barbell-hack-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Sumo Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/sumo-squat/icons/sumo-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Kickback",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-kickback/icons/cable-kickback-icon-32.png"
+    },
+    {
+      "exerciseName": "Bodyweight Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bodyweight-calf-raise/icons/bodyweight-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Lunge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/lunge/icons/lunge-icon-32.png"
+    },
+    {
+      "exerciseName": "Glute Bridge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/glute-bridge/icons/glute-bridge-icon-32.png"
+    },
+    {
+      "exerciseName": "Pin Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/pin-squat/icons/pin-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Walking Lunge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/walking-lunge/icons/walking-lunge-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Front Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-front-squat/icons/dumbbell-front-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Split Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-split-squat/icons/dumbbell-split-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Reverse Lunge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/reverse-lunge/icons/reverse-lunge-icon-32.png"
+    },
+    {
+      "exerciseName": "Squat Jump",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/squat-jump/icons/squat-jump-icon-32.png"
+    },
+    {
+      "exerciseName": "Nordic Hamstring Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/nordic-hamstring-curl/icons/nordic-hamstring-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Sissy Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/sissy-squat/icons/sissy-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Half Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/half-squat/icons/half-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Glute Ham Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/glute-ham-raise/icons/glute-ham-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Leg Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-leg-extension/icons/cable-leg-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Single Leg Seated Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/single-leg-seated-calf-raise/icons/single-leg-seated-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Side Lunge",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/side-lunge/icons/side-lunge-icon-32.png"
+    },
+    {
+      "exerciseName": "Glute Kickback",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/glute-kickback/icons/glute-kickback-icon-32.png"
+    },
+    {
+      "exerciseName": "Donkey Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/donkey-calf-raise/icons/donkey-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Walking Calf Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-walking-calf-raise/icons/dumbbell-walking-calf-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Side Leg Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/side-leg-raise/icons/side-leg-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Jefferson Squat",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/jefferson-squat/icons/jefferson-squat-icon-32.png"
+    },
+    {
+      "exerciseName": "Floor Hip Abduction",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/floor-hip-abduction/icons/floor-hip-abduction-icon-32.png"
+    },
+    {
+      "exerciseName": "Hip Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hip-extension/icons/hip-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Floor Hip Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/floor-hip-extension/icons/floor-hip-extension-icon-32.png"
+    }
   ],
   "Whole Body": [
-    "Deadlift",
-    "Hex Bar Deadlift",
-    "Power Clean",
-    "Romanian Deadlift",
-    "Sumo Deadlift",
-    "Clean and Jerk",
-    "Snatch",
-    "Clean",
-    "Clean and Press",
-    "Rack Pull",
-    "Dumbbell Romanian Deadlift",
-    "Hang Clean",
-    "Stiff Leg Deadlift",
-    "Muscle Ups",
-    "Thruster",
-    "Power Snatch",
-    "Push Jerk",
-    "Dumbbell Deadlift",
-    "Deficit Deadlift",
-    "Single Leg Romanian Deadlift",
-    "Hang Power Clean",
-    "Split Jerk",
-    "Burpees",
-    "Clean High Pull",
-    "Dumbbell Snatch",
-    "Snatch Deadlift",
-    "Clean Pull",
-    "Pause Deadlift",
-    "Single Leg Deadlift",
-    "Muscle Snatch",
-    "Jefferson Deadlift",
-    "Snatch Pull",
-    "Wall Ball",
-    "Zercher Deadlift",
-    "Single Leg Dumbbell Deadlift",
-    "Dumbbell Clean and Press",
-    "Ring Muscle Ups",
-    "Dumbbell Thruster",
-    "Hang Snatch",
-    "Dumbbell High Pull",
-    "Dumbbell Hang Clean",
-    "Behind The Back Deadlift",
-    "Clap Pull Up",
-    "Squat Thrust"
+    {
+      "exerciseName": "Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/deadlift/icons/deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Hex Bar Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hex-bar-deadlift/icons/hex-bar-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Power Clean",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/power-clean/icons/power-clean-icon-32.png"
+    },
+    {
+      "exerciseName": "Romanian Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/romanian-deadlift/icons/romanian-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Sumo Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/sumo-deadlift/icons/sumo-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Clean and Jerk",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/clean-and-jerk/icons/clean-and-jerk-icon-32.png"
+    },
+    {
+      "exerciseName": "Snatch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/snatch/icons/snatch-icon-32.png"
+    },
+    {
+      "exerciseName": "Clean",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/clean/icons/clean-icon-32.png"
+    },
+    {
+      "exerciseName": "Clean and Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/clean-and-press/icons/clean-and-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Rack Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/rack-pull/icons/rack-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Romanian Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-romanian-deadlift/icons/dumbbell-romanian-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Hang Clean",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hang-clean/icons/hang-clean-icon-32.png"
+    },
+    {
+      "exerciseName": "Stiff Leg Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/stiff-leg-deadlift/icons/stiff-leg-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Muscle Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/muscle-ups/icons/muscle-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Power Snatch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/power-snatch/icons/power-snatch-icon-32.png"
+    },
+    {
+      "exerciseName": "Thruster",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/thruster/icons/thruster-icon-32.png"
+    },
+    {
+      "exerciseName": "Push Jerk",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/push-jerk/icons/push-jerk-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-deadlift/icons/dumbbell-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Deficit Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/deficit-deadlift/icons/deficit-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Single Leg Romanian Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/single-leg-romanian-deadlift/icons/single-leg-romanian-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Burpees",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/burpees/icons/burpees-icon-32.png"
+    },
+    {
+      "exerciseName": "Hang Power Clean",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hang-power-clean/icons/hang-power-clean-icon-32.png"
+    },
+    {
+      "exerciseName": "Split Jerk",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/split-jerk/icons/split-jerk-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Snatch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-snatch/icons/dumbbell-snatch-icon-32.png"
+    },
+    {
+      "exerciseName": "Clean High Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/clean-high-pull/icons/clean-high-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Snatch Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/snatch-deadlift/icons/snatch-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Clean Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/clean-pull/icons/clean-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Pause Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/pause-deadlift/icons/pause-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Single Leg Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/single-leg-deadlift/icons/single-leg-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Muscle Snatch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/muscle-snatch/icons/muscle-snatch-icon-32.png"
+    },
+    {
+      "exerciseName": "Jefferson Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/jefferson-deadlift/icons/jefferson-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Snatch Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/snatch-pull/icons/snatch-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Wall Ball",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/wall-ball/icons/wall-ball-icon-32.png"
+    },
+    {
+      "exerciseName": "Zercher Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/zercher-deadlift/icons/zercher-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Single Leg Dumbbell Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/single-leg-dumbbell-deadlift/icons/single-leg-dumbbell-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Clean and Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-clean-and-press/icons/dumbbell-clean-and-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Ring Muscle Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/ring-muscle-ups/icons/ring-muscle-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Thruster",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-thruster/icons/dumbbell-thruster-icon-32.png"
+    },
+    {
+      "exerciseName": "Hang Snatch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hang-snatch/icons/hang-snatch-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell High Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-high-pull/icons/dumbbell-high-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Hang Clean",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-hang-clean/icons/dumbbell-hang-clean-icon-32.png"
+    },
+    {
+      "exerciseName": "Behind The Back Deadlift",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/behind-the-back-deadlift/icons/behind-the-back-deadlift-icon-32.png"
+    },
+    {
+      "exerciseName": "Clap Pull Up",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/clap-pull-up/icons/clap-pull-up-icon-32.png"
+    },
+    {
+      "exerciseName": "Squat Thrust",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/squat-thrust/icons/squat-thrust-icon-32.png"
+    }
   ],
   "Shoulders": [
-    "Shoulder Press",
-    "Dumbbell Shoulder Press",
-    "Dumbbell Lateral Raise",
-    "Military Press",
-    "Seated Shoulder Press",
-    "Push Press",
-    "Machine Shoulder Press",
-    "Seated Dumbbell Shoulder Press",
-    "Upright Row",
-    "Dumbbell Front Raise",
-    "Cable Lateral Raise",
-    "Arnold Press",
-    "Face Pull",
-    "Neck Curl",
-    "Dumbbell Upright Row",
-    "Machine Lateral Raise",
-    "Behind The Neck Press",
-    "Handstand Push Ups",
-    "Barbell Front Raise",
-    "Log Press",
-    "Landmine Press",
-    "Neck Extension",
-    "Z Press",
-    "Viking Press",
-    "Shoulder Pin Press",
-    "Dumbbell Z Press",
-    "Dumbbell External Rotation",
-    "One Arm Landmine Press",
-    "Dumbbell Push Press",
-    "Pike Push Up",
-    "Dumbbell Face Pull",
-    "Cable External Rotation"
+    {
+      "exerciseName": "Shoulder Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/shoulder-press/icons/shoulder-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Shoulder Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-shoulder-press/icons/dumbbell-shoulder-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Lateral Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-lateral-raise/icons/dumbbell-lateral-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Military Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/military-press/icons/military-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Seated Shoulder Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/seated-shoulder-press/icons/seated-shoulder-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Seated Dumbbell Shoulder Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/seated-dumbbell-shoulder-press/icons/seated-dumbbell-shoulder-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Shoulder Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-shoulder-press/icons/machine-shoulder-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Push Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/push-press/icons/push-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Upright Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/upright-row/icons/upright-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Front Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-front-raise/icons/dumbbell-front-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Lateral Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-lateral-raise/icons/cable-lateral-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Arnold Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/arnold-press/icons/arnold-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Face Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/face-pull/icons/face-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Neck Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/neck-curl/icons/neck-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Upright Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-upright-row/icons/dumbbell-upright-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Lateral Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-lateral-raise/icons/machine-lateral-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Behind The Neck Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/behind-the-neck-press/icons/behind-the-neck-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Handstand Push Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/handstand-push-ups/icons/handstand-push-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Front Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-front-raise/icons/barbell-front-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Log Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/log-press/icons/log-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Landmine Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/landmine-press/icons/landmine-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Neck Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/neck-extension/icons/neck-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Z Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/z-press/icons/z-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Viking Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/viking-press/icons/viking-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Shoulder Pin Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/shoulder-pin-press/icons/shoulder-pin-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Z Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-z-press/icons/dumbbell-z-press-icon-32.png"
+    },
+    {
+      "exerciseName": "One Arm Landmine Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/one-arm-landmine-press/icons/one-arm-landmine-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell External Rotation",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-external-rotation/icons/dumbbell-external-rotation-icon-32.png"
+    },
+    {
+      "exerciseName": "Pike Push Up",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/pike-push-up/icons/pike-push-up-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Push Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-push-press/icons/dumbbell-push-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Face Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-face-pull/icons/dumbbell-face-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable External Rotation",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-external-rotation/icons/cable-external-rotation-icon-32.png"
+    }
   ],
   "Back": [
-    "Pull Ups",
-    "Bent Over Row",
-    "Lat Pulldown",
-    "Chin Ups",
-    "Dumbbell Row",
-    "Seated Cable Row",
-    "Barbell Shrug",
-    "T Bar Row",
-    "Dumbbell Shrug",
-    "Pendlay Row",
-    "Machine Row",
-    "Dumbbell Pullover",
-    "Dumbbell Reverse Fly",
-    "Chest Supported Dumbbell Row",
-    "Close Grip Lat Pulldown",
-    "Machine Reverse Fly",
-    "Reverse Grip Lat Pulldown",
-    "Neutral Grip Pull Ups",
-    "Straight Arm Pulldown",
-    "Cable Reverse Fly",
-    "Yates Row",
-    "Bent Over Dumbbell Row",
-    "Back Extension",
-    "Bench Pull",
-    "Machine Back Extension",
-    "Barbell Pullover",
-    "One Arm Pull Ups",
-    "Dumbbell Bench Pull",
-    "Renegade Row",
-    "Inverted Row",
-    "One Arm Lat Pulldown",
-    "One Arm Seated Cable Row",
-    "Cable Upright Row",
-    "Machine Shrug",
-    "Hex Bar Shrug",
-    "Smith Machine Shrug",
-    "Dumbbell Incline Y Raise",
-    "Cable Shrug",
-    "Bent Arm Barbell Pullover",
-    "Barbell Power Shrug",
-    "Meadows Row",
-    "Behind The Back Barbell Shrug",
-    "Reverse Hyperextension"
+    {
+      "exerciseName": "Pull Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/pull-ups/icons/pull-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Bent Over Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bent-over-row/icons/bent-over-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Lat Pulldown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/lat-pulldown/icons/lat-pulldown-icon-32.png"
+    },
+    {
+      "exerciseName": "Chin Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/chin-ups/icons/chin-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-row/icons/dumbbell-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Seated Cable Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/seated-cable-row/icons/seated-cable-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Shrug",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-shrug/icons/barbell-shrug-icon-32.png"
+    },
+    {
+      "exerciseName": "T Bar Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/t-bar-row/icons/t-bar-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Shrug",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-shrug/icons/dumbbell-shrug-icon-32.png"
+    },
+    {
+      "exerciseName": "Pendlay Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/pendlay-row/icons/pendlay-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-row/icons/machine-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Pullover",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-pullover/icons/dumbbell-pullover-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Reverse Fly",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-reverse-fly/icons/dumbbell-reverse-fly-icon-32.png"
+    },
+    {
+      "exerciseName": "Chest Supported Dumbbell Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/chest-supported-dumbbell-row/icons/chest-supported-dumbbell-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Close Grip Lat Pulldown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/close-grip-lat-pulldown/icons/close-grip-lat-pulldown-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Reverse Fly",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-reverse-fly/icons/machine-reverse-fly-icon-32.png"
+    },
+    {
+      "exerciseName": "Reverse Grip Lat Pulldown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/reverse-grip-lat-pulldown/icons/reverse-grip-lat-pulldown-icon-32.png"
+    },
+    {
+      "exerciseName": "Neutral Grip Pull Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/neutral-grip-pull-ups/icons/neutral-grip-pull-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Straight Arm Pulldown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/straight-arm-pulldown/icons/straight-arm-pulldown-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Reverse Fly",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-reverse-fly/icons/cable-reverse-fly-icon-32.png"
+    },
+    {
+      "exerciseName": "Bent Over Dumbbell Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bent-over-dumbbell-row/icons/bent-over-dumbbell-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Back Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/back-extension/icons/back-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Yates Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/yates-row/icons/yates-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Back Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-back-extension/icons/machine-back-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Bench Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bench-pull/icons/bench-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Pullover",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-pullover/icons/barbell-pullover-icon-32.png"
+    },
+    {
+      "exerciseName": "One Arm Pull Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/one-arm-pull-ups/icons/one-arm-pull-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Inverted Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/inverted-row/icons/inverted-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Bench Pull",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-bench-pull/icons/dumbbell-bench-pull-icon-32.png"
+    },
+    {
+      "exerciseName": "Renegade Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/renegade-row/icons/renegade-row-icon-32.png"
+    },
+    {
+      "exerciseName": "One Arm Lat Pulldown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/one-arm-lat-pulldown/icons/one-arm-lat-pulldown-icon-32.png"
+    },
+    {
+      "exerciseName": "One Arm Seated Cable Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/one-arm-seated-cable-row/icons/one-arm-seated-cable-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Upright Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-upright-row/icons/cable-upright-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Shrug",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-shrug/icons/machine-shrug-icon-32.png"
+    },
+    {
+      "exerciseName": "Hex Bar Shrug",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hex-bar-shrug/icons/hex-bar-shrug-icon-32.png"
+    },
+    {
+      "exerciseName": "Smith Machine Shrug",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/smith-machine-shrug/icons/smith-machine-shrug-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Incline Y Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-incline-y-raise/icons/dumbbell-incline-y-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Shrug",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-shrug/icons/cable-shrug-icon-32.png"
+    },
+    {
+      "exerciseName": "Bent Arm Barbell Pullover",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bent-arm-barbell-pullover/icons/bent-arm-barbell-pullover-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Power Shrug",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-power-shrug/icons/barbell-power-shrug-icon-32.png"
+    },
+    {
+      "exerciseName": "Meadows Row",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/meadows-row/icons/meadows-row-icon-32.png"
+    },
+    {
+      "exerciseName": "Behind The Back Barbell Shrug",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/behind-the-back-barbell-shrug/icons/behind-the-back-barbell-shrug-icon-32.png"
+    },
+    {
+      "exerciseName": "Reverse Hyperextension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/reverse-hyperextension/icons/reverse-hyperextension-icon-32.png"
+    }
   ],
   "Biceps": [
-    "Dumbbell Curl",
-    "Barbell Curl",
-    "Hammer Curl",
-    "EZ Bar Curl",
-    "Preacher Curl",
-    "Cable Bicep Curl",
-    "Dumbbell Concentration Curl",
-    "Incline Dumbbell Curl",
-    "Machine Bicep Curl",
-    "One Arm Cable Bicep Curl",
-    "Strict Curl",
-    "One Arm Dumbbell Preacher Curl",
-    "Incline Hammer Curl",
-    "Spider Curl",
-    "Zottman Curl",
-    "Seated Dumbbell Curl",
-    "Cheat Curl",
-    "Cable Hammer Curl",
-    "One Arm Pulldown",
-    "Overhead Cable Curl",
-    "Incline Cable Curl",
-    "Lying Cable Curl"
+    {
+      "exerciseName": "Dumbbell Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-curl/icons/dumbbell-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Barbell Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/barbell-curl/icons/barbell-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Hammer Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hammer-curl/icons/hammer-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "EZ Bar Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/ez-bar-curl/icons/ez-bar-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Preacher Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/preacher-curl/icons/preacher-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Bicep Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-bicep-curl/icons/cable-bicep-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Concentration Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-concentration-curl/icons/dumbbell-concentration-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Incline Dumbbell Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/incline-dumbbell-curl/icons/incline-dumbbell-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Bicep Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-bicep-curl/icons/machine-bicep-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Strict Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/strict-curl/icons/strict-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "One Arm Cable Bicep Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/one-arm-cable-bicep-curl/icons/one-arm-cable-bicep-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "One Arm Dumbbell Preacher Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/one-arm-dumbbell-preacher-curl/icons/one-arm-dumbbell-preacher-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Incline Hammer Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/incline-hammer-curl/icons/incline-hammer-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Spider Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/spider-curl/icons/spider-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Zottman Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/zottman-curl/icons/zottman-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Seated Dumbbell Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/seated-dumbbell-curl/icons/seated-dumbbell-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Cheat Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cheat-curl/icons/cheat-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Hammer Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-hammer-curl/icons/cable-hammer-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "One Arm Pulldown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/one-arm-pulldown/icons/one-arm-pulldown-icon-32.png"
+    },
+    {
+      "exerciseName": "Overhead Cable Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/overhead-cable-curl/icons/overhead-cable-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Incline Cable Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/incline-cable-curl/icons/incline-cable-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Lying Cable Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/lying-cable-curl/icons/lying-cable-curl-icon-32.png"
+    }
   ],
   "Triceps": [
-    "Dips",
-    "Tricep Pushdown",
-    "Lying Tricep Extension",
-    "Tricep Rope Pushdown",
-    "Dumbbell Tricep Extension",
-    "Tricep Extension",
-    "Lying Dumbbell Tricep Extension",
-    "Seated Dip Machine",
-    "Dumbbell Tricep Kickback",
-    "Cable Overhead Tricep Extension",
-    "Machine Tricep Extension",
-    "Seated Dumbbell Tricep Extension",
-    "Reverse Grip Tricep Pushdown",
-    "JM Press",
-    "Tate Press",
-    "Ring Dips",
-    "Bench Dips"
+    {
+      "exerciseName": "Dips",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dips/icons/dips-icon-32.png"
+    },
+    {
+      "exerciseName": "Tricep Pushdown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/tricep-pushdown/icons/tricep-pushdown-icon-32.png"
+    },
+    {
+      "exerciseName": "Lying Tricep Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/lying-tricep-extension/icons/lying-tricep-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Tricep Rope Pushdown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/tricep-rope-pushdown/icons/tricep-rope-pushdown-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Tricep Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-tricep-extension/icons/dumbbell-tricep-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Tricep Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/tricep-extension/icons/tricep-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Lying Dumbbell Tricep Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/lying-dumbbell-tricep-extension/icons/lying-dumbbell-tricep-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Seated Dip Machine",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/seated-dip-machine/icons/seated-dip-machine-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Tricep Kickback",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-tricep-kickback/icons/dumbbell-tricep-kickback-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Overhead Tricep Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-overhead-tricep-extension/icons/cable-overhead-tricep-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Tricep Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-tricep-extension/icons/machine-tricep-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Seated Dumbbell Tricep Extension",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/seated-dumbbell-tricep-extension/icons/seated-dumbbell-tricep-extension-icon-32.png"
+    },
+    {
+      "exerciseName": "Reverse Grip Tricep Pushdown",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/reverse-grip-tricep-pushdown/icons/reverse-grip-tricep-pushdown-icon-32.png"
+    },
+    {
+      "exerciseName": "JM Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/jm-press/icons/jm-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Tate Press",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/tate-press/icons/tate-press-icon-32.png"
+    },
+    {
+      "exerciseName": "Ring Dips",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/ring-dips/icons/ring-dips-icon-32.png"
+    },
+    {
+      "exerciseName": "Bench Dips",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bench-dips/icons/bench-dips-icon-32.png"
+    }
   ],
   "Core": [
-    "Sit Ups",
-    "Cable Crunch",
-    "Machine Seated Crunch",
-    "Crunches",
-    "Dumbbell Side Bend",
-    "Cable Woodchopper",
-    "Hanging Leg Raise",
-    "Russian Twist",
-    "Lying Leg Raise",
-    "Decline Sit Up",
-    "Hanging Knee Raise",
-    "Ab Wheel Rollout",
-    "Toes To Bar",
-    "Decline Crunch",
-    "Jumping Jack",
-    "Bicycle Crunch",
-    "Reverse Crunches",
-    "Flutter Kicks",
-    "Mountain Climbers",
-    "High Pulley Crunch",
-    "Standing Cable Crunch",
-    "Superman",
-    "Side Crunch",
-    "Roman Chair Side Bend",
-    "Scissor Kicks"
+    {
+      "exerciseName": "Sit Ups",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/sit-ups/icons/sit-ups-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Crunch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-crunch/icons/cable-crunch-icon-32.png"
+    },
+    {
+      "exerciseName": "Machine Seated Crunch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/machine-seated-crunch/icons/machine-seated-crunch-icon-32.png"
+    },
+    {
+      "exerciseName": "Crunches",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/crunches/icons/crunches-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Side Bend",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-side-bend/icons/dumbbell-side-bend-icon-32.png"
+    },
+    {
+      "exerciseName": "Cable Woodchopper",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/cable-woodchopper/icons/cable-woodchopper-icon-32.png"
+    },
+    {
+      "exerciseName": "Hanging Leg Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hanging-leg-raise/icons/hanging-leg-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Russian Twist",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/russian-twist/icons/russian-twist-icon-32.png"
+    },
+    {
+      "exerciseName": "Lying Leg Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/lying-leg-raise/icons/lying-leg-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Decline Sit Up",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/decline-sit-up/icons/decline-sit-up-icon-32.png"
+    },
+    {
+      "exerciseName": "Hanging Knee Raise",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/hanging-knee-raise/icons/hanging-knee-raise-icon-32.png"
+    },
+    {
+      "exerciseName": "Ab Wheel Rollout",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/ab-wheel-rollout/icons/ab-wheel-rollout-icon-32.png"
+    },
+    {
+      "exerciseName": "Toes To Bar",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/toes-to-bar/icons/toes-to-bar-icon-32.png"
+    },
+    {
+      "exerciseName": "Decline Crunch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/decline-crunch/icons/decline-crunch-icon-32.png"
+    },
+    {
+      "exerciseName": "Jumping Jack",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/jumping-jack/icons/jumping-jack-icon-32.png"
+    },
+    {
+      "exerciseName": "Bicycle Crunch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/bicycle-crunch/icons/bicycle-crunch-icon-32.png"
+    },
+    {
+      "exerciseName": "Reverse Crunches",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/reverse-crunches/icons/reverse-crunches-icon-32.png"
+    },
+    {
+      "exerciseName": "Flutter Kicks",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/flutter-kicks/icons/flutter-kicks-icon-32.png"
+    },
+    {
+      "exerciseName": "Mountain Climbers",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/mountain-climbers/icons/mountain-climbers-icon-32.png"
+    },
+    {
+      "exerciseName": "High Pulley Crunch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/high-pulley-crunch/icons/high-pulley-crunch-icon-32.png"
+    },
+    {
+      "exerciseName": "Standing Cable Crunch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/standing-cable-crunch/icons/standing-cable-crunch-icon-32.png"
+    },
+    {
+      "exerciseName": "Superman",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/superman/icons/superman-icon-32.png"
+    },
+    {
+      "exerciseName": "Side Crunch",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/side-crunch/icons/side-crunch-icon-32.png"
+    },
+    {
+      "exerciseName": "Roman Chair Side Bend",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/roman-chair-side-bend/icons/roman-chair-side-bend-icon-32.png"
+    },
+    {
+      "exerciseName": "Scissor Kicks",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/scissor-kicks/icons/scissor-kicks-icon-32.png"
+    }
   ],
   "Forearms": [
-    "Wrist Curl",
-    "Reverse Barbell Curl",
-    "Reverse Wrist Curl",
-    "Dumbbell Wrist Curl",
-    "Dumbbell Reverse Wrist Curl",
-    "Dumbbell Reverse Curl"
-  ],
-  
+    {
+      "exerciseName": "Wrist Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/wrist-curl/icons/wrist-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Reverse Barbell Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/reverse-barbell-curl/icons/reverse-barbell-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Reverse Wrist Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/reverse-wrist-curl/icons/reverse-wrist-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Wrist Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-wrist-curl/icons/dumbbell-wrist-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Reverse Wrist Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-reverse-wrist-curl/icons/dumbbell-reverse-wrist-curl-icon-32.png"
+    },
+    {
+      "exerciseName": "Dumbbell Reverse Curl",
+      "imgURL": "https://static.strengthlevel.com/images/exercises/dumbbell-reverse-curl/icons/dumbbell-reverse-curl-icon-32.png"
+    }
+  ]
 }
-{
-    oneRepMax: 683.3,
-    strongerThanPercent: 100,
-    xBW: 5,
-    strengthBounds: { BW: 100, Beg: 7, Nov: 17, Int: 32, Adv: 53, Elite: 77 }
-  }
