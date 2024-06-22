@@ -15,6 +15,7 @@ const port = process.env.PORT || 8080;
 const host = process.env.DB_HOST
 
 const app = express();
+
 app.use(logger);
 app.use(cors());
 app.use(express.json());

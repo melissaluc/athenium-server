@@ -2,13 +2,12 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 
-const measurementsController = require('../controller/measurementsController');
+const strengthsController = require('../controller/strengthController');
 
 
 router.route('/:userId')
-    .get(measurementsController.getMeasurementsByUserId)
-    .post(measurementsController.createMeasurement)
-    .patch(measurementsController.updateMeasurement)
+    .get(strengthsController.getStrengthByUserId)
+    .post(strengthsController.createStrength)
 
 
 
