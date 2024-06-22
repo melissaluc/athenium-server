@@ -57,8 +57,8 @@ app.use('/api/v1/nutrition', mealsRouter);
 const measurementsRouter = require('./routes/measurements.js');
 app.use('/api/v1/measurements', measurementsRouter);
 
-// const strengthRouter = require('./routes/strength.js');
-// app.use('/api/v1/strength', strengthRouter);
+const strengthRouter = require('./routes/strength.js');
+app.use('/api/v1/strength', strengthRouter);
 
 
 // Define route handler for the root URL
