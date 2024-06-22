@@ -4,6 +4,7 @@ function logger(req, res, next) {
     next()
 }
 
+// const getExercises = require('./controller/strengthCalculator/getExercises.js')
 
 const express = require('express');
 const cors = require('cors');
@@ -14,12 +15,14 @@ const port = process.env.PORT || 8080;
 const host = process.env.DB_HOST
 
 const app = express();
+
 app.use(logger);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
 app.use(express.static('public'));
 
+// getExercises
 
 //  Routes
 // Logs: Workouts, nutrition/meal planner, goals, measurements

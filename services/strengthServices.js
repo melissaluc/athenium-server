@@ -1,37 +1,20 @@
-const workoutModel = require('../models/workoutModel.js');
+const strengthModel = require('../models/strengthModel.js');
 
 
-const getWorkoutsByUserId = async (userId) => {
-    return workoutModel.getWorkouts(userId);
-};
-
-const getWorkout = async (userId,workoutId) => {
-    return workoutModel.getWorkouts(userId, workoutId);
+const getStrengthByUserId = async (userId) => {
+    return strengthModel.getStrengthRecords(userId);
 };
 
 
 
-const createWorkout = async (userId, workout) => {
-    return workoutModel.createWorkout(userId, workout);
-};
-
-const updateWorkout = async (userId, workoutId, updateData) => {
-
-    return workoutModel.updateWorkout(userId, workoutId, updateData);
-
-};
-
-const deleteWorkout = async (userId, workoutId) => {
-    return workoutModel.deleteWorkout(userId, workoutId);
+const createStrength = async (userId, data) => {
+    return strengthModel.createStrengthRecord(userId, data);
 };
 
 
 
 module.exports = {
-    getWorkoutsByUserId,
-    createWorkout,
-    updateWorkout,
-    deleteWorkout,
-    getWorkout,
+    getStrengthByUserId,
+    createStrength,
     
 };

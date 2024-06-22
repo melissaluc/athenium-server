@@ -115,29 +115,48 @@ const updateWorkout = async (userId, workoutId, updateData) => {
 
     const { addedExercises,  deletedExercises, updatedExercises, updatedWorkoutDetails} = updateData
     
-    console.log(updateData)
+
 
     try {
         await knex.transaction(async (trx) => {
             // Handle added exercises
             if (addedExercises && addedExercises.length > 0) {
                 for (const exercise of addedExercises) {
-                    const uid = exercise.id ? exercise.id : uuidv4();
-                    await trx("workout_exercises").insert({
-                        uid: uid,
-                        workout_id: workoutId,
-                        exercise_name: exercise.exercise_name,
-                        category: exercise.category,
-                        group: exercise.group,
-                        weight: exercise.weight || 0,
-                        reps: exercise.reps || 0,
-                        sets: exercise.sets || 0,
-                        duration: exercise.duration || null,
-                        distance: exercise.distance || null,
-                        img_url: exercise.img_url || null,
-                        created_on: knex.fn.now(),
-                        updated_on: knex.fn.now()
-                    });
+                    // Check if any of the numeric fields are non-empty strings
+                    if (exercise.weight !== '' || exercise.reps !== '' || exercise.sets !== '' || exercise.duration !== '' || exercise.distance !== '') {
+                        // Convert string representations to numbers, defaulting to 0 if empty
+                        const weightNumber = parseFloat(exercise.weight) || 0;
+                        const repsNumber = parseInt(exercise.reps) || 0;
+                        const setsNumber = parseInt(exercise.sets) || 0;
+                        const distanceNumber = parseFloat(exercise.distance) || 0; 
+                        const durationNumber = parseFloat(exercise.duration) || 0; 
+                
+                        // Generate a UUID if exercise.uid is not provided
+                        const uid = exercise.uid ? exercise.uid : uuidv4();
+                
+                        try {
+                            // Insert into the database using transaction (trx)
+                            await trx("workout_exercises").insert({
+                                uid: uid,
+                                workout_id: workoutId,
+                                exercise_name: exercise.exercise_name,
+                                category: exercise.category,
+                                group: exercise.group,
+                                weight: weightNumber,
+                                reps: repsNumber,
+                                sets: setsNumber,
+                                duration: durationNumber,
+                                distance: distanceNumber,
+                                img_url: exercise.img_url || null,
+                                created_on: knex.fn.now(),
+                                updated_on: knex.fn.now()
+                            });
+                        } catch (error) {
+                            console.error('Error inserting exercise:', error);
+                            // Handle error as needed (e.g., rollback transaction)
+                            throw error; // Rethrow the error or handle appropriately
+                        }
+                    }
                 }
             }
 
@@ -151,29 +170,34 @@ const updateWorkout = async (userId, workoutId, updateData) => {
             // Handle updated exercises
             if (updatedExercises && updatedExercises.length > 0) {
                 for (const exercise of updatedExercises) {
+                    const weightNumber = exercise.weight !== '' ? parseFloat(exercise.weight) : null;
+                    const repsNumber = exercise.reps !== '' ? parseInt(exercise.reps) : null;
+                    const setsNumber = exercise.sets !== '' ? parseInt(exercise.sets) : null;
+                    const distanceNumber = exercise.distance !== '' ? parseFloat(exercise.distance) : null;
+                    const durationNumber = exercise.duration !== '' ? parseFloat(exercise.duration) : null;
     
                     const updateFields = {
                         updated_on: knex.fn.now()
                     };
 
                     if ('reps' in exercise) {
-                        updateFields.reps = exercise.reps;
+                        updateFields.reps = repsNumber;
                     }
 
                     if ('sets' in exercise) {
-                        updateFields.sets = exercise.sets;
+                        updateFields.sets = setsNumber;
                     }
 
                     if ('weight' in exercise) {
-                        updateFields.weight = exercise.weight;
+                        updateFields.weight = weightNumber ;
                     }
 
                     if ('duration' in exercise) {
-                        updateFields.duration = exercise.duration;
+                        updateFields.duration = durationNumber;
                     }
 
                     if ('distance' in exercise) {
-                        updateFields.distance = exercise.distance;
+                        updateFields.distance = distanceNumber;
                     }
 
                     // Update only if there are fields to update
