@@ -21,6 +21,7 @@ const getStrengthRecords = async (userId) => {
                 sl.relative_strength_demographic,
                 ld.work_volume,
                 sl.lift,
+                sl.reps,
                 sl.one_rep_max,
                 sl.strength_level,
                 sl.next_strength_level,
