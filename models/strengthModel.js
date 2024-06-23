@@ -14,16 +14,18 @@ const getStrengthRecords = async (userId) => {
             SELECT
                 sl.calculated_on AS date_calculated,
                 sl.exercise_name,
+                ex.img_url,
                 sl.category,
                 sl.group,
                 sl.body_weight,
-                sl.lift,
                 sl.relative_strength_demographic,
+                ld.work_volume,
+                sl.lift,
+                sl.reps,
                 sl.one_rep_max,
                 sl.strength_level,
                 sl.next_strength_level,
-                sl.strength_bounds,
-                ex.img_url
+                sl.strength_bounds
             FROM
                 strength_log AS sl
             INNER JOIN (
@@ -31,7 +33,7 @@ const getStrengthRecords = async (userId) => {
                     ld.exercise_name,
                     ld.group,
                     MAX(ld.calculated_on) AS last_calculated,
-                    MAX(ld.sets * ld.reps * ld.lift) AS max_work_volume
+                    MAX(ld.sets * ld.reps * ld.lift) AS work_volume
                 FROM
                     strength_log AS ld
                 WHERE
@@ -57,7 +59,38 @@ const getStrengthRecords = async (userId) => {
 
         // Extract the rows from result obj
         const latestRecords = result.rows;
-        return latestRecords;
+
+        const sendResult = {}
+        const proficiencyLevels = {
+            "beg": 1,
+            "nov": 2,
+            "int": 3,
+            "adv": 4,
+            "elite": 5
+        };
+        latestRecords.map(exercise => {
+            const strength_bounds = exercise.strength_bounds
+            if(strength_bounds.next_strength_level){
+                const nextStrengthLevel = strength_bounds.next_strength_level
+                const strengthLevel = strength_bounds.strength_level
+                const proficiencyScore = proficiencyLevels[strengthLevel]
+                const score = proficiencyScore*((exercise.one_rep_max - strengthLevel)/(nextStrengthLevel-strengthLevel))
+                exercise.score = score
+            } else {
+                exercise.score = 5
+            }
+
+            if(!sendResult[exercise.group]){
+                sendResult[exercise.group] = []
+                sendResult[exercise.group].push(exercise)
+            } else {
+                sendResult[exercise.group].push(exercise)
+            }
+        })
+
+
+
+        return sendResult;
 
     } catch (error) {
         console.error('Error fetching strength records:', error);
