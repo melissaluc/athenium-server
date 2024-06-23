@@ -77,7 +77,7 @@ const fs = require("fs");
     
         const textRegex = /<span class="mr-1">([^<]+)<\/span>\s*<span class="tag is-small">([^<]+)<\/span>/;
         const textMatch = exerciseElementHTML.match(textRegex);
-        const img_regex = /<img loading="lazy" src="(https:\/\/[^"]+)"/
+        const img_regex = /<img loading="lazy" src="(https:\/\/[^"]+)".*srcset="([^"]+bench-press-icon-64.png[^"]+)"/g;
         const imgMatch = exerciseElementHTML.match(img_regex);
         console.log(imgMatch)
         
