@@ -115,8 +115,6 @@ const updateWorkout = async (userId, workoutId, updateData) => {
 
     const { addedExercises,  deletedExercises, updatedExercises, updatedWorkoutDetails} = updateData
     
-
-
     try {
         await knex.transaction(async (trx) => {
             // Handle added exercises
@@ -132,12 +130,12 @@ const updateWorkout = async (userId, workoutId, updateData) => {
                         const durationNumber = parseFloat(exercise.duration) || 0; 
                 
                         // Generate a UUID if exercise.uid is not provided
-                        const uid = exercise.uid ? exercise.uid : uuidv4();
+                        // const uid = exercise.uid ? exercise.uid : uuidv4();
                 
                         try {
                             // Insert into the database using transaction (trx)
                             await trx("workout_exercises").insert({
-                                uid: uid,
+                                uid: exercise.id,
                                 workout_id: workoutId,
                                 exercise_name: exercise.exercise_name,
                                 category: exercise.category,

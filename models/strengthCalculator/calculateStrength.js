@@ -14,8 +14,8 @@ const retrieveStrengthLevel = async (
 
 
   // Launch a new browser instance
-  const browser = await puppeteer.launch();
-  // const browser = await puppeteer.launch({ headless: false });
+  // const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ headless: false });
   // Open a new page
   const page = await browser.newPage();
 
@@ -69,20 +69,44 @@ const retrieveStrengthLevel = async (
       throw new Error(`Selector ${bodyMassInput} not found`);
     }
 
-    // Wait for the lift mass input field to be visible and then type in the lift mass
-    const liftMassInput = await page.waitForSelector(
-      'div.calculator__form input[name="liftmass"]'
-    );
+// Check if liftMass is available, if not, proceed with variationInput and extraMassInput
+let liftMassInput;
+try {
+    liftMassInput = await page.waitForSelector('div.calculator__form input[name="liftmass"]', { timeout: 5000 });
+} catch (error) {
+    console.log('liftMass input not found, proceeding with variationInput and extraMassInput.');
+}
+
+if (liftMassInput) {
     await page.type('div.calculator__form input[name="liftmass"]', liftMass.toString());
-    if (!liftMassInput) {
-      throw new Error(`Selector ${liftMassInput} not found`);
+} else {
+    // Proceed with variationInput
+    const variationInput = await page.waitForSelector('div.calculator__form select[name="variation"]');
+    await page.select('div.calculator__form select[name="variation"]', 'weighted');
+
+    // Proceed with extraMassInput
+    const extraMassInput = await page.waitForSelector('div.calculator__form input[name="extramass"]');
+    await page.type('div.calculator__form input[name="extramass"]', liftMass.toString());
+    // Optional: Verify if variationInput and extraMassInput are present if needed
+    if (!variationInput) {
+        throw new Error(`Selector for variationInput not found`);
     }
+    
+    if (!extraMassInput) {
+        throw new Error(`Selector for extraMassInput not found`);
+    }
+}
+
 
     // Wait for the repetitions input field to be visible and then type in the number of repetitions
-    const repsInput = await page.waitForSelector(
-      'div.calculator__form input[name="repetitions"]'
-    );
-    await page.type('div.calculator__form input[name="repetitions"]', parseInt(Math.floor(reps)).toString());
+    // Assuming 'reps' is a variable holding the value '15'
+  const repsInput = await page.$('div.calculator__form input[name="repetitions"]');
+  await repsInput.click({ clickCount: 3 }); // Select all text in the input field
+  await repsInput.type('', { delay: 50 }); // Clear the input field by typing an empty string with a delay
+
+  // Now input the new value
+  await repsInput.type(parseInt(Math.floor(reps)).toString(), { delay: 50 });
+
     if (!repsInput) {
       throw new Error(`Selector ${repsInput} not found`);
     }
@@ -95,22 +119,29 @@ const retrieveStrengthLevel = async (
       ).value = value;
     }, exerciseValue);
 
+    
     // Submit form to generate calculated result
-    const submitForm = await page.waitForSelector('button[type="submit"]');
-    if (!submitForm) {
-      throw new Error(`Selector ${submitForm} not found`);
-    }
-    const submitButton = await page.$('button[type="submit"]');
-    if (!submitButton) {
-      throw new Error(`Selector ${submitButton} not found`);
-    }
-    await submitButton.click();
+    const submitButton = await page.waitForSelector('button[type="submit"]', { visible: true });
 
-    // Wait for the liftresult section to appear after the page reloads
-    const liftResult = await page.waitForSelector(".section-box.liftresult", {
-      timeout: 10000,
+    // Adjust the z-index of the submit button
+    await page.evaluate(() => {
+      const button = document.querySelector('button[type="submit"]');
+      if (button) {
+        button.style.zIndex = '1000'; // Set your desired z-index value here
+      } else {
+        console.error('Submit button not found on the page.');
+      }
     });
+
+    await submitButton.click({ clickCount: 1 })
+    // await submitButton.click({ clickCount: 3 })
+    // await submitButton.click({ clickCount: 4 })
+    
+    
+    // Wait for the liftresult section to appear after the page reloads
+    const liftResult = await page.waitForSelector(".section-box.liftresult");
     if (!liftResult) {
+      await submitButton.click({ clickCount: 2 })
       throw new Error(`Selector ${liftResult} not found`);
     }
     try {
@@ -186,6 +217,17 @@ const retrieveStrengthLevel = async (
         const body_weight = strengthBounds.bw
         delete strengthBounds.bw 
 
+        const keysMap = {'beg':'beginner','nov':'novice','int':'intermediate','adv':'advanced'}
+
+
+        const renamedObj = {};
+        Object.keys(strengthBounds).forEach(key => {
+            if (keysMap[key]) {
+                renamedObj[keysMap[key]] = strengthBounds[key];
+            } else {
+                renamedObj[key] = strengthBounds[key];
+            }
+        });
 
         return {
             strengthLevel,
@@ -194,21 +236,21 @@ const retrieveStrengthLevel = async (
             one_rep_max: parseFloat(oneRepMax),
             relative_strength_demographic: parseFloat(compare),
             relative_strength: parseFloat(lift),
-            strengthBounds
+            strengthBounds: renamedObj
         };
       });
       console.log(result);
       return result;
     } catch (err) {
       console.log(err);
-      await browser.close();
+      // await browser.close();
     }
   } catch (error) {
     console.error("Error during strength calculation:", error);
     throw error;
   } finally {
     // Close the browser
-    await browser.close();
+    // await browser.close();
   }
 };
 

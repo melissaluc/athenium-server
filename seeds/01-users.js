@@ -8,8 +8,8 @@ exports.seed = async function(knex) {
   await knex('users').insert([
     {
       user_id:"39b17fed-61d6-492a-b528-4507290d5423",
-      username:"user",
-      email_address:"atheniumTesterUser@gmail.com",
+      username:"admin",
+      email_address:"atheniumfitness@gmail.com",
       password:'mypassword',
       dob:new Date('1995-05-01'),
       first_name:'Mary',

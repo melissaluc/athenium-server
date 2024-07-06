@@ -68,27 +68,41 @@ const getStrengthRecords = async (userId) => {
             "adv": 4,
             "elite": 5
         };
+        
+        const strengthLevelShort = {
+            "beginner": "beg",
+            "novice": "nov",
+            "intermediate": "int",
+            "advanced": "adv",
+            "elite": "elite"
+        }
         latestRecords.map(exercise => {
-            const strength_bounds = exercise.strength_bounds
-            if(strength_bounds.next_strength_level){
-                const nextStrengthLevel = strength_bounds.next_strength_level
-                const strengthLevel = strength_bounds.strength_level
-                const proficiencyScore = proficiencyLevels[strengthLevel]
-                const score = proficiencyScore*((exercise.one_rep_max - strengthLevel)/(nextStrengthLevel-strengthLevel))
-                exercise.score = score
-            } else {
-                exercise.score = 5
-            }
-
-            if(!sendResult[exercise.group]){
-                sendResult[exercise.group] = []
-                sendResult[exercise.group].push(exercise)
-            } else {
-                sendResult[exercise.group].push(exercise)
+            console.log('nov',exercise)
+            if(exercise.strength_bounds) {
+                const strength_bounds = exercise.strength_bounds
+                // Convert to short form level
+                const current_strength_level = strengthLevelShort[exercise.strength_level]
+                const next_strength_level = strengthLevelShort[exercise.next_strength_level]
+                if(strength_bounds[next_strength_level]){
+                    const nextStrengthLevel = strength_bounds.next_strength_level
+                    const strengthLevel = strength_bounds[current_strength_level]
+                    const proficiencyScore = proficiencyLevels[strengthLevel]
+                    const score = proficiencyScore*((exercise.one_rep_max - strengthLevel)/(nextStrengthLevel-strengthLevel))
+                    exercise.score = score
+                } else {
+                    exercise.score = 5
+                }
+    
+                if(!sendResult[exercise.group]){
+                    sendResult[exercise.group] = []
+                    sendResult[exercise.group].push(exercise)
+                } else {
+                    sendResult[exercise.group].push(exercise)
+                }
             }
         })
 
-
+        console.log(sendResult)
 
         return sendResult;
 
