@@ -39,8 +39,8 @@ app.use(express.static('public'));
 // const usersRouter = require('./routes/users.js');
 // app.use('/api/v1/users', usersRouter);
 
-// const dashboardRouter = require('./routes/dashboard.js');
-// app.use('/api/v1/dashboard', dashboardRouter);
+const dashboardRouter = require('./routes/dashboard.js');
+app.use('/api/v1/dashboard', dashboardRouter);
 
 const exercisesRouter = require('./routes/trends.js');
 app.use('/api/v1/trends', exercisesRouter);

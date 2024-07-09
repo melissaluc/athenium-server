@@ -60,6 +60,8 @@ const getGoalsByUserId = async (userId) => {
     }
 }
 
+
+
 const addGoal= async (userId, newGoal) => {
     console.log('newGoal modal',newGoal)
     const {start_date,...goalData} = newGoal
