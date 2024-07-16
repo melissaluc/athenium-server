@@ -1,12 +1,9 @@
-name: Server CI/CD Pipeline
+name: Deploy to AWS Elastic Beanstalk
 
 on:
   push:
     branches:
-      - develop  # Trigger on push to main branch
-  pull_request:
-    branches:
-      - develop  # Trigger on pull request to main branch
+      - main  # Adjust branch name as needed
 
 jobs:
   deploy:
@@ -16,18 +13,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install AWS CLI for Elastic Beanstalk deployment
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Adjust Node.js version as needed
 
-      # Configure AWS credentials
-      - name: Configure AWS credentials
-        run: aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY}} && aws configure set aws_secret_access_key ${{ secrets.SECRET_ACCESS_KEY}} && aws configure set region us-east-2
+      - name: Install dependencies
+        run: npm install
 
-      # Deploy to AWS Elastic Beanstalk
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2  # Adjust region as needed
+
       - name: Deploy to AWS Elastic Beanstalk
         run: |
-          eb init -p nodejs -r us-east-2 Athenium
-          eb deploy --staged
+          aws elasticbeanstalk create-application-version --application-name Athenium --version-label $GITHUB_SHA --source-bundle S3Bucket="elasticbeanstalk-us-east-2-123456789012",S3Key="your-app-name/$GITHUB_SHA.zip"
+          aws elasticbeanstalk update-environment --application-name Athenium --environment-name Athenium-env --version-label $GITHUB_SHA
+
+      - name: Deployment Complete
+        run: echo App deployed to AWS Elastic Beanstalk
