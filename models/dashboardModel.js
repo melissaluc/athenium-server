@@ -14,7 +14,7 @@ const getBodyCompositionByUserId = async (userId) => {
                 "body_fat",
                 "lean_muscle_mass",
                 "bmi",
-                knex.raw("EXTRACT(epoch FROM created_on)::int AS timestamp"),
+                knex.raw("EXTRACT(epoch FROM created_on)::int AS created_on"),
                 // knex.raw("EXTRACT(epoch FROM updated_on)::int AS updated_on_unix")
             )
             .where({ user_id: userId })
@@ -41,7 +41,9 @@ const getBodyCompositionByUserId = async (userId) => {
                         current_bf:{label:"BF%", value:bodyComposition[0].body_fat, uom:"%"},
                         current_bmi:{label:"BMI", value:bodyComposition[0].bmi, uom:null},
                         current_muscle_mass:{label:"Muscle Mass", value:bodyComposition[0].lean_muscle_mass, uom:"lbs"}
-                    }
+                    },
+                    updated_on:bodyComposition[0].created_on,
+                    last_updated_on:bodyComposition[1].created_on
                 }
             }
 

@@ -36,8 +36,8 @@ app.use(express.static('public'));
 
 // userid: 39b17fed-61d6-492a-b528-4507290d5423
 
-// const usersRouter = require('./routes/users.js');
-// app.use('/api/v1/users', usersRouter);
+const usersRouter = require('./routes/users.js');
+app.use('/api/v1/user', usersRouter);
 
 const dashboardRouter = require('./routes/dashboard.js');
 app.use('/api/v1/dashboard', dashboardRouter);
