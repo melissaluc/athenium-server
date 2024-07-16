@@ -1,0 +1,33 @@
+name: Server CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull request to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Install AWS CLI for Elastic Beanstalk deployment
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+
+      # Configure AWS credentials
+      - name: Configure AWS credentials
+        run: aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY}} && aws configure set aws_secret_access_key ${{ secrets.SECRET_ACCESS_KEY}} && aws configure set region us-east-2
+
+      # Deploy to AWS Elastic Beanstalk
+      - name: Deploy to AWS Elastic Beanstalk
+        run: |
+          eb init -p nodejs -r us-east-2 Athenium
+          eb deploy --staged
