@@ -20,7 +20,15 @@ jobs:
 
       - name: Update npm to version 10.8.2
         run: npm install -g npm@10.8.2
+        
+      - name: Clear npm cache
+        run: npm cache clean --force
 
+      - name: Install dependencies
+        run: npm install --verbose  # Adjust npm install command as needed
+
+      - name: Build application
+        run: npm run build  # Adjust build command as needed
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
