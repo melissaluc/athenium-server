@@ -1,7 +1,7 @@
 // db.js
 
-const knex = require('knex');
-const knexConfig = require('./knexfile');
+const config = require("./knexfile.js");
+
 
 // Determine the environment
 // const environment = 'development';
@@ -10,6 +10,6 @@ const environment = 'production';
 const config = knexConfig[environment];
 
 // Initialize Knex connection
-const db = knex(config);
+const knex = require('knex')(config);
 
-module.exports = db;
+module.exports = knex;

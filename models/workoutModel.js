@@ -1,5 +1,5 @@
 // models/measurementModel.js
-const db = require('../db');
+const knex = require('../db');
 
 const { v4: uuidv4 } = require('uuid');
 
