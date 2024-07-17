@@ -35,7 +35,7 @@ jobs:
 
       - name: Build and push Docker image
         env:
-          IMAGE_TAG: "${{ secrets.DOCKER_USERNAME }}/athenium-server:${{ github.sha }}"
+          IMAGE_TAG: "${{ secrets.DOCKER_USERNAME }}/athenium-node-app:latest-${{ github.sha }}"
         run: |
           docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_TAG --push --progress plain
 
