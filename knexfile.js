@@ -33,17 +33,14 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?sslmode=require`,
-    ssl:{
-      rejectUnauthorized: false,
+    connection: {
+      database: process.env.PRODUCTION_DB_NAME,
+      user: process.env.PRODUCTION_DB_USER,
+      password: process.env.PRODUCTION_DB_PASSWORD,
+      host: process.env.PRODUCTION_DB_HOST,
+      port: process.env.PRODUCTION_DB_PORT,
+      charset: "utf8"
     },
-    // connection: {
-    //   database: process.env.PRODUCTION_DB_NAME,
-    //   user: process.env.PRODUCTION_DB_USER,
-    //   password: process.env.PRODUCTION_DB_PASSWORD,
-    //   host: process.env.PRODUCTION_DB_HOST,
-    //   port: process.env.PRODUCTION_DB_PORT
-    // },
     pool: {
       min: 2,
       max: 10
