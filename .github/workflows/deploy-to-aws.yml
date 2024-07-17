@@ -47,6 +47,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
+      - name: Upload application zip to S3
+        run: aws s3 cp path/to/your/application.zip s3://elasticbeanstalk-us-east-2-767398068141/athenium/$GITHUB_SHA.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+
       - name: Deploy to AWS Elastic Beanstalk
         run: |
           aws elasticbeanstalk create-application-version \
