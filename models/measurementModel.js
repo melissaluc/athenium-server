@@ -1,7 +1,4 @@
-// models/measurementModel.js
-const config = require("../knexfile.js");
-const { error } = require("console");
-const knex = require("knex")(config.development);
+const db = require('../db');
 
 const { v4: uuidv4 } = require('uuid');
 
