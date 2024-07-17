@@ -16,17 +16,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Adjust Node.js version as needed
+          node-version: '20'  # Use Node.js version 20.x or another compatible version
 
       - name: Update npm to version 10.8.2
         run: npm install -g npm@10.8.2
-        
+
       - name: Clear npm cache
         run: npm cache clean --force
 
       - name: Install dependencies
-        run: npm install --verbose  # Adjust npm install command as needed
-
+        run: npm install --verbose
+        
       - name: Build application
         run: npm run build  # Adjust build command as needed
       - name: Set up Docker Buildx
