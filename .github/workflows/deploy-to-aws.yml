@@ -13,6 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Install dependencies
+        run: npm install --verbose
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -24,10 +35,18 @@ jobs:
 
       - name: Build and push Docker image
         env:
-          IMAGE_TAG: your-docker-username/athenium-server:$GITHUB_SHA
+          IMAGE_TAG: "${{ secrets.DOCKER_USERNAME }}/athenium-node-app:latest"
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_TAG .
-          docker push $IMAGE_TAG
+          docker buildx build --platform linux/amd64 -t $IMAGE_TAG . --push --progress plain
+
+      - name: Create application zip
+        run: zip -r node-app.zip .  # Creates a zip file containing all files in the current directory
+
+      - name: Upload application zip to S3
+        run: aws s3 cp node-app.zip s3://elasticbeanstalk-us-east-2-767398068141/athenium/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -41,9 +60,10 @@ jobs:
           aws elasticbeanstalk create-application-version \
             --application-name Athenium \
             --version-label $GITHUB_SHA \
-            --source-bundle S3Bucket="elasticbeanstalk-us-east-2-767398068141",S3Key="Athenium/$GITHUB_SHA.zip" \
+            --source-bundle S3Bucket=elasticbeanstalk-us-east-2-767398068141,S3Key=athenium/node-app.zip \
             --auto-create-application \
             --process
 
       - name: Deployment Complete
-        run: echo App deployed to AWS Elastic Beanstalk
+        run: |
+          echo "App deployed to AWS Elastic Beanstalk"
