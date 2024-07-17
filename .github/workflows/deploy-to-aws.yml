@@ -24,11 +24,10 @@ jobs:
 
       - name: Build and push Docker image
         env:
-          IMAGE_TAG: ${{ secrets.DOCKER_USERNAME }}/athenium-server:$GITHUB_SHA
+          IMAGE_TAG: "${{ secrets.DOCKER_USERNAME }}/athenium-server:${GITHUB_SHA}"
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_TAG .
-          docker push $IMAGE_TAG
-
+          docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_TAG --push .
+      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
