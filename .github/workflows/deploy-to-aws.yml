@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         run: npm install --verbose
 
-      - name: Build application
-        run: npm run build  # Adjust build command as needed
-
       - name: Create application zip
         run: zip -r app.zip .  # Creates a zip file containing all files in the current directory
 
