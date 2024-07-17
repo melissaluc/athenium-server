@@ -24,11 +24,6 @@ jobs:
       - name: Install dependencies
         run: npm install --verbose
 
-      - name: Start server
-        run: npm start
-        
-      - name: Build application
-        run: npm run build  # Adjust build command as needed
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -44,7 +39,6 @@ jobs:
         run: |
           docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_TAG --push .
 
-      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
