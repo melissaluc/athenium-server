@@ -1,44 +1,39 @@
-name: Deploy to AWS Elastic Beanstalk
+name: Deploy to AWS Elastic Beanstalk with Docker
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          node-version: '14'
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build application
-        run: npm run build 
-
-      - name: Archive application
-        run: zip -r $GITHUB_SHA.zip .  
-
-      - name: Upload to S3
-        run: |
-          aws s3 cp $GITHUB_SHA.zip s3://elasticbeanstalk-us-east-2-767398068141/Athenium/
+      - name: Build and push Docker image
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY}}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY}}
+          IMAGE_TAG: your-docker-username/athenium-server:$GITHUB_SHA
+        run: |
+          docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_TAG .
+          docker push $IMAGE_TAG
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY}}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
       - name: Deploy to AWS Elastic Beanstalk
@@ -46,7 +41,9 @@ jobs:
           aws elasticbeanstalk create-application-version \
             --application-name Athenium \
             --version-label $GITHUB_SHA \
-            --source-bundle S3Bucket="elasticbeanstalk-us-east-2-767398068141",S3Key="Athenium/$GITHUB_SHA.zip"
+            --source-bundle S3Bucket="elasticbeanstalk-us-east-2-767398068141",S3Key="Athenium/$GITHUB_SHA.zip" \
+            --auto-create-application \
+            --process
 
       - name: Deployment Complete
         run: echo App deployed to AWS Elastic Beanstalk
