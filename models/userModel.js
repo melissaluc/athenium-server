@@ -10,7 +10,7 @@ const getUser = async (userId) => {
                 knex.raw("DATE_PART('year', AGE(dob))::int as age"),
                 "first_name",
                 "last_name",
-                "height"
+                "height_cm"
             )
             .where({ 'user_id': userId })
             .first()
