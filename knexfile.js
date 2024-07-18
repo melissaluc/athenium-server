@@ -39,7 +39,8 @@ module.exports = {
       password: process.env.PRODUCTION_DB_PASSWORD,
       host: process.env.PRODUCTION_DB_HOST,
       port: process.env.PRODUCTION_DB_PORT,
-      charset: "utf8"
+      charset: "utf8",
+      ssl: { rejectUnauthorized: false }
     },
     pool: {
       min: 2,

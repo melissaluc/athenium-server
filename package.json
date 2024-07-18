@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
+    "render": "node index.js && knex migrate:latest && knex seed:run",
     "startdb": "call init_database.bat",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
