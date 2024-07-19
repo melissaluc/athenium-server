@@ -6,7 +6,7 @@ if [[ ! -d /opt/render/project/puppeteer ]]; then
     echo "Creating PUPPETEER_CACHE_DIR directory"
     mkdir -p /opt/render/project/puppeteer
 fi
-
+npx puppeteer browsers install chrome
 npm install
 # npm run build # Uncomment if required
 
