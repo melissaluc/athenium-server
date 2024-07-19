@@ -23,16 +23,20 @@
 # CMD ["npm", "start"]
 
 #  SOURCE: https://www.youtube.com/watch?v=6cm6G78ZDmM "How to Deploy a Node.js Puppeteer App to Render.com for Free"
+
+FROM node:18.16.0
 FROM ghcr.io/puppeteer/puppeteer:22.13.1 
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD =true\
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
 WORKDIR /usr/src/app
 
 COPY package.json package-lock.json ./
 
 RUN npm ci
+
+RUN npm install
 
 COPY . .
 
