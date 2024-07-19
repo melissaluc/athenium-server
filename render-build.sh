@@ -4,7 +4,7 @@ set -o errexit
 
 
 # npx puppeteer browsers install chrome
-
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 npm install  # Install dependencies using npm
 # npm run build # Uncomment this if you have a build step
