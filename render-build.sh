@@ -7,9 +7,15 @@ npm install  # Install dependencies using npm
 
 # Store/pull Puppeteer cache with build cache
 if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
-  echo "...Copying Puppeteer Cache from Build Cache" 
-  cp -R $XDG_CACHE_HOME/puppeteer/ $PUPPETEER_CACHE_DIR
+  echo "Puppeteer cache directory not found, creating it."
+  mkdir -p $PUPPETEER_CACHE_DIR
+  # Optionally, you can initialize the directory with any necessary files or data
+fi
+
+# Copy Puppeteer cache
+if [[ -d $XDG_CACHE_HOME/puppeteer/ ]]; then
+  echo "Copying Puppeteer Cache from Build Cache" 
+  cp -R $XDG_CACHE_HOME/puppeteer/* $PUPPETEER_CACHE_DIR
 else 
-  echo "...Storing Puppeteer Cache in Build Cache" 
-  cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME
+  echo "No Puppeteer Cache found to copy."
 fi
