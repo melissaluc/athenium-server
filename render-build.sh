@@ -1,20 +1,26 @@
 #!/usr/bin/env bash
+# exit on error
 set -o errexit
 
-# Create PUPPETEER_CACHE_DIR if it doesn't exist
-if [[ ! -d /opt/render/project/puppeteer ]]; then
-    echo "Creating PUPPETEER_CACHE_DIR directory"
-    mkdir -p /opt/render/project/puppeteer
-fi
-npx puppeteer browsers install chrome
 npm install
-# npm run build # Uncomment if required
 
-# Store/pull Puppeteer cache with build cache
-if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
-  echo "...Copying Puppeteer Cache from Build Cache" 
-  cp -R $XDG_CACHE_HOME/puppeteer/ $PUPPETEER_CACHE_DIR
-else 
-  echo "...Storing Puppeteer Cache in Build Cache" 
-  cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME
+STORAGE_DIR=/opt/render/project/.render
+
+if [[ ! -d $STORAGE_DIR/chrome ]]; then
+  echo "...Downloading Chrome"
+  mkdir -p $STORAGE_DIR/chrome
+  cd $STORAGE_DIR/chrome
+  wget -P ./ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  dpkg -x ./google-chrome-stable_current_amd64.deb $STORAGE_DIR/chrome
+  rm ./google-chrome-stable_current_amd64.deb
+  cd $HOME/project/src # Make sure we return to where we were
+else
+  echo "...Using Chrome from cache"
 fi
+
+# Set Chrome binary path environment variable
+export CHROME_BIN="/opt/render/project/.render/chrome/opt/google/chrome/google-chrome"
+
+# Add Chrome binary path to PATH (optional)
+export PATH="${PATH}:${CHROME_BIN}"
+
