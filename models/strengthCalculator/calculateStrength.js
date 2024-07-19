@@ -243,14 +243,14 @@ if (liftMassInput) {
       return result;
     } catch (err) {
       console.log(err);
-      // await browser.close();
+      await browser.close();
     }
   } catch (error) {
     console.error("Error during strength calculation:", error);
     throw error;
   } finally {
     // Close the browser
-    // await browser.close();
+    await browser.close();
   }
 };
 
