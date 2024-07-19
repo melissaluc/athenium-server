@@ -2,8 +2,8 @@ const knex = require('knex');
 const knexConfig = require('./knexfile');
 
 // development production staging
-const environment = 'production'; 
-const config = knexConfig[environment];
+
+const config = knexConfig[process.env.NODE_ENV];
 
 // Initialize Knex connection with logging enabled
 const knexInstance = knex({

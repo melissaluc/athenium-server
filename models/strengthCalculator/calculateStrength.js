@@ -16,8 +16,11 @@ const retrieveStrengthLevel = async (
   // Launch a new browser instance
   const browser = await puppeteer.launch({
     headless: true, 
-    executablePath: '/opt/render/project/.render/chrome/opt/google/chrome/google-chrome',
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    executablePath: process.env.NODE_ENV === 'production' 
+      ? process.env.PUPPETEER_EXECUTEABLE_PATH 
+      :puppeteer.executablePath,
+    args: ["--no-sandbox", "--disable-setuid-sandbox", '--enable-gpu'],
+    ignoreDefaultArgs: ['--disable-extensions'],
   });
 
   // const browser = await puppeteer.launch({ headless: false });

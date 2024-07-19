@@ -23,7 +23,7 @@
 # CMD ["npm", "start"]
 
 #  SOURCE: https://www.youtube.com/watch?v=6cm6G78ZDmM "How to Deploy a Node.js Puppeteer App to Render.com for Free"
-FROM ghcr.io/puppeteer/puppeteer:16.1.0 
+FROM ghcr.io/puppeteer/puppeteer:22.13.1 
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD =true\
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
