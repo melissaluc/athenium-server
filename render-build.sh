@@ -3,7 +3,7 @@
 set -o errexit
 
 
-npx puppeteer browsers install chrome
+sudo npx puppeteer browsers install chrome
 
 
 npm install  # Install dependencies using npm
