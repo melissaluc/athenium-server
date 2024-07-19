@@ -1,25 +1,20 @@
 #!/usr/bin/env bash
-# exit on error
 set -o errexit
 
+# Create PUPPETEER_CACHE_DIR if it doesn't exist
+if [[ ! -d /opt/render/project/puppeteer ]]; then
+    echo "Creating PUPPETEER_CACHE_DIR directory"
+    mkdir -p /opt/render/project/puppeteer
+fi
 
-# npx puppeteer browsers install chrome
-PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-
-npm install  # Install dependencies using npm
-# npm run build # Uncomment this if you have a build step
+npm install
+# npm run build # Uncomment if required
 
 # Store/pull Puppeteer cache with build cache
 if [[ ! -d $PUPPETEER_CACHE_DIR ]]; then 
-  echo "Puppeteer cache directory not found, creating it."
-  mkdir -p $PUPPETEER_CACHE_DIR
-  # Optionally, you can initialize the directory with any necessary files or data
-fi
-
-# Copy Puppeteer cache
-if [[ -d $XDG_CACHE_HOME/puppeteer/ ]]; then
-  echo "Copying Puppeteer Cache from Build Cache" 
-  cp -R $XDG_CACHE_HOME/puppeteer/* $PUPPETEER_CACHE_DIR
+  echo "...Copying Puppeteer Cache from Build Cache" 
+  cp -R $XDG_CACHE_HOME/puppeteer/ $PUPPETEER_CACHE_DIR
 else 
-  echo "No Puppeteer Cache found to copy."
+  echo "...Storing Puppeteer Cache in Build Cache" 
+  cp -R $PUPPETEER_CACHE_DIR $XDG_CACHE_HOME
 fi
