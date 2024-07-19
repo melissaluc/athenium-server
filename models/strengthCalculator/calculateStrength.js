@@ -15,7 +15,7 @@ const retrieveStrengthLevel = async (
   
   // Launch a new browser instance
   const browser = await puppeteer.launch({
-    headless: true, // Change to true for headless mode
+    headless: false,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
@@ -27,6 +27,7 @@ const retrieveStrengthLevel = async (
   try {
     // Navigate to a URL
     await page.goto(process.env.StrengthCalc_URL);
+    console.log("Navigation successful!");
 
     // Set the viewport size
     await page.setViewport({ width: 900, height: 1200 });
