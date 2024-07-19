@@ -14,8 +14,8 @@ const retrieveStrengthLevel = async (
 
 
   // Launch a new browser instance
-  // const browser = await puppeteer.launch();
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch();
+  // const browser = await puppeteer.launch({ headless: false });
   // Open a new page
   const page = await browser.newPage();
 
