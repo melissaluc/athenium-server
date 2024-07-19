@@ -22,6 +22,7 @@ const retrieveStrengthLevel = async (
   // const browser = await puppeteer.launch({ headless: false });
   // Open a new page
   const page = await browser.newPage();
+  await page.setDefaultNavigationTimeout(60000); 
 
   try {
     // Navigate to a URL
