@@ -18,7 +18,8 @@ const retrieveStrengthLevel = async (
     headless: true, 
     executablePath: process.env.NODE_ENV === 'production' 
       ? process.env.PUPPETEER_EXECUTEABLE_PATH 
-      :puppeteer.executablePath,
+      :process.env.CHROME_BIN,
+      // :puppeteer.executablePath,
     args: ["--no-sandbox", 
       "--disable-setuid-sandbox", 
       '--enable-gpu', 

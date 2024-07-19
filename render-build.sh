@@ -2,10 +2,14 @@
 # exit on error
 set -o errexit
 
+# Install npm dependencies
 npm install
 
-STORAGE_DIR=/opt/render/project/.render
+# Set the cache directory for Puppeteer
+export PUPPETEER_CACHE_DIR="/opt/render/project/puppeteer"
 
+# Check if Chrome is already downloaded; if not, download and extract it
+STORAGE_DIR="/opt/render/project/.render"
 if [[ ! -d $STORAGE_DIR/chrome ]]; then
   echo "...Downloading Chrome"
   mkdir -p $STORAGE_DIR/chrome
@@ -13,14 +17,13 @@ if [[ ! -d $STORAGE_DIR/chrome ]]; then
   wget -P ./ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   dpkg -x ./google-chrome-stable_current_amd64.deb $STORAGE_DIR/chrome
   rm ./google-chrome-stable_current_amd64.deb
-  cd $HOME/project/src # Make sure we return to where we were
+  cd $HOME/project/src # Ensure we return to the original directory
 else
   echo "...Using Chrome from cache"
 fi
 
 # Set Chrome binary path environment variable
-export CHROME_BIN="/opt/render/project/.render/chrome/opt/google/chrome/google-chrome"
+export PUPPETEER_EXECUTABLE_PATH="/opt/render/project/.render/chrome/opt/google/chrome/google-chrome"
 
-# Add Chrome binary path to PATH (optional)
-export PATH="${PATH}:${CHROME_BIN}"
-
+# Start your application or server here
+# Example: node app.js
