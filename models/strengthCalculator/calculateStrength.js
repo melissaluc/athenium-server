@@ -25,6 +25,7 @@ const retrieveStrengthLevel = async (
       '--single-process',
       '--no-zygote'],
     ignoreDefaultArgs: ['--disable-extensions'],
+    defaultViewport: { width: 900, height: 1200 }
   });
   
   // const browser = await puppeteer.launch({ headless: false });
@@ -36,14 +37,16 @@ const retrieveStrengthLevel = async (
   console.log('Puppeteer version:', version);
 
   // await page.setDefaultNavigationTimeout(60000); 
-  try {
+  try{
     // Navigate to a URL
     console.log('Navigating to:', process.env.StrengthCalc_URL);
     await page.goto(process.env.StrengthCalc_URL, { waitUntil: 'domcontentloaded', timeout: 100000 });
     console.log("Navigation successful!");
-
-    // Set the viewport size
-    await page.setViewport({ width: 900, height: 1200 });
+  } catch(error) {
+    console.log('Error during navigation or viewport setting:', error);
+    
+  }
+  try {
 
     await page.waitForSelector("div.calculator *", { visible: true, timeout: 100000 });
 
