@@ -22,9 +22,10 @@ fi
 
 # Set Chrome binary path environment variable
 export PUPPETEER_EXECUTABLE_PATH="$PUPPETEER_CACHE_DIR/chrome/opt/google/chrome/google-chrome"
+echo "PUPPETEER_EXECUTABLE_PATH set to: $PUPPETEER_EXECUTABLE_PATH"
 
 echo "Listing contents of $PUPPETEER_EXECUTABLE_PATH"
-ls -l $PUPPETEER_EXECUTABLE_PATH
+ls -l /opt/render/project/.render/puppeteer/chrome/opt/google/chrome/google-chrome
 
 installed_version=$(google-chrome --version)
 echo "Installed Chrome version: $installed_version"
