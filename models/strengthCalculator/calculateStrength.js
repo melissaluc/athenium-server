@@ -39,7 +39,7 @@ const retrieveStrengthLevel = async (
   try {
     // Navigate to a URL
     console.log('Navigating to:', process.env.StrengthCalc_URL);
-    await page.goto(process.env.StrengthCalc_URL, { waitUntil: 'networkidle0' });
+    await page.goto(process.env.StrengthCalc_URL, {waitUntil: 'load'});
     console.log("Navigation successful!");
 
     // Set the viewport size
