@@ -23,5 +23,9 @@ fi
 # Set Chrome binary path environment variable
 export PUPPETEER_EXECUTABLE_PATH="$PUPPETEER_CACHE_DIR/chrome/opt/google/chrome/google-chrome"
 
-# Start your application or server here
-# Example: node app.js
+echo "Listing contents of $PUPPETEER_EXECUTABLE_PATH"
+ls -l $PUPPETEER_EXECUTABLE_PATH
+
+installed_version=$(google-chrome --version)
+echo "Installed Chrome version: $installed_version"
+
