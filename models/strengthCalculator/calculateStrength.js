@@ -12,12 +12,12 @@ const retrieveStrengthLevel = async (
   exerciseName
 ) => {
 
-  console.log('process.env.PUPPETEER_EXECUTEABLE_PATH ',process.env.PUPPETEER_EXECUTEABLE_PATH, "\n process.env.NODE_ENV ",process.env.NODE_ENV)
+  console.log('process.env.PUPPETEER_EXECUTABLE_PATH ',process.env.PUPPETEER_EXECUTABLE_PATH, "\n process.env.NODE_ENV ",process.env.NODE_ENV)
   // Launch a new browser instance
   const browser = await puppeteer.launch({
     headless: true, 
     executablePath: process.env.NODE_ENV === 'production' 
-      ? process.env.PUPPETEER_EXECUTEABLE_PATH 
+      ? process.env.PUPPETEER_EXECUTABLE_PATH 
       :puppeteer.executablePath,
     args: ["--no-sandbox", 
       "--disable-setuid-sandbox", 
