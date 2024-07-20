@@ -1,6 +1,8 @@
 const puppeteer = require("puppeteer");
 require("dotenv").config();
-const fs = require("fs");
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
 
 // Define an async function to use async/await syntax
 const retrieveStrengthLevel = async (
