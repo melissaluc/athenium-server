@@ -32,11 +32,22 @@ const retrieveStrengthLevel = async (
   
   // Open a new page
   const page = await browser.newPage();
-  
-  const version = await browser.version();
-  console.log('Puppeteer version:', version);
+  await page.setRequestInterception(true);
 
-  // await page.setDefaultNavigationTimeout(60000); 
+  // TODO: Check if chromium was installed
+  // const version = await browser.version();
+  // console.log('Puppeteer version:', version);
+
+  page.on('request', (request) => {
+    if (request.resourceType() === 'image') {
+        // Abort image requests
+        request.abort();
+    } else {
+        // Continue all other requests
+        request.continue();
+    }
+});
+
   try{
     // Navigate to a URL
     console.log('Navigating to:', process.env.StrengthCalc_URL);
