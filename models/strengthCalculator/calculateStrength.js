@@ -51,7 +51,7 @@ const retrieveStrengthLevel = async (
     await page.waitForSelector("div.calculator *", { visible: true, timeout: 100000 });
 
     // Wait for the age input field to be visible and then type in the age
-    const ageInput = await page.waitForSelector('div.calculator__form input[name="ageyears"]');
+    const ageInput = await page.waitForSelector('div.calculator__form input[name="ageyears"]',  { visible: true, timeout: 100000 });
     await page.type('div.calculator__form input[name="ageyears"]', ageYears.toString());
     if (!ageInput) {
       throw new Error(`Selector ${ageInput} not found`);
@@ -59,16 +59,15 @@ const retrieveStrengthLevel = async (
 
     // Wait for the gender input field to be visible and then select  gender
     const genderInput = await page.waitForSelector(
-      "div.calculator__form select#gender"
-    );
+      "div.calculator__form select#gender",  { visible: true, timeout: 100000 });
     await page.select("div.calculator__form select#gender", gender);
     if (!genderInput) {
       throw new Error(`Selector ${genderInput} not found`);
     }
     // Wait for the weight unit input field to be visible and then select unit
     const bodyWeightUnitInput = await page.waitForSelector(
-      'div.calculator__form select[name="bodymassunit"]'
-    );
+      'div.calculator__form select[name="bodymassunit"]',
+      { visible: true, timeout: 100000 });
     await page.select('div.calculator__form select[name="bodymassunit"]', "lb");
     if (!bodyWeightUnitInput) {
       throw new Error(`Selector ${bodyWeightUnitInput} not found`);
@@ -76,7 +75,7 @@ const retrieveStrengthLevel = async (
     
     // Wait for the weight unit input field to be visible and then select unit
     const liftUnitInput = await page.waitForSelector(
-      'div.calculator__form select[name="liftmassunit"]'
+      'div.calculator__form select[name="liftmassunit"]',  { visible: true, timeout: 100000 }
     );
     await page.select('div.calculator__form select[name="liftmassunit"]', "lb");
     if (!liftUnitInput) {
@@ -84,7 +83,7 @@ const retrieveStrengthLevel = async (
     }
     // Wait for the body mass input field to be visible and then type in the body mass
     const bodyMassInput = await page.waitForSelector(
-      'div.calculator__form input[name="bodymass"]'
+      'div.calculator__form input[name="bodymass"]', { visible: true, timeout: 100000 }
     );
     await page.type('div.calculator__form input[name="bodymass"]', bodyMass.toString());
     if (!bodyMassInput) {
@@ -94,7 +93,7 @@ const retrieveStrengthLevel = async (
 // Check if liftMass is available, if not, proceed with variationInput and extraMassInput
 let liftMassInput;
 try {
-    liftMassInput = await page.waitForSelector('div.calculator__form input[name="liftmass"]', { timeout: 5000 });
+    liftMassInput = await page.waitForSelector('div.calculator__form input[name="liftmass"]',  { visible: true, timeout: 100000 });
 } catch (error) {
     console.log('liftMass input not found, proceeding with variationInput and extraMassInput.');
 }
@@ -103,11 +102,11 @@ if (liftMassInput) {
     await page.type('div.calculator__form input[name="liftmass"]', liftMass.toString());
 } else {
     // Proceed with variationInput
-    const variationInput = await page.waitForSelector('div.calculator__form select[name="variation"]');
+    const variationInput = await page.waitForSelector('div.calculator__form select[name="variation"]',  { visible: true, timeout: 100000 });
     await page.select('div.calculator__form select[name="variation"]', 'weighted');
 
     // Proceed with extraMassInput
-    const extraMassInput = await page.waitForSelector('div.calculator__form input[name="extramass"]');
+    const extraMassInput = await page.waitForSelector('div.calculator__form input[name="extramass"]',  { visible: true, timeout: 100000 });
     await page.type('div.calculator__form input[name="extramass"]', liftMass.toString());
     // Optional: Verify if variationInput and extraMassInput are present if needed
     if (!variationInput) {
@@ -143,7 +142,7 @@ if (liftMassInput) {
 
     
     // Submit form to generate calculated result
-    const submitButton = await page.waitForSelector('button[type="submit"]', { visible: true });
+    const submitButton = await page.waitForSelector('button[type="submit"]', { visible: true, timeout: 100000 });
 
     // Adjust the z-index of the submit button
     await page.evaluate(() => {
@@ -161,7 +160,7 @@ if (liftMassInput) {
     
     
     // Wait for the liftresult section to appear after the page reloads
-    const liftResult = await page.waitForSelector(".section-box.liftresult");
+    const liftResult = await page.waitForSelector(".section-box.liftresult",  { visible: true, timeout: 100000 });
     if (!liftResult) {
       await submitButton.click({ clickCount: 2 })
       throw new Error(`Selector ${liftResult} not found`);
