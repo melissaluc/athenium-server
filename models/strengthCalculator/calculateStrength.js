@@ -12,7 +12,7 @@ const retrieveStrengthLevel = async (
   exerciseName
 ) => {
 
-  console.log('process.env.PUPPETEER_EXECUTABLE_PATH ',process.env.PUPPETEER_EXECUTABLE_PATH, "\n process.env.NODE_ENV ",process.env.NODE_ENV)
+
   // Launch a new browser instance
   const browser = await puppeteer.launch({
     headless: true, 
@@ -26,15 +26,19 @@ const retrieveStrengthLevel = async (
       '--no-zygote'],
     ignoreDefaultArgs: ['--disable-extensions'],
   });
-
+  
   // const browser = await puppeteer.launch({ headless: false });
+  
   // Open a new page
   const page = await browser.newPage();
-  console.log('StrengthCalc_URL:', process.env.StrengthCalc_URL);
-  // await page.setDefaultNavigationTimeout(60000); 
+  
+  const version = await browser.version();
+  console.log('Puppeteer version:', version);
 
+  // await page.setDefaultNavigationTimeout(60000); 
   try {
     // Navigate to a URL
+    console.log('Navigating to:', process.env.StrengthCalc_URL);
     await page.goto(process.env.StrengthCalc_URL, { timeout: 120000 });
     console.log("Navigation successful!");
 
