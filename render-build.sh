@@ -1,32 +1,41 @@
 #!/usr/bin/env bash
-# exit on error
 set -o errexit
 
 # Install npm dependencies
 npm install
 
-# Check if Chrome is already downloaded; if not, download and extract it
+# Define paths
 PUPPETEER_CACHE_DIR="/opt/render/project/.render/puppeteer"
-export PUPPETEER_CACHE_DIR
-if [[ ! -d $PUPPETEER_CACHE_DIR/chrome ]]; then
-  echo "...Downloading Chrome"
-  mkdir -p $PUPPETEER_CACHE_DIR/chrome
-  cd $PUPPETEER_CACHE_DIR/chrome
-  wget -P ./ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  dpkg -x ./google-chrome-stable_current_amd64.deb $PUPPETEER_CACHE_DIR/chrome
-  rm ./google-chrome-stable_current_amd64.deb
-  cd $HOME/project/src # Ensure we return to the original directory
+CHROME_DEB_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+CHROME_DEB_FILE="$PUPPETEER_CACHE_DIR/chrome/google-chrome-stable_current_amd64.deb"
+CHROME_INSTALL_DIR="$PUPPETEER_CACHE_DIR/chrome/opt/google/chrome"
+
+# Ensure directories exist
+mkdir -p "$PUPPETEER_CACHE_DIR/chrome"
+
+# Check if Chrome is already downloaded; if not, download it
+if [[ ! -f $CHROME_DEB_FILE ]]; then
+  echo "...Downloading Google Chrome"
+  curl -o $CHROME_DEB_FILE $CHROME_DEB_URL
 else
-  echo "...Using Chrome from cache"
+  echo "...Google Chrome already downloaded"
+fi
+
+# Extract Chrome if not already extracted
+if [[ ! -d $CHROME_INSTALL_DIR ]]; then
+  echo "...Extracting Google Chrome"
+  dpkg -x $CHROME_DEB_FILE $CHROME_INSTALL_DIR
+else
+  echo "...Google Chrome already extracted"
 fi
 
 # Set Chrome binary path environment variable
-export PUPPETEER_EXECUTABLE_PATH="$PUPPETEER_CACHE_DIR/chrome/opt/google/chrome/google-chrome"
+export PUPPETEER_EXECUTABLE_PATH="$CHROME_INSTALL_DIR/google-chrome"
 echo "PUPPETEER_EXECUTABLE_PATH set to: $PUPPETEER_EXECUTABLE_PATH"
 
+# Verify Chrome installation
 echo "Listing contents of $PUPPETEER_EXECUTABLE_PATH"
-ls -l /opt/render/project/.render/puppeteer/chrome/opt/google/chrome/google-chrome
+ls -l $PUPPETEER_EXECUTABLE_PATH || true
 
-installed_version=$(google-chrome --version)
+installed_version=$($PUPPETEER_EXECUTABLE_PATH --version)
 echo "Installed Chrome version: $installed_version"
-
