@@ -6,7 +6,8 @@ set -o errexit
 npm install
 
 # Check if Chrome is already downloaded; if not, download and extract it
-PUPPETEER_CACHE_DIR="/opt/render/project/.render"
+PUPPETEER_CACHE_DIR="/opt/render/project/.render/puppeteer"
+export PUPPETEER_CACHE_DIR
 if [[ ! -d $PUPPETEER_CACHE_DIR/chrome ]]; then
   echo "...Downloading Chrome"
   mkdir -p $PUPPETEER_CACHE_DIR/chrome
@@ -20,7 +21,7 @@ else
 fi
 
 # Set Chrome binary path environment variable
-export PUPPETEER_EXECUTABLE_PATH="/opt/render/project/.render/chrome/opt/google/chrome/google-chrome"
+export PUPPETEER_EXECUTABLE_PATH="$PUPPETEER_CACHE_DIR/chrome/opt/google/chrome/google-chrome"
 
 # Start your application or server here
 # Example: node app.js
