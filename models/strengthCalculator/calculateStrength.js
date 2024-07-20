@@ -31,11 +31,11 @@ const retrieveStrengthLevel = async (
   // Open a new page
   const page = await browser.newPage();
   console.log('StrengthCalc_URL:', process.env.StrengthCalc_URL);
-  await page.setDefaultNavigationTimeout(60000); 
+  // await page.setDefaultNavigationTimeout(60000); 
 
   try {
     // Navigate to a URL
-    await page.goto(process.env.StrengthCalc_URL);
+    await page.goto(process.env.StrengthCalc_URL, { timeout: 120000 });
     console.log("Navigation successful!");
 
     // Set the viewport size
