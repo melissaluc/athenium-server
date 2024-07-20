@@ -45,7 +45,7 @@ const retrieveStrengthLevel = async (
     // Set the viewport size
     await page.setViewport({ width: 900, height: 1200 });
 
-    await page.waitForSelector("div.calculator *", { timeout: 5000 });
+    await page.waitForSelector("div.calculator *", { visible: true, timeout: 100000 });
 
     // Wait for the age input field to be visible and then type in the age
     const ageInput = await page.waitForSelector('div.calculator__form input[name="ageyears"]');
