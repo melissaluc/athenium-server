@@ -131,3 +131,5 @@ dist
 
 # bat files
 init_rds.bat
+
+/node_modules

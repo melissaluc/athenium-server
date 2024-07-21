@@ -16,17 +16,19 @@ const retrieveStrengthLevel = async (
 
 
   // Launch a new browser instance
+  // const browser = await puppeteer.launch({
+  //   headless: true, 
+  //   executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH :puppeteer.executablePath,
+  //   args: ["--no-sandbox", 
+  //     "--disable-setuid-sandbox", 
+  //     '--enable-gpu', 
+  //     '--single-process',
+  //     '--no-zygote'],
+  //   ignoreDefaultArgs: ['--disable-extensions'],
+  //   defaultViewport: { width: 900, height: 1200 }
+  // });
   const browser = await puppeteer.launch({
-    headless: true, 
-    executablePath: process.env.NODE_ENV === 'production' 
-      ? process.env.PUPPETEER_EXECUTABLE_PATH 
-      :puppeteer.executablePath,
-    args: ["--no-sandbox", 
-      "--disable-setuid-sandbox", 
-      '--enable-gpu', 
-      '--single-process',
-      '--no-zygote'],
-    ignoreDefaultArgs: ['--disable-extensions'],
+    headless: false, 
     defaultViewport: { width: 900, height: 1200 }
   });
   
@@ -209,6 +211,10 @@ if (liftMassInput) {
           th.textContent.replace(/['".]/g, "").trim().toLowerCase()
         );
 
+        const resultsTitle = document.querySelector('.liftresult h2.title').innerText
+        const hasBeginner = resultsTitle.includes("Beginner")
+
+
         let strengthLevel = null;
         let next_strength_level = null;
         const rows = strengthBoundsTableRows.map((td, index) => {
@@ -240,11 +246,14 @@ if (liftMassInput) {
                         break;
                 }
                 return parseInt(td.textContent.replace(/['".]/g, "").trim());
-            } else {
-
+            } else if (hasBeginner) {
+                strengthLevel='beginner'; 
+                next_strength_level = 'novice';
                 return parseInt(td.textContent.replace(/['".]/g, "").trim());
-            }
-        });
+            } else {
+                return parseInt(td.textContent.replace(/['".]/g, "").trim());
+
+        }});
         
         const zipped = headers.map((header, index) => [header, rows[index]]);
         const strengthBounds = Object.fromEntries(zipped);
@@ -284,7 +293,7 @@ if (liftMassInput) {
     throw error;
   } finally {
     // Close the browser
-    await browser.close();
+    // await browser.close();
   }
 };
 
