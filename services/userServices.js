@@ -1,8 +1,8 @@
 const userModel = require('../models/userModel');
 
 
-const getUser = async (userId) => {
-    return userModel.getUser(userId);
+const getUser = async (username) => {
+    return userModel.getUser(username);
 };
 
 

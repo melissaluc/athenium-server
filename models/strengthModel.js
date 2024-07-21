@@ -115,7 +115,7 @@ const createStrengthRecord = async (userId, data) => {
 
     try {
         // Call retrieveStrengthLevel to get strength data
-        const result = await calculateStrength.retrieveStrengthLevel(30, "female", 125, data.weight, data.reps, data.exercise_name);
+        const result = await calculateStrength.retrieveStrengthLevel(data.age, "female", data.body_weight, data.weight, data.reps, data.exercise_name);
         console.log('Retrieved strength result:', result);
         
         // Check if result is valid before proceeding

@@ -5,7 +5,7 @@ const fs = require("fs");
 const userController = require('../controller/userController');
 
 
-router.route('/:userId')
+router.route('/:username')
     .get(userController.getUser)
 
 

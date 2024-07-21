@@ -1,7 +1,7 @@
 const knex = require('../db');
 const { v4: uuidv4 } = require('uuid');
 
-const getUser = async (userId) => {
+const getUser = async (username) => {
     try {
         const user= await knex('users')
             .select(
@@ -12,14 +12,14 @@ const getUser = async (userId) => {
                 "last_name",
                 "height_cm"
             )
-            .where({ 'user_id': userId })
+            .where({ 'username': username })
             .first()
 
         const bodyComposition = await knex('body_composition_log')
         .select(
             "weight"
         )
-        .where({ user_id: userId })
+        .where({ user_id: user.user_id })
         .orderBy('created_on','desc')
         .limit(1);
 
