@@ -9,7 +9,9 @@ const retrieveStrengthLevel = async (
   bodyMass,
   liftMass,
   reps,
-  exerciseName
+  exerciseName,
+  lift_uom,
+  body_mass_uom
 ) => {
 
 
@@ -69,7 +71,7 @@ const retrieveStrengthLevel = async (
     const bodyWeightUnitInput = await page.waitForSelector(
       'div.calculator__form select[name="bodymassunit"]'
     );
-    await page.select('div.calculator__form select[name="bodymassunit"]', "lb");
+    await page.select('div.calculator__form select[name="bodymassunit"]', body_mass_uom);
     if (!bodyWeightUnitInput) {
       throw new Error(`Selector ${bodyWeightUnitInput} not found`);
     }
@@ -78,7 +80,7 @@ const retrieveStrengthLevel = async (
     const liftUnitInput = await page.waitForSelector(
       'div.calculator__form select[name="liftmassunit"]'
     );
-    await page.select('div.calculator__form select[name="liftmassunit"]', "lb");
+    await page.select('div.calculator__form select[name="liftmassunit"]', lift_uom);
     if (!liftUnitInput) {
       throw new Error(`Selector ${liftUnitInput} not found`);
     }
