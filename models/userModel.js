@@ -68,16 +68,14 @@ const getUser = (username) => {
 
 const createUser = () => {
     // Retrieve sign up data
-    // Generate UOM settings
-    // User: height
-    // Body Composition: body_weight, BMI, lean_muscle_mass 
-    // Measurements: girth_measurements
-    // Workouts: lift_weight
+    // 1. User Table
+    // 2. UOM Table
 
 }
 
 
 module.exports = {
     getUser,
+    createUser
 
 };
