@@ -27,15 +27,16 @@ fi
 # Extract Chrome if not already extracted
 if [[ ! -d $CHROME_INSTALL_DIR ]]; then
   echo "...Extracting Google Chrome"
-  
-  # Extract the .deb file
-  dpkg-deb -x $CHROME_DEB_FILE $CHROME_INSTALL_DIR
-  
-  ls -l $CHROME_INSTALL_DIR || true
+  dpkg-deb -x $CHROME_DEB_FILE $PUPPETEER_CACHE_DIR
+
+  # Verify extraction
+  echo "Listing contents of $PUPPETEER_CACHE_DIR"
+  ls -l $PUPPETEER_CACHE_DIR || true
 else
   echo "...Google Chrome already extracted"
 fi
 
+# Update the correct path based on inspection
 export PUPPETEER_EXECUTABLE_PATH="$CHROME_INSTALL_DIR/google-chrome"
 echo "PUPPETEER_EXECUTABLE_PATH set to: $PUPPETEER_EXECUTABLE_PATH"
 
@@ -43,5 +44,6 @@ echo "PUPPETEER_EXECUTABLE_PATH set to: $PUPPETEER_EXECUTABLE_PATH"
 echo "Listing contents of $CHROME_INSTALL_DIR"
 ls -l $CHROME_INSTALL_DIR || true
 
+# Check installed version of Chrome
 installed_version=$($PUPPETEER_EXECUTABLE_PATH --version)
 echo "Installed Chrome version: $installed_version"
