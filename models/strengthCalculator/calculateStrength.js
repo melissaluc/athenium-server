@@ -71,7 +71,7 @@ const retrieveStrengthLevel = async (
     const genderInput = await page.waitForSelector(
       "div.calculator__form select#gender"
     );
-    await page.select("div.calculator__form select#gender", gender);
+    await page.select("div.calculator__form select#gender", gender.toString());
     if (!genderInput) {
       throw new Error(`Selector ${genderInput} not found`);
     }
@@ -79,7 +79,7 @@ const retrieveStrengthLevel = async (
     const bodyWeightUnitInput = await page.waitForSelector(
       'div.calculator__form select[name="bodymassunit"]'
     );
-    await page.select('div.calculator__form select[name="bodymassunit"]', body_mass_uom);
+    await page.select('div.calculator__form select[name="bodymassunit"]', body_mass_uom.toString());
     if (!bodyWeightUnitInput) {
       throw new Error(`Selector ${bodyWeightUnitInput} not found`);
     }
@@ -88,7 +88,7 @@ const retrieveStrengthLevel = async (
     const liftUnitInput = await page.waitForSelector(
       'div.calculator__form select[name="liftmassunit"]'
     );
-    await page.select('div.calculator__form select[name="liftmassunit"]', lift_uom);
+    await page.select('div.calculator__form select[name="liftmassunit"]', lift_uom.toString());
     if (!liftUnitInput) {
       throw new Error(`Selector ${liftUnitInput} not found`);
     }
