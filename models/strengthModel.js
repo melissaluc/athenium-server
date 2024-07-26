@@ -112,7 +112,6 @@ const getStrengthRecords = async (userId) => {
 
 const createStrengthRecord = async (userId, data) => {
     console.log('Entering createStrengthRecord function');
-    console.log(data);
 
     try {
         // Call retrieveStrengthLevel to get strength data

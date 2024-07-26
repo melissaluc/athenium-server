@@ -104,7 +104,7 @@ const retrieveStrengthLevel = async (
 // Check if liftMass is available, if not, proceed with variationInput and extraMassInput
 let liftMassInput;
 try {
-    liftMassInput = await page.waitForSelector('div.calculator__form input[name="liftmass"]', { timeout: 5000 });
+    liftMassInput = await page.waitForSelector('div.calculator__form input[name="liftmass"]', { timeout: 100000 });
 } catch (error) {
     console.log('liftMass input not found, proceeding with variationInput and extraMassInput.');
 }
