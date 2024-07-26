@@ -1,2 +1,3 @@
 # .dockerignore
 package.json
+Dockerfile
