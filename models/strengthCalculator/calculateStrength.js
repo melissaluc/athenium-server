@@ -17,7 +17,7 @@ const retrieveStrengthLevel = async (
 
   // Launch a new browser instance
   let browser
-  if (BROWSER_WS_ENDPOINT) {
+  if (process.env.BROWSER_WS_ENDPOINT) {
     browser = await puppeteer.connect({
       browserWSEndpoint: process.env.BROWSER_WS_ENDPOINT,
     });
