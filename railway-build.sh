@@ -1,6 +1,11 @@
 #!/bin/bash
 set -o errexit
 
+
+apt-get update
+apt-get install -y binutils
+# apt-get install -y dpkg
+
 # Install npm dependencies
 npm install
 
