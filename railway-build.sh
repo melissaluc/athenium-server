@@ -30,8 +30,9 @@ fi
 # Extract Chrome if not already extracted
 if [[ ! -d $CHROME_INSTALL_DIR ]]; then
   echo "...Extracting Google Chrome"
+  # dpkg -x $CHROME_DEB_FILE $CHROME_INSTALL_DIR
   ar x $CHROME_DEB_FILE
-  tar xf data.tar.xz -C $CHROME_INSTALL_DIR
+  tar -xvf $CHROME_INSTALL_DIR
 else
   echo "...Google Chrome already extracted"
 fi
