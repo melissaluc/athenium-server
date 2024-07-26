@@ -39,3 +39,5 @@ ls -l $PUPPETEER_EXECUTABLE_PATH || true
 
 installed_version=$($PUPPETEER_EXECUTABLE_PATH --version)
 echo "Installed Chrome version: $installed_version"
+
+# 
