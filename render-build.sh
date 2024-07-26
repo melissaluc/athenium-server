@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+# !/usr/bin/env bash
+#!/bin/bash
 set -o errexit
 
 # Install npm dependencies
