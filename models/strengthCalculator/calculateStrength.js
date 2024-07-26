@@ -17,9 +17,9 @@ const retrieveStrengthLevel = async (
 
   // Launch a new browser instance
   let browser
-  if (process.env.PLATFORM==='railway') {
+  if (BROWSER_WS_ENDPOINT) {
     browser = await puppeteer.connect({
-      browserWSEndpoint: process.env.RAILWAY_BROSWERLESS_WS_ENDPOINT,
+      browserWSEndpoint: process.env.BROWSER_WS_ENDPOINT,
     });
   }
   else {
