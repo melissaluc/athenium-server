@@ -1,14 +1,12 @@
 #!/bin/bash
 set -o errexit
 
-# Update package lists and install dependencies
 apt-get update
 apt-get install -y dpkg curl
 
-# Install npm dependencies
 npm install
 
-# Define paths
+# paths
 PUPPETEER_CACHE_DIR="/app/puppeteer"
 CHROME_DEB_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 CHROME_DEB_FILE="$PUPPETEER_CACHE_DIR/chrome/google-chrome-stable_current_amd64.deb"
@@ -33,13 +31,11 @@ if [[ ! -d $CHROME_INSTALL_DIR ]]; then
   # Extract the .deb file
   dpkg-deb -x $CHROME_DEB_FILE $CHROME_INSTALL_DIR
   
-  # Verify extraction
   ls -l $CHROME_INSTALL_DIR || true
 else
   echo "...Google Chrome already extracted"
 fi
 
-# Set Chrome binary path environment variable
 export PUPPETEER_EXECUTABLE_PATH="$CHROME_INSTALL_DIR/google-chrome"
 echo "PUPPETEER_EXECUTABLE_PATH set to: $PUPPETEER_EXECUTABLE_PATH"
 
@@ -47,6 +43,5 @@ echo "PUPPETEER_EXECUTABLE_PATH set to: $PUPPETEER_EXECUTABLE_PATH"
 echo "Listing contents of $CHROME_INSTALL_DIR"
 ls -l $CHROME_INSTALL_DIR || true
 
-# Check installed version of Chrome
 installed_version=$($PUPPETEER_EXECUTABLE_PATH --version)
 echo "Installed Chrome version: $installed_version"
