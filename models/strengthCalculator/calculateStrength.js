@@ -124,6 +124,7 @@ const retrieveStrengthLevel = async (
 // Check if liftMass is available, if not, proceed with variationInput and extraMassInput
 let liftMassInput;
 try {
+    console.log('Filling in lift mass...')
     liftMassInput = await page.waitForSelector('div.calculator__form input[name="liftmass"]', { timeout: 100000 });
 } catch (error) {
     console.log('liftMass input not found, proceeding with variationInput and extraMassInput.');
@@ -131,6 +132,7 @@ try {
 
 if (liftMassInput) {
     await page.type('div.calculator__form input[name="liftmass"]', liftMass.toString());
+    console.log('Filling in lift mass...')
 } else {
     // Proceed with variationInput
     const variationInput = await page.waitForSelector('div.calculator__form select[name="variation"]');
@@ -191,7 +193,7 @@ if (liftMassInput) {
     
     
     // Wait for the liftresult section to appear after the page reloads
-    const liftResult = await page.waitForSelector(".section-box.liftresult");
+    const liftResult = await page.waitForSelector(".section-box.liftresult", { visible: true, timeout: 100000 });
     if (!liftResult) {
       await submitButton.click({ clickCount: 2 })
       throw new Error(`Selector ${liftResult} not found`);
