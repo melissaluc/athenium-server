@@ -17,6 +17,7 @@ const retrieveStrengthLevel = async (
 
   // Launch a new browser instance
   let browser
+
   if (process.env.BROWSER_WS_ENDPOINT) {
     browser = await puppeteer.connect({
       browserWSEndpoint: process.env.BROWSER_WS_ENDPOINT,
@@ -42,6 +43,9 @@ const retrieveStrengthLevel = async (
   
   // Open a new page
   const page = await browser.newPage();
+  if (process.env.BROWSER_WS_ENDPOINT) {
+    await page.setViewport({ width: 900, height: 1200 });
+  }
   
   const version = await browser.version();
   console.log('Puppeteer version:', version);
