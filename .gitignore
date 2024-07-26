@@ -131,3 +131,7 @@ dist
 
 # bat files
 init_rds.bat
+
+Dockerfile.bak
+Dockerfile
+.dockerignore
