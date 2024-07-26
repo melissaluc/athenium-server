@@ -22,6 +22,8 @@ const retrieveStrengthLevel = async (
     const launchArgs = JSON.stringify({ stealth: true });
     browser = await puppeteer.connect({
       browserWSEndpoint: `${process.env.BROWSER_WS_ENDPOINT}&launch=${launchArgs}`,
+      defaultViewport: { width: 900, height: 1200 },
+      timeout: 60000 
     });
   }
   else {
@@ -36,7 +38,7 @@ const retrieveStrengthLevel = async (
         '--single-process',
         '--no-zygote'],
       ignoreDefaultArgs: ['--disable-extensions'],
-      defaultViewport: { width: 900, height: 1200 }
+      defaultViewport: { width: 900, height: 1200 },
     });
   }
   
@@ -45,9 +47,6 @@ const retrieveStrengthLevel = async (
   // Open a new page
   console.log("Opening a new page...");
   const page = await browser.newPage();
-  if (process.env.BROWSER_WS_ENDPOINT) {
-    await page.setViewport({ width: 900, height: 1200 });
-  }
   
   const version = await browser.version();
   console.log('Puppeteer version:', version);
