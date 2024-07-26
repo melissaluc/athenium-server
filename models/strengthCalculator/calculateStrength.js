@@ -19,8 +19,9 @@ const retrieveStrengthLevel = async (
   let browser
 
   if (process.env.BROWSER_WS_ENDPOINT) {
+    const launchArgs = JSON.stringify({ stealth: true });
     browser = await puppeteer.connect({
-      browserWSEndpoint: process.env.BROWSER_WS_ENDPOINT,
+      browserWSEndpoint: `${process.env.BROWSER_WS_ENDPOINT}&launch=${launchArgs}`,
     });
   }
   else {
@@ -42,6 +43,7 @@ const retrieveStrengthLevel = async (
   // const browser = await puppeteer.launch({ headless: false });
   
   // Open a new page
+  console.log("Opening a new page...");
   const page = await browser.newPage();
   if (process.env.BROWSER_WS_ENDPOINT) {
     await page.setViewport({ width: 900, height: 1200 });
@@ -61,48 +63,63 @@ const retrieveStrengthLevel = async (
     
   }
   try {
-
+    console.log('Waiting for calculator form...')
     await page.waitForSelector("div.calculator *", { visible: true, timeout: 100000 });
 
     // Wait for the age input field to be visible and then type in the age
+    console.log('Filling in the age input field...')
     const ageInput = await page.waitForSelector('div.calculator__form input[name="ageyears"]');
     await page.type('div.calculator__form input[name="ageyears"]', ageYears.toString());
     if (!ageInput) {
       throw new Error(`Selector ${ageInput} not found`);
+    } else {
+      console.log('Age input filled.');
     }
 
     // Wait for the gender input field to be visible and then select  gender
+    console.log('Selecting gender...')
     const genderInput = await page.waitForSelector(
       "div.calculator__form select#gender"
     );
     await page.select("div.calculator__form select#gender", gender);
     if (!genderInput) {
       throw new Error(`Selector ${genderInput} not found`);
+    } else {
+      console.log('Gender selected.');
     }
     // Wait for the weight unit input field to be visible and then select unit
+    console.log('Selecting body mass unit...')
     const bodyWeightUnitInput = await page.waitForSelector(
       'div.calculator__form select[name="bodymassunit"]'
     );
     await page.select('div.calculator__form select[name="bodymassunit"]', body_mass_uom.toString());
     if (!bodyWeightUnitInput) {
       throw new Error(`Selector ${bodyWeightUnitInput} not found`);
+    } else {
+      console.log('Body mass unit selected.');
     }
     
     // Wait for the weight unit input field to be visible and then select unit
+    console.log('Selecting lift mass unit...')
     const liftUnitInput = await page.waitForSelector(
       'div.calculator__form select[name="liftmassunit"]'
     );
     await page.select('div.calculator__form select[name="liftmassunit"]', lift_uom.toString());
     if (!liftUnitInput) {
       throw new Error(`Selector ${liftUnitInput} not found`);
+    } else {
+      console.log('Lift mass unit selected.');
     }
     // Wait for the body mass input field to be visible and then type in the body mass
+    console.log('Filling in body mass...')
     const bodyMassInput = await page.waitForSelector(
       'div.calculator__form input[name="bodymass"]'
     );
     await page.type('div.calculator__form input[name="bodymass"]', bodyMass.toString());
     if (!bodyMassInput) {
       throw new Error(`Selector ${bodyMassInput} not found`);
+    } else {
+      console.log('Body mass filled.');
     }
 
 // Check if liftMass is available, if not, proceed with variationInput and extraMassInput
