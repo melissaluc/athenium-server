@@ -16,19 +16,27 @@ const retrieveStrengthLevel = async (
 
 
   // Launch a new browser instance
-  const browser = await puppeteer.launch({
-    headless: true, 
-    executablePath: process.env.NODE_ENV === 'production' 
-      ? process.env.PUPPETEER_EXECUTABLE_PATH 
-      :puppeteer.executablePath,
-    args: ["--no-sandbox", 
-      "--disable-setuid-sandbox", 
-      '--enable-gpu', 
-      '--single-process',
-      '--no-zygote'],
-    ignoreDefaultArgs: ['--disable-extensions'],
-    defaultViewport: { width: 900, height: 1200 }
-  });
+  let browser
+  if (process.env.PLATFORM==='railway') {
+    browser = await puppeteer.connect({
+      browserWSEndpoint: process.env.RAILWAY_BROSWERLESS_WS_ENDPOINT,
+    });
+  }
+  else {
+    browser = await puppeteer.launch({
+      headless: true, 
+      executablePath: process.env.NODE_ENV === 'production' 
+        ? process.env.PUPPETEER_EXECUTABLE_PATH 
+        :puppeteer.executablePath,
+      args: ["--no-sandbox", 
+        "--disable-setuid-sandbox", 
+        '--enable-gpu', 
+        '--single-process',
+        '--no-zygote'],
+      ignoreDefaultArgs: ['--disable-extensions'],
+      defaultViewport: { width: 900, height: 1200 }
+    });
+  }
   
   // const browser = await puppeteer.launch({ headless: false });
   
