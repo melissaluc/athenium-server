@@ -71,7 +71,7 @@ const retrieveStrengthLevel = async (
     const genderInput = await page.waitForSelector(
       "div.calculator__form select#gender"
     );
-    await page.select("div.calculator__form select#gender", gender.toString());
+    await page.select("div.calculator__form select#gender", gender);
     if (!genderInput) {
       throw new Error(`Selector ${genderInput} not found`);
     }
