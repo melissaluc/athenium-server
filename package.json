@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./render-build.sh",
+    "build:railway": "echo 'Running build for Railway' && ./railway-build.sh",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "render": "node index.js && knex migrate:latest && knex seed:run",

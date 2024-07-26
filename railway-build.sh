@@ -6,8 +6,8 @@ set -o errexit
 npm install
 
 # Define paths
-# PUPPETEER_CACHE_DIR="/opt/render/project/.render/puppeteer"
-PUPPETEER_CACHE_DIR="/opt/render/project/.render/puppeteer"
+
+PUPPETEER_CACHE_DIR="/app/puppeteer"
 CHROME_DEB_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 CHROME_DEB_FILE="$PUPPETEER_CACHE_DIR/chrome/google-chrome-stable_current_amd64.deb"
 CHROME_INSTALL_DIR="$PUPPETEER_CACHE_DIR/chrome/opt/google/chrome"
