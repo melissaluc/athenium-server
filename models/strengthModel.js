@@ -1,4 +1,4 @@
-const knex = require('../db');
+const knex = require('../utils/db.js');
 const { v4: uuidv4 } = require('uuid');
 
 const calculateStrength = require('./strengthCalculator/calculateStrength.js')
@@ -55,40 +55,41 @@ const getStrengthRecords = async (userId) => {
 
         // Extract the rows from result obj
         const latestRecords = result.rows;
-
         const sendResult = {}
         const proficiencyLevels = {
-            "beg": 1,
-            "nov": 2,
-            "int": 3,
-            "adv": 4,
+            "beginner": 1,
+            "novice": 2,
+            "intermediate": 3,
+            "advanced": 4,
             "elite": 5
         };
         
-        const strengthLevelShort = {
-            "beginner": "beg",
-            "novice": "nov",
-            "intermediate": "int",
-            "advanced": "adv",
-            "elite": "elite"
-        }
         latestRecords.map(exercise => {
-            console.log('nov',exercise)
+            let normalizedScore
             if(exercise.strength_bounds) {
+
                 const strength_bounds = exercise.strength_bounds
-                // Convert to short form level
-                const current_strength_level = strengthLevelShort[exercise.strength_level]
-                const next_strength_level = strengthLevelShort[exercise.next_strength_level]
+                const current_strength_level = exercise.strength_level
+                const next_strength_level = exercise.next_strength_level
+                // Values
+                const strengthLevel = strength_bounds[current_strength_level]
+                const proficiencyScore = proficiencyLevels[current_strength_level]
                 if(strength_bounds[next_strength_level]){
-                    const nextStrengthLevel = strength_bounds.next_strength_level
-                    const strengthLevel = strength_bounds[current_strength_level]
-                    const proficiencyScore = proficiencyLevels[strengthLevel]
-                    const score = proficiencyScore*((exercise.one_rep_max - strengthLevel)/(nextStrengthLevel-strengthLevel))
-                    exercise.score = score
+                    const nextStrengthLevel = strength_bounds[next_strength_level]
+                    // const score = proficiencyScore*((exercise.one_rep_max - strengthLevel)/(nextStrengthLevel-strengthLevel))
+                    normalizedScore = proficiencyScore + ((exercise.one_rep_max - strengthLevel)/(nextStrengthLevel-strengthLevel))
+                    // console.log(`
+                    //     ${exercise.exercise_name}
+                    //     \n${current_strength_level}: ${proficiencyScore} 
+                    //     \n normalized score: ${normalizedScore}
+                    //     \n onerepmax: ${exercise.one_rep_max}
+                    //     \n nextstrengthlevel: ${next_strength_level}
+                    //     `)
                 } else {
-                    exercise.score = 5
+                    normalizedScore = 5 + (exercise.one_rep_max/strength_bounds[current_strength_level])
                 }
-    
+                exercise.score = normalizedScore
+                
                 if(!sendResult[exercise.group]){
                     sendResult[exercise.group] = []
                     sendResult[exercise.group].push(exercise)
@@ -97,8 +98,15 @@ const getStrengthRecords = async (userId) => {
                 }
             }
         })
+        
+        Object.keys(sendResult).forEach(group => {
+            sendResult[group].sort((a, b) => b.score - a.score);
+        });
+
+        
 
         console.log(sendResult)
+        
 
         return sendResult;
 
