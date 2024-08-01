@@ -1,4 +1,4 @@
-const knex = require('../db');
+const knex = require('../utils/db');
 const { v4: uuidv4 } = require("uuid");
 
 const getScheduleByUserId = async (userId) => {
