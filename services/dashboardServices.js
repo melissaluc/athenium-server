@@ -1,8 +1,8 @@
 const dashboardModel = require('../models/dashboardModel');
 
 
-const getByUserId = async (id) => {
-    return dashboardModel.getBodyCompositionByUserId(id);
+const getByUserId = async (userId) => {
+    return dashboardModel.getBodyCompositionByUserId(userId);
 };
 
 

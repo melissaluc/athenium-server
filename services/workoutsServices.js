@@ -10,7 +10,6 @@ const getWorkout = async (userId,workoutId) => {
 };
 
 
-
 const createWorkout = async (userId, workout) => {
     return workoutModel.createWorkout(userId, workout);
 };

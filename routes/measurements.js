@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
+
 
 const measurementsController = require('../controller/measurementsController');
+const { authenticateToken } = require('../utils/auth');
 
-
-router.route('/:userId')
-    .get(measurementsController.getMeasurementsByUserId)
-    .post(measurementsController.createMeasurement)
-    .patch(measurementsController.updateMeasurement)
+router.route('/')
+    .get(authenticateToken, measurementsController.getMeasurementsByUserId)
+    .post(authenticateToken, measurementsController.createMeasurement)
+    .patch(authenticateToken, measurementsController.updateMeasurement)
 
 
 

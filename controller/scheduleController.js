@@ -4,7 +4,7 @@ const scheduleService = require('../services/scheduleServices');
 const getByUserId = async (req,res) => {
     console.log('service',req.params)
     try {
-        const { userId } = req.params; 
+        const userId = req.user.userId;
         const schedule = await scheduleService.getByUserId(userId);
         res.json(schedule);
     } catch (err) {
@@ -14,7 +14,7 @@ const getByUserId = async (req,res) => {
 
 const updateMeasurement = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const userId = req.user.userId;
         const { dateSelected, newMeasurements } = req.body;
         // Convert UNIX timestamp to ISO 8601 format
         // const dateSelectedConverted = new Date(dateSelected * 1000).toISOString();
@@ -31,7 +31,7 @@ const createMeasurement = async (req, res) => {
     console.log(req.body)
     try {
         const {dateSelected, newMeasurements} = req.body;
-        const {userId} = req.params
+        const userId = req.user.userId;
         const measurement= await measurementService.createMeasurementByUser(userId, dateSelected, newMeasurements);
         res.status(201).json(measurement);
     } catch (err) {

@@ -1,9 +1,10 @@
 // models/BodyCompositionModel.js
 const dashboardService = require('../services/dashboardServices');
 
+
 const getBodyCompositionByUserId = async (req,res) => {
     try {
-        const { userId } = req.params; 
+        const userId = req.user.userId;
         const bodyComposition = await dashboardService.getByUserId(userId);
         res.json(bodyComposition);
     } catch (err) {

@@ -1,16 +1,16 @@
-const knex = require('../db');
+const knex = require('../utils/db');
 const { v4: uuidv4 } = require('uuid');
 
-const getUser = (username) => {
+
+const findUser = (filter) => {
     return knex('users')
         .select('user_id')
-        .where({ 'username': username })
+        .where(filter)
         .first()
-        .then(user => {
-            if (!user) {
-                throw new Error(`User with username '${username}' not found`);
-            }
+}
 
+
+const getUser = (userId) => {
             // Fetch user details
             return knex('users')
                 .select(
@@ -21,7 +21,7 @@ const getUser = (username) => {
                     "last_name",
                     "height_cm"
                 )
-                .where({ 'user_id': user.user_id })
+                .where({'user_id': userId})
                 .first()
                 .then(userDetails => {
                     if (!userDetails) {
@@ -31,14 +31,14 @@ const getUser = (username) => {
                     // Fetch latest body composition data
                     return knex('body_composition_log')
                         .select('weight')
-                        .where({ 'user_id': user.user_id })
+                        .where({ 'user_id': userId})
                         .orderBy('created_on', 'desc')
                         .limit(1)
                         .then(bodyComposition => {
                             // Fetch user's uom settings
                             return knex('user_uom')
                                 .select('uom_name', 'abbreviation', 'uom')
-                                .where({ 'user_id': user.user_id })
+                                .where({ 'user_id': userId})
                                 .then(userSetUOM => {
                                     // Prep final user data object
                                     const uomObj = {}
@@ -48,9 +48,9 @@ const getUser = (username) => {
                                             uom: uom.uom
                                         }
                                     })
-
+                                    const { user_id, ...userDetailsWithoutId } = userDetails;
                                     const userData = {
-                                        ...userDetails,
+                                        ...userDetailsWithoutId,
                                         weight: bodyComposition.length > 0 ? bodyComposition[0].weight : null,
                                         uom: userSetUOM.length > 0 ? uomObj : null
                                     };
@@ -58,8 +58,7 @@ const getUser = (username) => {
                                     return userData;
                                 });
                         });
-                });
-        })
+                })
         .catch(err => {
             console.error('Error fetching user:', err);
             throw err;
@@ -76,6 +75,7 @@ const createUser = () => {
 
 module.exports = {
     getUser,
-    createUser
+    createUser,
+    findUser
 
 };

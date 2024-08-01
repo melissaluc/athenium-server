@@ -2,13 +2,8 @@
 
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
 const getExercises = require("../controller/getExercises.js")
-const config = require("../knexfile.js");
-const { error } = require("console");
-const knex = require("knex")(config);
-
-const { v4: uuidv4 } = require('uuid');
+const { authenticateToken } = require('../utils/auth');
 
 
 
@@ -16,7 +11,7 @@ const { v4: uuidv4 } = require('uuid');
 // Get Exercises
 
 router.route("/")
-    .get((req, res)=>{
+    .get(authenticateToken ,(req, res)=>{
 
         try {
             getExercises(req.body.headers.user_id)

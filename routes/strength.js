@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
+
 
 const strengthsController = require('../controller/strengthController');
+const { authenticateToken } = require('../utils/auth');
 
-
-router.route('/:userId')
-    .get(strengthsController.getStrengthByUserId)
-    .post(strengthsController.createStrength)
+router.route('/')
+    .get(authenticateToken, strengthsController.getStrengthByUserId)
+    .post(authenticateToken, strengthsController.createStrength)
 
 
 

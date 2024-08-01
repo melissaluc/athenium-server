@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-
-const trendsController = require('../controller/trendsController');
 
 
-router.route('/:userId')
-    .get(trendsController.getTrendsByUserId)
+const trendsController = require('../controller/trendsController.js');
+const { authenticateToken } = require('../utils/auth');
+
+router.route('/')
+    .get(authenticateToken, trendsController.getTrendsByUserId)
 
 
 

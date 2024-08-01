@@ -1,4 +1,4 @@
-const knex = require('../db');
+const knex = require('../utils/db.js');
 
 const { v4: uuidv4 } = require('uuid');
 const { options } = require("../routes/trends.js");

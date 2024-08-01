@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
+
 
 const mealsController = require('../controller/mealsController');
+const { authenticateToken } = require('../utils/auth');
 
-
-router.route('/:userId')
-    .get(mealsController.getMealsByUserId)
-    .post(mealsController.addFoodMeal)
-    .patch(mealsController.updateMeal)
+router.route('/')
+    .get(authenticateToken, mealsController.getMealsByUserId)
+    .post(authenticateToken, mealsController.addFoodMeal)
+    .patch(authenticateToken, mealsController.updateMeal)
 
 
 

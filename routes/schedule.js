@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
+
 
 const scheduleController = require('../controller/scheduleController');
+const { authenticateToken } = require('../utils/auth');
 
-
-router.route('/:userId')
-    .get(scheduleController.getByUserId)
+router.route('/')
+    .get(authenticateToken, scheduleController.getByUserId)
     // .post(scheduleController.createSchedule)
 
     

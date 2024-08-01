@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
 
+const { authenticateToken } = require('../utils/auth');
 const dashboardController = require('../controller/dashboardController');
 
 
-router.route('/:userId')
-    .get(dashboardController.getBodyCompositionByUserId)
+router.route('/')
+    .get(authenticateToken, dashboardController.getBodyCompositionByUserId)
 
 
 

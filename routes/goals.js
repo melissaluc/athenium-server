@@ -1,18 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
 
 const goalsController = require('../controller/goalsController');
+const { authenticateToken } = require('../utils/auth');
 
-
-router.route('/:userId')
-    .get(goalsController.getByUserId)
-    .post(goalsController.addGoal)
+router.route('/')
+    .get(authenticateToken, goalsController.getByUserId)
+    .post(authenticateToken, goalsController.addGoal)
 
     
-router.route('/:userId/:goalId')
-    .delete(goalsController.deleteGoal)
-    .put(goalsController.updateGoal)
+router.route('/:goalId')
+    .delete(authenticateToken, goalsController.deleteGoal)
+    .put(authenticateToken, goalsController.updateGoal)
 
 
 module.exports = router;

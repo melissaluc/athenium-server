@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
 
+const { authenticateToken } = require('../utils/auth');
 const userController = require('../controller/userController');
 
 
-router.route('/:username')
-    .get(userController.getUser)
+router.route('/')
+    .get(authenticateToken, userController.getUser)
 
 
 
