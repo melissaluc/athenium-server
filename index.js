@@ -4,37 +4,53 @@ function logger(req, res, next) {
     next()
 }
 
-// const getExercises = require('./controller/strengthCalculator/getExercises.js')
 
 const express = require('express');
 const cors = require('cors');
-
 require('dotenv').config();
+const helmet = require("helmet")
+const passport = require('passport')
+const session = require('express-session')
+const bodyParser = require('body-parser');
 
 const port = process.env.PORT || 8080; 
-const host = process.env.DB_HOST
+const host = process.env.HOST
 
 const app = express();
 
 app.use(logger);
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL
+}));
+app.use(helmet())
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
 app.use(express.static('public'));
+app.use(bodyParser.json())
+//  Google OAuth
+// Express session
+app.use(
+    session({ 
+        resave: false, 
+        saveUninitialized: false,
+        secret: process.env.SESSION_SECRET,
+        cookie: {
+            secure: process.env.NODE_ENV === "production" ? "true" : "auto",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+           },
+    }));
 
-// getExercises
+// Passport initialization
+app.use(passport.session());
+app.use(passport.authenticate("session"));
+// app.use(passport.initialize());
 
-//  Routes
-// Logs: Workouts, nutrition/meal planner, goals, measurements
-// Schedule: schedule (planned workout and meals)
-// User: validate user log in
-// Dashboard: user profile data, user stats 
-// Measurements: weight, circumference, bodyfat, muscle mass
-// Tracking: measurements, meals, workout, goalsls
-// Strength Level: calculate strength level
-// Exercises: exercises
 
-// userid: 39b17fed-61d6-492a-b528-4507290d5423
+//  Routers
+const authRouter = require("./routes/auth.js")
+app.use("/api/v1/auth", authRouter);
 
 const usersRouter = require('./routes/users.js');
 app.use('/api/v1/user', usersRouter);
@@ -65,14 +81,25 @@ app.use('/api/v1/strength', strengthRouter);
 
 
 // Define route handler for the root URL
+
+const serverHTML = `
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <h1 style="font-family: 'Silkscreen', sans-serif;" >Athenium</h1>
+</html>
+`
+
 app.get('/', (req, res) => {
-    res.send('Athenium Server'); // You can customize this response
+    res.send(serverHTML); 
 });
 
 
-
-
 // Log Host and Port
-app.listen(port, ()=>console.log(`server running at Host:localhost port: ${port}`))
+app.listen(port, ()=>console.log(`server running at host: ${host} port: ${port}`))
 
 
+ 
