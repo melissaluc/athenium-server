@@ -25,7 +25,7 @@ const getUser = (userId) => {
                 .first()
                 .then(userDetails => {
                     if (!userDetails) {
-                        throw new Error(`User details not found for user_id '${user.user_id}'`);
+                        throw new Error(`User details not found for user_id '${userId}'`);
                     }
 
                     // Fetch latest body composition data
@@ -65,12 +65,39 @@ const getUser = (userId) => {
         });
 }
 
-const createUser = () => {
-    // Retrieve sign up data
-    // 1. User Table
-    // 2. UOM Table
+const createUser = async (user) => {
+    const id = uuidv4();
+    const {username, hashedPassword, email_address, google_id, profile_img, dob, first_name, last_name, country, height_cm} = user
+    const date = new Date(dob);
+    date.setUTCHours(0, 0, 0, 0);
+    try {
+        const [newUser] = await knex('users')
+        .insert({
+            user_id: id,
+            username,
+            password: hashedPassword,
+            email_address,
+            google_id,
+            profile_img,
+            dob:date.toISOString(),
+            first_name,
+            last_name,
+            country,
+            height_cm,
+            created_on: new Date().toISOString(),
+            updated_on: new Date().toISOString()
+        })
+        .returning('*');
+        console.log('newUser: ',newUser)
+        return newUser;
+    
 
-}
+    } catch (error) {
+        console.error('Error creating user:', error);
+        throw error; 
+    }
+
+}   
 
 
 module.exports = {

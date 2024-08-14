@@ -39,17 +39,6 @@ const createMeasurement = async (userId, dateSelected, measurement) => {
 
         const id = uuidv4();
 
-        // // Convert Unix timestamp (seconds) to ISO 8601 string
-        // const createdOnDate = new Date(dateSelected * 1000).toISOString();
-
-        // Fetch the most recent measurements for the user
-        const prevMeasurements = await knex('measurements_log')
-            .select('weight_kg', 'musclemass_kg', 'bf_percentage')
-            .where('user_id', userId)
-            .orderBy('created_on', 'desc')
-            .limit(1)
-            .first(); 
-
         // Insert new measurement with previous values
         const insertedMeasurement = await knex('measurements_log')
             .insert({
@@ -58,9 +47,6 @@ const createMeasurement = async (userId, dateSelected, measurement) => {
                 ...measurement,
                 created_on: dateSelected,
                 updated_on: knex.fn.now(),
-                weight_kg: prevMeasurements ? prevMeasurements.weight_kg : null,
-                musclemass_kg: prevMeasurements ? prevMeasurements.musclemass_kg : null,
-                bf_percentage: prevMeasurements ? prevMeasurements.bf_percentage : null
             })
             .returning('*');
 

@@ -52,6 +52,9 @@ app.use(passport.authenticate("session"));
 const authRouter = require("./routes/auth.js")
 app.use("/api/v1/auth", authRouter);
 
+const verifyEmailRouter = require("./routes/verifyEmail.js")
+app.use("/api/v1/verify-email", verifyEmailRouter);
+
 const usersRouter = require('./routes/users.js');
 app.use('/api/v1/user', usersRouter);
 
