@@ -19,7 +19,7 @@ const saveUserForVerification = async (email_address, userData) => {
         const query = await knex('user_verification')
         .where({"email_address":email_address})
         .first()
-        if(query!==undefined & query.code) {
+        if(query!==undefined && query.code) {
             console.log('User already exists')
             return query.code;
         } else {
