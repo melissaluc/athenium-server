@@ -19,7 +19,7 @@ const saveUserForVerification = async (email_address, userData) => {
         const query = await knex('user_verification')
         .where({"email_address":email_address})
         .first()
-        if(query.code) {
+        if(query!==undefined & query.code) {
             console.log('User already exists')
             return query.code;
         } else {
@@ -45,7 +45,7 @@ const saveUserForVerification = async (email_address, userData) => {
 
 // Send the verification email
 const sendVerificationEmail = async (first_name, email_address, code) => {
-    console.log(email_address)
+    console.log(`send verification code ${code} email to send to: ${email_address}`)
     try {
         const mailOptions = {
             from: process.env.NOREPLY_EMAIL,

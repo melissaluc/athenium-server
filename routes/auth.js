@@ -141,7 +141,9 @@ router.route('/signup')
         } else if (action === 'submit' && userData) {
             if(!userData.google_id){
                 try {
+
                     const code = await saveUserForVerification(userData.email_address, userData)
+                    console.log('code generated: ',code)
                 
                     if(code){
                         const result = await sendVerificationEmail(userData.first_name, userData.email_address, code)
