@@ -4,7 +4,7 @@ require("dotenv").config();
 const jwt = require('jsonwebtoken');
 const knex = require('../utils/db');
 const bcrypt = require('bcrypt');
-const {saveUserForVerification, sendVerificationEmail} = require('../utils/verifyEmail')
+const {sendVerificationCode} = require('../utils/verifyEmail')
 const {addNewUser} = require('../utils/signup')
 
 async function authenticateUser(req, res) {
@@ -24,7 +24,6 @@ async function authenticateUser(req, res) {
             userCheck = await knex('users')
                 .where({ 'username': username })
                 .first();
-
             // If a user with the username is found, verify the password
             if (userCheck && await bcrypt.compare(password, userCheck.password)) {
                 // Password is correct, generate JWT token
@@ -136,20 +135,15 @@ router.route('/signup')
         const { action, username, email_address, userData} = req.body;
         if (action==='checkUsername') {
             const userExists = await findUser(username, email_address, null)
-            console.log('userExisits? ',userExists)
+            console.log('userExists? ',userExists)
             return res.json(userExists)
         } else if (action === 'submit' && userData) {
             if(!userData.google_id){
                 try {
 
-                    const code = await saveUserForVerification(userData.email_address, userData)
-                    console.log('code generated: ',code)
-                
-                    if(code){
-                        const result = await sendVerificationEmail(userData.first_name, userData.email_address, code)
-                        console.log('result: ',result)
-                        return res.json(result)
-                    }
+                    const result = await sendVerificationCode(userData.email_address, userData)
+                    console.log(result)
+                    return res.json(result)
 
                 } catch (error) {
                     return res.status(500).json({ success: false, message: 'Failed to create user' });

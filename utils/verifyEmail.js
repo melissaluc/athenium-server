@@ -105,4 +105,18 @@ const verifyCodeAndActivateUser = async (email_address, code) => {
     }
 };
 
-module.exports = {saveUserForVerification, sendVerificationEmail, verifyCodeAndActivateUser}
+
+const sendVerificationCode = async (email_address, userData ) => {
+
+    const code = await saveUserForVerification(email_address, userData)
+    console.log('code generated: ',code)
+
+    if(code){
+        const result = await sendVerificationEmail(userData.first_name, email_address, code)
+        console.log('result: ',result)
+        return result
+    }
+}
+
+
+module.exports = {saveUserForVerification, sendVerificationEmail, verifyCodeAndActivateUser, sendVerificationCode}
