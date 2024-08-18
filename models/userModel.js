@@ -99,10 +99,25 @@ const createUser = async (user) => {
 
 }   
 
+const updateUser = async (userId, newUserData) => {
+    try {
+        await knex('users')
+        .where({ 'user_id': userId })
+        .update(newUserData);
+
+        console.log(`User with ID ${userId} has been updated.`);
+
+    } catch (error) {
+        console.error('Error updating user:', error);
+    }
+
+}
+
 
 module.exports = {
     getUser,
     createUser,
-    findUser
+    findUser,
+    updateUser
 
 };

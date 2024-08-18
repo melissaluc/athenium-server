@@ -12,6 +12,7 @@ exports.up = function(knex) {
         table.float('body_fat').notNullable();
         table.float('lean_muscle_mass').notNullable();
         table.float('bmi').notNullable();
+        table.float('ffmi');
         table.float('bmr').notNullable();
         table.timestamp('created_on').defaultTo(knex.fn.now()).notNullable();
         table.timestamp('updated_on').defaultTo(knex.fn.now()).notNullable();

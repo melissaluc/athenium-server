@@ -18,13 +18,10 @@ exports.up = function(knex) {
         table.double('l_thigh_cm').notNullable();
         table.double('r_calf_cm').notNullable(); 
         table.double('l_calf_cm').notNullable();
-        // TODO: add he following fields below
-        // "height_cm",
-        // "leg_cm",
-        // "torso_cm",
+        table.double('l_upper_thigh_cm').notNullable().defaultTo(0);
+        table.double('r_upper_thigh_cm').notNullable().defaultTo(0); 
         table.timestamp('created_on').defaultTo(knex.fn.now()).notNullable();
         table.timestamp('updated_on').defaultTo(knex.fn.now()).notNullable();
-        // table.timestamps(true, true);
       });
 };
 

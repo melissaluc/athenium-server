@@ -55,6 +55,9 @@ app.use("/api/v1/auth", authRouter);
 const verifyEmailRouter = require("./routes/verifyEmail.js");
 app.use("/api/v1/verify-email", verifyEmailRouter);
 
+const resetPassword = require("./routes/resetPassword.js");
+app.use("/api/v1/reset-password", resetPassword);
+
 const usersRouter = require('./routes/users.js');
 app.use('/api/v1/user', usersRouter);
 

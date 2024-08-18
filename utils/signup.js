@@ -5,11 +5,10 @@ const {addUOM} = require('../models/settingsModel')
 const bcrypt = require('bcrypt');
 
 const addNewUser = async (userData) => {
-    const { username, password, email_address, dob, first_name, last_name, country, google_id, current_body_weight, height_cm, bmr, bmi, body_fat_percentage, lean_muscle_mass, uom, profile_img } = userData;
+    const { username, password, email_address, dob, first_name, last_name, country, google_id, current_body_weight, height_cm, bmr, bmi, ffmi, body_fat_percentage, lean_muscle_mass, uom, profile_img } = userData;
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    console.log('hashed password: ',hashedPassword)
     const user = { username, hashedPassword, email_address, google_id, profile_img, dob, first_name, last_name, country, height_cm };
     
     try {
@@ -19,7 +18,7 @@ const addNewUser = async (userData) => {
         console.log('create user id: ',userId)
 
         // Create measurements if provided
-        if (userData.newMeasurements) {
+        if (userData.newMeasurements && Object.keys(userData.newMeasurements).length > 0) {
             console.log('Insert measurement')
             const insertMeasurement = await createMeasurement(userId, userData.dateSelected, userData.newMeasurements);
             console.log('Insert measurement: ',insertMeasurement)
@@ -32,7 +31,8 @@ const addNewUser = async (userData) => {
             body_fat: body_fat_percentage,
             lean_muscle_mass: lean_muscle_mass,
             bmi: bmi,
-            bmr: bmr
+            bmr: bmr,
+            ffmi: ffmi || 0
         };
         await createBodyComposition(bodyComposition);
         console.log('Inserted body composition')

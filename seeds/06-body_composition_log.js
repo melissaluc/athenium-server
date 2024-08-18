@@ -15,6 +15,7 @@ exports.seed = function(knex) {
                   body_fat: 23,
                   lean_muscle_mass: 90,
                   bmi: 22.5,
+                  ffmi:22.5,
                   created_on: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
                   updated_on: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000)
               },
@@ -25,6 +26,7 @@ exports.seed = function(knex) {
                   body_fat: 23,
                   lean_muscle_mass: 90,
                   bmi: 24.8,
+                  ffmi:24.8,
                   created_on: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
                   updated_on: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000)
               },
@@ -35,6 +37,7 @@ exports.seed = function(knex) {
                   body_fat: 23,
                   lean_muscle_mass: 92,
                   bmi: 21.1,
+                  ffmi:21.1,
                   created_on: new Date(),
                   updated_on: new Date()
               }

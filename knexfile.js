@@ -1,9 +1,11 @@
 
 require('dotenv').config();
-
+const fs = require('fs');
+const path = require('path');
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+
 
 module.exports = {
   development: {
@@ -32,15 +34,21 @@ module.exports = {
     }
   },
   production: {
-    client: 'pg',
+    // client: 'pg',
+    client: 'cockroachdb',
     connection: {
-      database: process.env.PRODUCTION_DB_NAME,
-      user: process.env.PRODUCTION_DB_USER,
-      password: process.env.PRODUCTION_DB_PASSWORD,
-      host: process.env.PRODUCTION_DB_HOST,
-      port: process.env.PRODUCTION_DB_PORT,
+      connectionString:process.env.DATABASE_URL,
+      // database: process.env.PRODUCTION_DB_NAME,
+      // user: process.env.PRODUCTION_DB_USER,
+      // password: process.env.PRODUCTION_DB_PASSWORD,
+      // host: process.env.PRODUCTION_DB_HOST,
+      // port: process.env.PRODUCTION_DB_PORT,
       charset: "utf8",
-      ssl: { rejectUnauthorized: false }
+      // ssl: { rejectUnauthorized: false } for render.com
+      ssl: {
+        rejectUnauthorized: true, 
+        ca: path.join(__dirname, 'certs', 'root.crt').toString()
+      }
     },
     pool: {
       min: 2,
