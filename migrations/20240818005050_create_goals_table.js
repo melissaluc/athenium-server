@@ -33,10 +33,7 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-    return knex.schema
-        .dropTableIfExists('goals_log') // Drop table if it exists
-        .then(() => {
-            return knex.schema.createTable('goals_log', (table) => {
+    return knex.schema.createTable('goals_log', (table) => {
                 table.uuid('uid').primary();
                 table.uuid('user_id').references('user_id').inTable('users').onDelete('CASCADE');
                 table.string('status').notNullable();
@@ -47,13 +44,13 @@ exports.down = function(knex) {
                 table.string('category').notNullable();
                 table.string('metric').notNullable();
                 table.string('uom').notNullable();
-                table.float('current_value').notNullable(); // Ensure current_value is not nullable
-                table.float('start_value').notNullable(); // Ensure start_value is not nullable
+                table.float('current_value').notNullable(); 
+                table.float('start_value').notNullable(); 
                 table.float('target_value').notNullable();
                 table.float('priority_level').notNullable();
                 table.integer('rank').notNullable();
                 table.timestamp('created_on').defaultTo(knex.fn.now()).notNullable();
                 table.timestamp('updated_on').defaultTo(knex.fn.now()).notNullable();
             });
-        });
+
 };

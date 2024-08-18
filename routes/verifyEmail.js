@@ -30,6 +30,8 @@ router.route('/')
                 const result = await sendVerificationCode(email_address, userData);
                 return res.json(result);
 
+            } else if (action === 'reset_password') {
+                
             } else {
                 return res.status(400).json({ success: false, message: 'Invalid action' });
             }
