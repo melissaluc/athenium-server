@@ -76,39 +76,38 @@ const getUser = (userId) => {
 }
 
 
-const createUser = async (user) => {
+const createUser = async (user, trx) => {
     const id = uuidv4();
-    const {username, hashedPassword, email_address, google_id, profile_img, dob, first_name, last_name, country, height_cm} = user
+    const { username, hashedPassword, email_address, google_id, profile_img, dob, first_name, last_name, country, height_cm } = user;
     const date = new Date(dob);
     date.setUTCHours(0, 0, 0, 0);
-    try {
-        const [newUser] = await knex('users')
-        .insert({
-            user_id: id,
-            username,
-            password: hashedPassword,
-            email_address,
-            google_id,
-            profile_img,
-            dob:date.toISOString(),
-            first_name,
-            last_name,
-            country,
-            height_cm,
-            created_on: new Date().toISOString(),
-            updated_on: new Date().toISOString()
-        })
-        .returning('*');
-        console.log('newUser: ',newUser)
-        return newUser;
-    
 
+    try {
+        const [newUser] = await trx('users')
+            .insert({
+                user_id: id,
+                username,
+                password: hashedPassword,
+                email_address,
+                google_id,
+                profile_img,
+                dob: date.toISOString(),
+                first_name,
+                last_name,
+                country,
+                height_cm,
+                created_on: new Date().toISOString(),
+                updated_on: new Date().toISOString()
+            })
+            .returning('*');
+        
+        return newUser;
     } catch (error) {
         console.error('Error creating user:', error);
-        throw error; 
+        throw error;
     }
+};
 
-}   
 
 const updateUser = async (userId, newUserData) => {
     try {

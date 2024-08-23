@@ -143,14 +143,21 @@ router.route('/signup')
 
                     const result = await sendVerificationCode(userData.email_address, userData)
                     console.log(result)
-                    return res.json(result)
+                    return res.status(200).json(result)
 
                 } catch (error) {
                     return res.status(500).json({ success: false, message: 'Failed to create user' });
                 }
 
             } else {
-                addNewUser(userData)
+                const newUser = await addNewUser(userData)
+                console.log(newUser)
+                if(newUser.success){
+                    return res.status(200).json(newUser)
+                } else {
+                    return res.status(500).json({ success: false })
+                }
+            
             }
         }
     });
