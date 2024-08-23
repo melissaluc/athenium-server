@@ -5,6 +5,21 @@ const { addUOM } = require('../models/settingsModel');
 const bcrypt = require('bcrypt');
 const knex = require('../utils/db'); 
 
+async function hashPassword(password) {
+    let hashedPassword = null; 
+    const saltRounds = 10;
+
+    try {
+        const salt = await bcrypt.genSalt(saltRounds);
+        console.log(`Salt: ${salt}`);
+        hashedPassword = await bcrypt.hash(password, salt);
+        console.log('Password hashed: ', hashedPassword);
+    } catch (err) {
+        console.error('Error hashing password:', err.message);
+    }
+
+    return hashedPassword; 
+}
 
 const addNewUser = async (userData) => {
     const {
@@ -29,15 +44,20 @@ const addNewUser = async (userData) => {
         dateSelected
     } = userData;
 
-    let hashedPassword;
-    if (!google_id) {
-        const saltRounds = 10;
-        hashedPassword = await bcrypt.hash(password, saltRounds);
+    let hashedPassword = null;
+    if (google_id === false) {
+        hashedPassword = await hashPassword(password); // Await the result of hashPassword
+    }
+    console.log(' hashedPassword: ', hashedPassword, typeof hashedPassword)
+
+    // Check if hashedPassword is null and throw an error
+    if (google_id === false && hashedPassword === null) {
+        throw new Error('Password hashing failed');
     }
 
     const user = { 
         username, 
-        password: hashedPassword || null, 
+        password: hashedPassword, // Use the hashed password
         email_address, 
         google_id, 
         profile_img, 
@@ -47,6 +67,8 @@ const addNewUser = async (userData) => {
         country, 
         height_cm: Number(height_cm) 
     };
+
+    console.log('UserData: ', user)
 
     try {
         const result = await knex.transaction(async (trx) => {
@@ -127,7 +149,5 @@ const addNewUser = async (userData) => {
         throw error; // Ensure error is thrown to be handled by calling code
     }
 };
-
-
 
 module.exports = { addNewUser };

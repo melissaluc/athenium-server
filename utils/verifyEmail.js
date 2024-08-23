@@ -188,13 +188,17 @@ const verifyCodeAndActivateUser = async (email_address, code) => {
         }
 
         const user = verification.user_data;
-        await addNewUser(user);
+        console.log('stored userData:',user)
+        const newUser = await addNewUser(user)
+        if(newUser.success){
+            sendConfirmationEmail(user.first_name, email_address)
+            // Delete verification record
+            await knex('user_verification').where('email_address', email_address).andWhere('code', code).del();
+            return { success: true , msg:'New user created and verified'};
 
-        sendConfirmationEmail(user.first_name, email_address)
-        // Delete verification record
-        await knex('user_verification').where('email_address', email_address).andWhere('code', code).del();
-
-        return { success: true , msg:'New user created and verified'};
+        } else {
+            return res.status(500).json({ success: false })
+        }
     } catch (error) {
         console.error('Error verifying code:', error);
         throw error;

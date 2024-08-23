@@ -20,7 +20,7 @@ router.route('/')
                 }
 
                 const result = await verifyCodeAndActivateUser(email_address, verification_code);
-                return res.json(result);
+                return res.status(200).json(result);
 
             } else if (action === 'resend_code') {
                 if (!userData) {
@@ -28,10 +28,7 @@ router.route('/')
                 }
 
                 const result = await sendVerificationCode(email_address, userData);
-                return res.json(result);
-
-            } else if (action === 'reset_password') {
-                
+                return res.status(200).json(result);
             } else {
                 return res.status(400).json({ success: false, message: 'Invalid action' });
             }

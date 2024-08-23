@@ -16,23 +16,24 @@ async function authenticateUser(req, res) {
         if (google_id && email) {
             // Check for Google ID and email pair
             userCheck = await knex('users')
-                .where({ 'email_address': email })
-                .andWhere({ 'google_id': google_id })
+                .where({ email_address: email })
+                .andWhere({ google_id })
                 .first();
         } else if (username && password) {
             // Check for username and password pair
             userCheck = await knex('users')
-                .where({ 'username': username })
+                .where({ username })
                 .first();
+
             // If a user with the username is found, verify the password
             if (userCheck && await bcrypt.compare(password, userCheck.password)) {
                 // Password is correct, generate JWT token
                 const authToken = jwt.sign(
                     { userId: userCheck.user_id, email: userCheck.email },
-                    process.env.JWT_SECRET, 
-                    { algorithm: 'HS256', expiresIn: '1h' } 
+                    process.env.JWT_SECRET,
+                    { algorithm: 'HS256', expiresIn: '1h' }
                 );
-                
+
                 return res.json({
                     success: true,
                     token: authToken,
@@ -44,27 +45,11 @@ async function authenticateUser(req, res) {
             return res.status(400).json({ success: false, message: 'Invalid request parameters' });
         }
 
-        // If userCheck exists and is valid, generate JWT token
-        if (userCheck && userCheck.user_id) {
-            const authToken = jwt.sign(
-                { userId: userCheck.user_id, email: userCheck.email },
-                process.env.JWT_SECRET, 
-                { algorithm: 'HS256', expiresIn: '1h' } 
-            );
-
-            return res.json({
-                success: true,
-                token: authToken,
-            });
-        } else {
-            return res.status(401).json({ success: false, message: 'Invalid credentials' });
-        }
     } catch (err) {
+        console.error('Authentication error:', err); // Log the error for debugging
         return res.status(500).json({ success: false, message: 'Server error' });
     }
 }
-
-
 
 // Auth Routes
 router.route('/login')
@@ -150,6 +135,7 @@ router.route('/signup')
                 }
 
             } else {
+                // Create a google user
                 const newUser = await addNewUser(userData)
                 console.log(newUser)
                 if(newUser.success){

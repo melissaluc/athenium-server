@@ -78,7 +78,7 @@ const getUser = (userId) => {
 
 const createUser = async (user, trx) => {
     const id = uuidv4();
-    const { username, hashedPassword, email_address, google_id, profile_img, dob, first_name, last_name, country, height_cm } = user;
+    const { username, password, email_address, google_id, profile_img, dob, first_name, last_name, country, height_cm } = user;
     const date = new Date(dob);
     date.setUTCHours(0, 0, 0, 0);
 
@@ -87,7 +87,7 @@ const createUser = async (user, trx) => {
             .insert({
                 user_id: id,
                 username,
-                password: hashedPassword,
+                password,
                 email_address,
                 google_id,
                 profile_img,
