@@ -113,7 +113,7 @@ router.route('/google/login')
                 query.where('email_address', email_address);
             }
             if (username) {
-                query.andWhere('username', username);
+                query.andWhereRaw('LOWER(username) = ?', [username.toLowerCase()]);
             }
             if (google_id) {
                 query.andWhere('google_id', google_id);
