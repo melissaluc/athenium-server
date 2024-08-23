@@ -13,40 +13,61 @@ async function authenticateUser(req, res) {
     try {
         let userCheck;
 
+        // Google Authentication
         if (google_id && email) {
-            // Check for Google ID and email pair
             userCheck = await knex('users')
-                .where({ email_address: email })
-                .andWhere({ google_id })
-                .first();
-        } else if (username && password) {
-            // Check for username and password pair
-            userCheck = await knex('users')
-                .where({ username })
+                .where({ email_address: email, google_id })
                 .first();
 
-            // If a user with the username is found, verify the password
-            if (userCheck && await bcrypt.compare(password, userCheck.password)) {
-                // Password is correct, generate JWT token
+            if (userCheck) {
+        
                 const authToken = jwt.sign(
-                    { userId: userCheck.user_id, email: userCheck.email },
+                    { userId: userCheck.user_id, email: userCheck.email_address },
                     process.env.JWT_SECRET,
                     { algorithm: 'HS256', expiresIn: '1h' }
                 );
 
-                return res.json({
+                return res.status(200).json({
                     success: true,
                     token: authToken,
                 });
             } else {
-                return res.status(401).json({ success: false, message: 'Invalid username or password' });
+                return res.status(401).json({ success: false, message: 'Invalid Google ID or email' });
             }
-        } else {
+        }
+        
+        // Username and Password Authentication
+        else if (username && password) {
+            userCheck = await knex('users')
+                .where({ username })
+                .first();
+
+            if (userCheck) {
+                const isPasswordValid = await bcrypt.compare(password, userCheck.password);
+                if (isPasswordValid) {
+            
+                    const authToken = jwt.sign(
+                        { userId: userCheck.user_id, email: userCheck.email_address },
+                        process.env.JWT_SECRET,
+                        { algorithm: 'HS256', expiresIn: '1h' }
+                    );
+
+                    return res.status(200).json({
+                        success: true,
+                        token: authToken,
+                    });
+                }
+            }
+            return res.status(401).json({ success: false, message: 'Invalid username or password' });
+        } 
+        
+        // Invalid Request Handling
+        else {
             return res.status(400).json({ success: false, message: 'Invalid request parameters' });
         }
 
     } catch (err) {
-        console.error('Authentication error:', err); // Log the error for debugging
+        console.error('Authentication error:', err);
         return res.status(500).json({ success: false, message: 'Server error' });
     }
 }
@@ -194,13 +215,5 @@ router.route('/google/signup')
       })
       
 
-    
-// Logout route
-router.get('/logout', (req, res) => {
-    req.logout((err) => {
-    if (err) return res.status(500).json({ error: 'Logout error' });
-        res.redirect(`${process.env.CLIENT_URL}/login`);
-    });
-    });
 
 module.exports = router;
