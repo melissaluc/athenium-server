@@ -18,6 +18,7 @@ exports.seed = async function(knex) {
       last_name:'Sue',
       country:'Canada',
       height_cm:173,
+      gender:'female',
       created_on:new Date('2024-05-01T00:00:00'),
       updated_on:new Date('2024-05-01T00:00:00')
     }

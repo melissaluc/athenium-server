@@ -27,6 +27,8 @@ async function authenticateUser(req, res) {
                     { algorithm: 'HS256', expiresIn: '1h' }
                 );
 
+                console.log('AuthToken generated: ',authToken)
+
                 return res.status(200).json({
                     success: true,
                     token: authToken,
@@ -51,6 +53,8 @@ async function authenticateUser(req, res) {
                         process.env.JWT_SECRET,
                         { algorithm: 'HS256', expiresIn: '1h' }
                     );
+
+                    console.log('AuthToken generated: ',authToken)
 
                     return res.status(200).json({
                         success: true,
