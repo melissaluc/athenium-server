@@ -17,6 +17,7 @@ exports.up = function(knex) {
                 table.double('height_cm').notNullable();
                 table.string('country').notNullable();
                 table.string('profile_img');
+                table.enu('gender', ['male', 'female']).notNullable();
                 table.timestamp('created_on').defaultTo(knex.fn.now()).notNullable();
                 table.timestamp('updated_on').defaultTo(knex.fn.now()).notNullable();
             });

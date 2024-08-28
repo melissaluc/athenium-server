@@ -15,7 +15,7 @@ const getWorkout = async (req,res) => {
         const {workoutId} = req.params; 
         const userId = req.user.userId;
         const workouts = await workoutsService.getWorkout(userId,workoutId);
-        res.json(workouts);
+        res.status(200).json(workouts);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -27,7 +27,8 @@ const updateWorkout = async (req, res) => {
         const userId = req.user.userId;;
         const updateData = req.body;
         const workout= await workoutsService.updateWorkout(userId, workoutId, updateData);
-        res.json(workout);
+        console.log(workout)
+        res.status(200).json({success:true})
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -39,7 +40,7 @@ const createWorkout = async (req, res) => {
         const newWorkout = req.body;
         const userId = req.user.userId;
         const workout= await workoutsService.createWorkout(userId, newWorkout);
-        res.status(201).json(workout);
+        return res.status(201).json(workout);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -47,11 +48,12 @@ const createWorkout = async (req, res) => {
 
 
 const deleteWorkout = async (req, res) => {
+    console.log(req.params)
     try {
-        const workoutId = req.params
+        const {workoutId} = req.params
         const userId = req.user.userId
         const workout= await workoutsService.deleteWorkout(userId, workoutId);
-        res.status(201).json(workout);
+        return res.status(204).send();
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

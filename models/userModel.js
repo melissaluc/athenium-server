@@ -30,9 +30,12 @@ const getUser = (userId) => {
                 ) AS INT
             ) AS age`
             ),
+            "country",
+            knex.raw('TO_CHAR(dob::date, \'YYYY-MM-DD\') AS dob'),
             "first_name",
             "last_name",
-            "height_cm"
+            "height_cm",
+            "gender"
         )
         .where({'user_id': userId})
         .first()
@@ -110,18 +113,22 @@ const createUser = async (user, trx) => {
 
 
 const updateUser = async (userId, newUserData) => {
+    //  Setting update (preferred uoms) and personal information
     try {
         await knex('users')
         .where({ 'user_id': userId })
-        .update(newUserData);
+        .update(newUserData)
+        .returning('*');
 
         console.log(`User with ID ${userId} has been updated.`);
 
     } catch (error) {
-        console.error('Error updating user:', error);
+        console.error(error);
+        res.status(500).json({ error: 'Error updating user' });
     }
 
 }
+
 
 
 module.exports = {

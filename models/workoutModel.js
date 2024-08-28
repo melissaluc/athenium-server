@@ -1,4 +1,4 @@
-// models/measurementModel.js
+
 const knex = require('../utils/db');
 
 const { v4: uuidv4 } = require('uuid');
@@ -11,15 +11,15 @@ const getWorkouts = async (userId, workoutId) => {
         .select(
             "uid",
             "user_id",
-            "last_completed",
             "created_on",
             "updated_on",
             "frequency",
             "workout_name",
             "description",
             "tags",
-            // knex.raw("EXTRACT(epoch FROM created_on)::int AS created_on_unix"),
-            // knex.raw("EXTRACT(epoch FROM updated_on)::int AS updated_on_unix")
+            knex.raw("EXTRACT(epoch FROM last_completed)::int AS last_completed"),
+            knex.raw("EXTRACT(epoch FROM created_on)::int AS created_on_unix"),
+            knex.raw("EXTRACT(epoch FROM updated_on)::int AS updated_on_unix")
         )
         .where({ user_id: userId })
         .andWhere(builder => {
@@ -90,19 +90,19 @@ const createWorkout = async (userId, workout) => {
         // Insert new measurement with previous values
         const insertedWorkout = await knex('workouts_log')
         .insert({
-            uid: workout.workout_id ? workout.workout_id : id,
+            uid: id,
             user_id: userId,
             workout_name:workout.workout_name,
             description:workout.description,
-            last_completed:workout.last_completed,
+            last_completed:workout.last_completed || null,
             created_on:knex.fn.now(),
             updated_on:knex.fn.now(),
-            frequency:workout.frequency,
+            frequency:workout.frequency || 0,
             tags:JSON.stringify(workout.tags),
         })
         .returning('*');
-        
-        return insertedWorkout;
+        const { uid, user_id, ...rest } = insertedWorkout[0];
+        return {workout_id: uid, ...rest };
     } catch (error) {
         console.error('Error logging measurement:', error);
         throw error; // Rethrow the error to handle it further up the chain
@@ -110,48 +110,36 @@ const createWorkout = async (userId, workout) => {
 };
     
 const updateWorkout = async (userId, workoutId, updateData) => {
+    console.log('update data:', updateData);
+    const { addedExercises, deletedExercises, updatedExercises, updatedWorkoutDetails } = updateData;
 
-    const { addedExercises,  deletedExercises, updatedExercises, updatedWorkoutDetails} = updateData
-    
     try {
         await knex.transaction(async (trx) => {
             // Handle added exercises
-            if (addedExercises && addedExercises.length > 0) {
-                for (const exercise of addedExercises) {
-                    // Check if any of the numeric fields are non-empty strings
+            if (addedExercises) {
+                for (const [id, exercise] of Object.entries(addedExercises)) {
                     if (exercise.weight !== '' || exercise.reps !== '' || exercise.sets !== '' || exercise.duration !== '' || exercise.distance !== '') {
-                        // Convert string representations to numbers, defaulting to 0 if empty
                         const weightNumber = parseFloat(exercise.weight) || 0;
                         const repsNumber = parseInt(exercise.reps) || 0;
                         const setsNumber = parseInt(exercise.sets) || 0;
                         const distanceNumber = parseFloat(exercise.distance) || 0; 
                         const durationNumber = parseFloat(exercise.duration) || 0; 
-                
-                        // Generate a UUID if exercise.uid is not provided
-                        // const uid = exercise.uid ? exercise.uid : uuidv4();
-                
-                        try {
-                            // Insert into the database using transaction (trx)
-                            await trx("workout_exercises").insert({
-                                uid: exercise.id,
-                                workout_id: workoutId,
-                                exercise_name: exercise.exercise_name,
-                                category: exercise.category,
-                                group: exercise.group,
-                                weight: weightNumber,
-                                reps: repsNumber,
-                                sets: setsNumber,
-                                duration: durationNumber,
-                                distance: distanceNumber,
-                                img_url: exercise.img_url || null,
-                                created_on: knex.fn.now(),
-                                updated_on: knex.fn.now()
-                            });
-                        } catch (error) {
-                            console.error('Error inserting exercise:', error);
-                            // Handle error as needed (e.g., rollback transaction)
-                            throw error; // Rethrow the error or handle appropriately
-                        }
+                        
+                        await trx("workout_exercises").insert({
+                            uid: id,
+                            workout_id: workoutId,
+                            exercise_name: exercise.exercise_name,
+                            category: exercise.category,
+                            group: exercise.group,
+                            weight: weightNumber,
+                            reps: repsNumber,
+                            sets: setsNumber,
+                            duration: durationNumber,
+                            distance: distanceNumber,
+                            img_url: exercise.img_url || null,
+                            created_on: knex.fn.now(),
+                            updated_on: knex.fn.now()
+                        });
                     }
                 }
             }
@@ -164,58 +152,40 @@ const updateWorkout = async (userId, workoutId, updateData) => {
             }
 
             // Handle updated exercises
-            if (updatedExercises && updatedExercises.length > 0) {
-                for (const exercise of updatedExercises) {
+            if (updatedExercises) {
+                for (const [id, exercise] of Object.entries(updatedExercises)) {
                     const weightNumber = exercise.weight !== '' ? parseFloat(exercise.weight) : null;
                     const repsNumber = exercise.reps !== '' ? parseInt(exercise.reps) : null;
                     const setsNumber = exercise.sets !== '' ? parseInt(exercise.sets) : null;
                     const distanceNumber = exercise.distance !== '' ? parseFloat(exercise.distance) : null;
                     const durationNumber = exercise.duration !== '' ? parseFloat(exercise.duration) : null;
-    
-                    const updateFields = {
-                        updated_on: knex.fn.now()
-                    };
 
-                    if ('reps' in exercise) {
-                        updateFields.reps = repsNumber;
-                    }
+                    const updateFields = { updated_on: knex.fn.now() };
 
-                    if ('sets' in exercise) {
-                        updateFields.sets = setsNumber;
-                    }
+                    if (repsNumber !== null) updateFields.reps = repsNumber;
+                    if (setsNumber !== null) updateFields.sets = setsNumber;
+                    if (weightNumber !== null) updateFields.weight = weightNumber;
+                    if (durationNumber !== null) updateFields.duration = durationNumber;
+                    if (distanceNumber !== null) updateFields.distance = distanceNumber;
 
-                    if ('weight' in exercise) {
-                        updateFields.weight = weightNumber ;
-                    }
-
-                    if ('duration' in exercise) {
-                        updateFields.duration = durationNumber;
-                    }
-
-                    if ('distance' in exercise) {
-                        updateFields.distance = distanceNumber;
-                    }
-
-                    // Update only if there are fields to update
-                    if (Object.keys(updateFields).length > 1) { // Ensure there are fields other than 'updated_on'
+                    if (Object.keys(updateFields).length > 1) {
                         await trx('workout_exercises')
-                            .where('uid', exercise.uid)
+                            .where('uid', id)
                             .update(updateFields);
                     }
                 }
             }
 
-
-            
-
-            // Update workout details if workout_name or description changed
+            // Update workout details if necessary
             const workoutUpdates = {};
-            if (updatedWorkoutDetails.workout_name) {
-                workoutUpdates.workout_name = updatedWorkoutDetails.workout_name;
-            }
-            if (updatedWorkoutDetails.description) {
-                workoutUpdates.description = updatedWorkoutDetails.description;
-            }
+            const date = new Date(updatedWorkoutDetails.last_completed);
+            const lastUpdatedIsoString = date.toISOString();
+
+            if (updatedWorkoutDetails.workout_name) workoutUpdates.workout_name = updatedWorkoutDetails.workout_name;
+            if (updatedWorkoutDetails.description) workoutUpdates.description = updatedWorkoutDetails.description;
+            if (updatedWorkoutDetails.last_completed) workoutUpdates.last_completed = lastUpdatedIsoString;
+            if (updatedWorkoutDetails.frequency) workoutUpdates.frequency = updatedWorkoutDetails.frequency;
+
             if (Object.keys(workoutUpdates).length > 0) {
                 workoutUpdates.updated_on = knex.fn.now();
                 await trx('workouts_log')
@@ -227,17 +197,19 @@ const updateWorkout = async (userId, workoutId, updateData) => {
             await trx.commit();
             console.log("Transaction committed successfully.");
         });
-        
+
         // Return updated workout data if needed
         const updatedWorkout = await knex('workouts_log')
-        .where({ user_id: userId, uid: workoutId })
-        .first();
-        return updatedWorkout;
+            .where({ user_id: userId, uid: workoutId })
+            .first();
+        
+        return updatedWorkout; // Return the updated workout
     } catch (error) {
         console.error('Error updating workout:', error);
-        throw error;
+        throw error; // Ensure error is propagated
     }
-};    
+};
+
     
 const deleteWorkout = async (userId, workoutId) => {
     try {
@@ -253,6 +225,7 @@ const deleteWorkout = async (userId, workoutId) => {
             
             await trx.commit();
             console.log("Transaction committed successfully.");
+            return {success:true, msg:'Transaction committed successfully.'}
         })
     } catch (error) {
         console.error('Error deleting workout:', error);
