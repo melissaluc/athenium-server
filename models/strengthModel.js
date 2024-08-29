@@ -1,7 +1,7 @@
 const knex = require('../utils/db.js');
 const { v4: uuidv4 } = require('uuid');
 
-const calculateStrength = require('./strengthCalculator/calculateStrength.js')
+const {calculateStrength} = require('./strengthCalculator/calculateStrength.js')
 
 const getStrengthRecords = async (userId) => {
     try {
@@ -123,7 +123,19 @@ const createStrengthRecord = async (userId, data) => {
 
     try {
         // Call retrieveStrengthLevel to get strength data
-        const result = await calculateStrength.retrieveStrengthLevel(data.age, data.gender, data.body_weight, data.weight, data.reps, data.exercise_name, data.lift_uom, data.body_mass_uom)
+        const result = await calculateStrength(
+                                            data.gender, 
+                                            data.age, 
+                                            data.body_weight, 
+                                            data.body_mass_uom, 
+                                            data.exercise_name, 
+                                            data.weight,
+                                            data.lift_uom,
+                                            data.reps,
+                                            data?.variation || null,
+                                            data?.assistanceMass || null,
+                                            data?.extraMass || null
+                                            )
         console.log('Retrieved strength result:', result);
         
         // Check if result is valid before proceeding
@@ -133,7 +145,8 @@ const createStrengthRecord = async (userId, data) => {
                 .where('user_id', userId)
                 .andWhere({exercise_name:data.exercise_name})
                 .andWhere({group:data.group})
-                .andWhereRaw("DATE(calculated_on) = DATE(CURRENT_TIMESTAMP)")
+                // .andWhereRaw("DATE(calculated_on) = DATE(CURRENT_TIMESTAMP)")
+                .andWhereRaw("DATE(calculated_on) = CURRENT_DATE")
                 .first();
             console.log('Existing record:', existingRecord);
 
@@ -166,7 +179,7 @@ const createStrengthRecord = async (userId, data) => {
                         user_id: userId,
                         exercise_name: data.exercise_name,
                         category: data.category,
-                        body_weight: result.body_weight,
+                        body_weight: result.bodyWeight,
                         relative_strength_demographic: result.relative_strength_demographic,
                         one_rep_max: result.one_rep_max,
                         lift: data.weight,

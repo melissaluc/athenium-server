@@ -9,13 +9,14 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "render": "node index.js && knex migrate:latest && knex seed:run",
-    "startdb": "call init_database.bat",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "startdb": "call init_database.bat"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.5",
     "bcrypt": "^5.1.1",
+    "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -29,10 +30,15 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.12.0",
-    "puppeteer": "^22.13.1",
+    "puppeteer": "^22.4.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-adblocker": "^2.13.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
+    "@playwright/test": "^1.46.1",
+    "@types/node": "^22.5.1",
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.4"
   }

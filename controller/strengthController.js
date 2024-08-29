@@ -4,7 +4,7 @@ const getStrengthByUserId = async (req,res) => {
     try {
         const userId = req.user.userId; 
         const strength = await strengthService.getStrengthByUserId(userId);
-        res.json(strength);
+        res.status(201).json(strength);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

@@ -139,3 +139,7 @@ Dockerfile
 #  Ignore certificates
 certs/
 .crt
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
