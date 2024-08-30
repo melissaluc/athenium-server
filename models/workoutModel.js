@@ -47,7 +47,6 @@ const getWorkouts = async (userId, workoutId) => {
             
             // Combine workouts with their exercises
             const combinedData = workouts.map(workout => {
-                
                 return {
                     workout_id: workout.uid,
                     last_completed: workout.last_completed,
@@ -58,6 +57,18 @@ const getWorkouts = async (userId, workoutId) => {
                     tags: workout.tags,
                     exercises : exercises.filter(exercise => (exercise.workout_id === workout.uid))
                     .map(exercise => {
+                        console.log({
+                            id: exercise.uid,
+                            img_url: exercise.img_url,
+                            category:exercise.category,
+                            group:exercise.group,
+                            exercise_name: exercise.exercise_name,
+                            weight: exercise.weight,
+                            reps: exercise.reps,
+                            sets: exercise.sets,
+                            duration: exercise.duration,
+                            distance: exercise.distance
+                        })
                         return {
                             id: exercise.uid,
                             img_url: exercise.img_url,
@@ -73,7 +84,6 @@ const getWorkouts = async (userId, workoutId) => {
                     })
                 }
             })
-            
             return combinedData;
         } catch (err) {
             console.error('Error fetching workouts data:', err);
@@ -178,12 +188,14 @@ const updateWorkout = async (userId, workoutId, updateData) => {
 
             // Update workout details if necessary
             const workoutUpdates = {};
-            const date = new Date(updatedWorkoutDetails.last_completed);
-            const lastUpdatedIsoString = date.toISOString();
+            if (updatedWorkoutDetails.last_completed) {
+                // Convert seconds to milliseconds
+                const lastCompletedDate = new Date(updatedWorkoutDetails.last_completed * 1000);
+                workoutUpdates.last_completed = lastCompletedDate.toISOString(); // Convert to ISO string
+            }
 
             if (updatedWorkoutDetails.workout_name) workoutUpdates.workout_name = updatedWorkoutDetails.workout_name;
             if (updatedWorkoutDetails.description) workoutUpdates.description = updatedWorkoutDetails.description;
-            if (updatedWorkoutDetails.last_completed) workoutUpdates.last_completed = lastUpdatedIsoString;
             if (updatedWorkoutDetails.frequency) workoutUpdates.frequency = updatedWorkoutDetails.frequency;
 
             if (Object.keys(workoutUpdates).length > 0) {

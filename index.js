@@ -67,9 +67,6 @@ app.use('/api/v1/dashboard', dashboardRouter);
 const exercisesRouter = require('./routes/trends.js');
 app.use('/api/v1/trends', exercisesRouter);
 
-const scheduleRouter = require('./routes/schedule.js');
-app.use('/api/v1/schedule', scheduleRouter);
-
 const workoutsRouter = require('./routes/workouts.js');
 app.use('/api/v1/workouts', workoutsRouter);
 
