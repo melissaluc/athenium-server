@@ -143,19 +143,19 @@ const getTrendsByUserId = async (userId) => {
                         ],
                 data:measurements
             },
-            nutrition:{
-                "uom": {
-                    "macros": "g",
-                    "calories": "cal"
-                },
-                "options":[
-                    "protein",
-                    "carbs",
-                    "fat",
-                    "calories"
-                ],
-                data:nutrition
-            },
+            // nutrition:{
+            //     "uom": {
+            //         "macros": "g",
+            //         "calories": "cal"
+            //     },
+            //     "options":[
+            //         "protein",
+            //         "carbs",
+            //         "fat",
+            //         "calories"
+            //     ],
+            //     data:nutrition
+            // },
             strength:{
                 uom:{
                     lift: "lbs",

@@ -13,7 +13,7 @@ const getWorkouts = async (userId, workoutId) => {
             "user_id",
             "created_on",
             "updated_on",
-            "frequency",
+            knex.raw('frequency::int AS frequency'),
             "workout_name",
             "description",
             "tags",

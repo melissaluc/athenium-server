@@ -9,6 +9,11 @@ router.route('/')
     .get(authenticateToken, strengthsController.getStrengthByUserId)
     .post(authenticateToken, strengthsController.createStrength)
 
+router.route('/:exerciseName')
+    .get(authenticateToken, strengthsController.getExerciseStrengthLogByUserId)
+    .post(authenticateToken, strengthsController.createStrength)
+    .delete(authenticateToken, strengthsController.deleteStrengthRecords)
+    .patch(authenticateToken, strengthsController.updateStrengthRecords)
 
 
 
