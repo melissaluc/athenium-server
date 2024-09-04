@@ -23,15 +23,15 @@ const parseHTML = async (htmlText) => {
       .map((i, el) => $(el).text().replace(/['".]/g, "").trim().toLowerCase())
       .get();
 
-      let strengthLevel = null;
-      let next_strength_level = null;
+      let strengthLevel = 'beginner';
+      let next_strength_level = 'novice';
       const rows = $('.section-box.liftresult .liftresult__standards table tbody tr td')
       .map((i, el) => {
         const $el = $(el);
         const value = $el.text().replace(/['".]/g, "").trim();
         const hasHighlightClass = $el.hasClass('has-background-tablehighlight'); 
         
-        // console.log('Index:', i, 'Value:', value, 'hasHighlightClass:', hasHighlightClass);
+        console.log('Index:', i, 'Value:', value, 'hasHighlightClass:', hasHighlightClass);
         
         if (hasHighlightClass) {
           switch (i) {
@@ -51,9 +51,13 @@ const parseHTML = async (htmlText) => {
               strengthLevel = 'advanced';
               next_strength_level = 'elite';
               break;
+            case 5:
+              strengthLevel = 'elite';
+              next_strength_level = 'elite';
+              break;
             default:
-              strengthLevel = 'unknown';
-              next_strength_level = 'unknown';
+              strengthLevel = 'beginner';
+              next_strength_level = 'novice';
               break;
           }
           return parseInt(value) || 0;
@@ -104,6 +108,7 @@ const calculateStrength = async (
     exerciseName,
     liftMass,
     liftMassUnit,
+    sets,
     repetitions,
     variation,
     assistanceMass,

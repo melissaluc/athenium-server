@@ -111,18 +111,23 @@ router.route('/google/login')
 
     const findUser = async (username, email_address, google_id) => {
         console.log('Finding user:',username, email_address, google_id)
+        const lowerUsername = username.toLowerCase()
         try {
             const query = knex('users');
             if (email_address) {
                 query.where('email_address', email_address);
             }
             if (username) {
-                query.andWhereRaw('LOWER(username) = ?', [username.toLowerCase()]);
+                query.andWhereRaw('LOWER(username) = ?', lowerUsername);
             }
             if (google_id) {
                 query.andWhere('google_id', google_id);
             }
-        
+            const sqlQuery = query.toSQL();
+            console.log('Generated SQL Query:', sqlQuery.sql);
+            console.log('Bindings:', sqlQuery.bindings);
+
+            
             const userCheck = await query.first();
             if (userCheck === undefined) {
                 console.log('User not found')

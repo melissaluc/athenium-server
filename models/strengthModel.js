@@ -3,6 +3,41 @@ const { v4: uuidv4 } = require('uuid');
 
 const {calculateStrength} = require('./strengthCalculator/calculateStrength.js')
 
+
+const getExerciseRecords = async (userId, exerciseName, trx) => {
+    // const formatExerciseName = exerciseName.toLowerCase() 
+    //                             .replace(/-/g, ' ')
+    //                             .replace(/\b\w/g, char => char.toUpperCase());
+    try {
+
+        const strengthLog = await knex('strength_log')
+                        .select(
+                        'uid',
+                        'calculated_on',
+                        'created_on',
+                        'exercise_name',
+                        'body_weight',
+                        'group',
+                        'category',
+                        "relative_strength_demographic",
+                        "one_rep_max",
+                        "lift",
+                        "sets",
+                        "reps",
+                        "strength_level",
+                        "next_strength_level",
+                        "strength_bounds"
+                        )
+                        .where({user_id:userId})
+                        .andWhere({exercise_name: exerciseName})
+                        .orderBy('created_on', 'desc')
+
+        return strengthLog
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 const getStrengthRecords = async (userId) => {
     try {
         // Raw sql query
@@ -18,6 +53,7 @@ const getStrengthRecords = async (userId) => {
                 ld.work_volume,
                 sl.lift,
                 sl.reps,
+                sl.sets,
                 sl.one_rep_max,
                 sl.strength_level,
                 sl.next_strength_level,
@@ -117,37 +153,44 @@ const getStrengthRecords = async (userId) => {
 };
 
 
-
-const createStrengthRecord = async (userId, data) => {
+const createStrengthRecord = async (userId, data, trx) => {
     console.log('Entering createStrengthRecord function: ',data);
 
     try {
         // Call retrieveStrengthLevel to get strength data
+        const lift = data.weight || data.lift;
         const result = await calculateStrength(
                                             data.gender, 
                                             data.age, 
                                             data.body_weight, 
                                             data.body_mass_uom, 
                                             data.exercise_name, 
-                                            data.weight,
+                                            lift,
                                             data.lift_uom,
+                                            data.sets || 0,
                                             data.reps,
                                             data?.variation || null,
                                             data?.assistanceMass || null,
                                             data?.extraMass || null
                                             )
+
         console.log('Retrieved strength result:', result);
         
         // Check if result is valid before proceeding
         if (result) {
             // Check if a record already exists for the current user_id and calculated_on date
-            const existingRecord = await knex('strength_log')
-                .where('user_id', userId)
-                .andWhere({exercise_name:data.exercise_name})
-                .andWhere({group:data.group})
-                // .andWhereRaw("DATE(calculated_on) = DATE(CURRENT_TIMESTAMP)")
-                .andWhereRaw("DATE(calculated_on) = CURRENT_DATE")
-                .first();
+            let query = knex('strength_log')
+            .where('user_id', userId)
+            .andWhere('exercise_name', data.exercise_name)
+
+
+            if (data.uid) {
+                query = query.andWhere('uid', data.uid);
+            } else {
+                query = query.andWhereRaw("DATE(created_on) = DATE(CURRENT_DATE)");
+            }
+
+            let existingRecord = await query.first();
             console.log('Existing record:', existingRecord);
 
             if (existingRecord) {
@@ -159,7 +202,7 @@ const createStrengthRecord = async (userId, data) => {
                         body_weight: result.body_weight,
                         relative_strength_demographic: result.relative_strength_demographic,
                         one_rep_max: result.one_rep_max,
-                        lift: data.weight,
+                        lift,
                         sets:data.sets,
                         reps:data.reps,
                         strength_level: result.strengthLevel,
@@ -175,14 +218,14 @@ const createStrengthRecord = async (userId, data) => {
                 // Insert new record if no existing record found for today
                 const insertedStrength = await knex('strength_log')
                     .insert({
-                        uid:id,
+                        uid:data.uid || id,
                         user_id: userId,
                         exercise_name: data.exercise_name,
                         category: data.category,
                         body_weight: result.bodyWeight,
                         relative_strength_demographic: result.relative_strength_demographic,
                         one_rep_max: result.one_rep_max,
-                        lift: data.weight,
+                        lift,
                         sets:data.sets,
                         reps:data.reps,
                         group:data.group,
@@ -190,7 +233,7 @@ const createStrengthRecord = async (userId, data) => {
                         next_strength_level: result.next_strength_level,
                         strength_bounds:JSON.stringify(result.strengthBounds),
                         calculated_on: knex.fn.now(),
-                        created_on: knex.fn.now(),
+                        created_on: data.created_on || knex.fn.now(),
                     })
                     .returning('*');
                 console.log('Inserted data:', insertedStrength);
@@ -203,13 +246,93 @@ const createStrengthRecord = async (userId, data) => {
     }
 };
 
-    
+ 
+const deleteExerciseStrengthRecords = async (userId, exerciseName) => {
+    console.log('deleting records for ', exerciseName)
+    try {
 
+        const [record] = await knex('strength_log')
+            .select('exercise_name')
+            .where({'user_id': userId})
+            .andWhere('exercise_name', 'ilike', `%${exerciseName}%`)
+            .limit(1);
+
+        if (record) {
+            await knex('strength_log')
+                .where({'user_id': userId})
+                .andWhere('exercise_name', 'ilike', `%${exerciseName}%`)
+                .del()
+
+                return {success:true, exercise_deleted: record.exercise_name}
+        }
+
+        return null
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
+const updateStrengthRecords = async (userId, exerciseName, updatedData) => {
+    const {addedRecords, deletedRecords, unsavedRows: updatedRows, user} = updatedData;
+    console.log(updatedData)
+    // const {gender, lift_uom, body_mass_uom}= userData
+
+    
+    try {
+        const result = await knex.transaction(async (trx) => {
+
+            if (updatedRows && Object.keys(updatedRows).length > 0){
+                console.log('Updated rows: ', updatedRows)
+                const updatedRowsArray = Object.entries(updatedRows);
+                for (const [uid, rowData] of updatedRowsArray) {
+                    await createStrengthRecord(userId, { ...rowData, ...user }, trx);
+                }
+                    
+            }
+
+            if (deletedRecords && deletedRecords.length > 0) {
+                console.log('Attempting to delete Records:', deletedRecords, typeof deletedRecords)
+
+                const deleteQuery = `
+                                    DELETE FROM "strength_log"
+                                    WHERE "user_id" = ?
+                                    AND "uid" IN (?)
+                                `;
+
+
+                const deleteRows = await trx.raw(deleteQuery, [userId, deletedRecords]);
+                console.log('Rows Deleted:', deleteRows.rowCount);
+
+                if (deleteRows.rowCount === 0) {
+                    console.warn('No rows were deleted. Please verify the query and data.');
+                }
+            }
+
+
+            const strengthLog = await getExerciseRecords(userId, exerciseName) 
+
+            return {success:true, msg:'Transaction committed successfully.', log:strengthLog}
+            
+        })
+
+        console.log('Transaction committed successfully.',result)
+        return result
+
+    } catch (error) {
+        console.error(`Error ${deletedRecords.length> 0 && 'deleting records, and '} ${Object.keys(updatedRows).length> 0 && 'updating records'}:`, error);
+        throw error;
+    }
+
+}
 
 module.exports = {
     getStrengthRecords,
     createStrengthRecord,
-
+    getExerciseRecords,
+    deleteExerciseStrengthRecords,
+    updateStrengthRecords
 
 
 };
