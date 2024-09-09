@@ -113,7 +113,7 @@ const createUser = async (user, trx) => {
 
 
 const updateUser = async (userId, newUserData) => {
-    //  Setting update (preferred uoms) and personal information
+    //  Setting update personal information
     try {
         await knex('users')
         .where({ 'user_id': userId })
@@ -121,10 +121,11 @@ const updateUser = async (userId, newUserData) => {
         .returning('*');
 
         console.log(`User with ID ${userId} has been updated.`);
+        return {success: true}
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error updating user' });
+        return { error: 'Error updating user' };
     }
 
 }

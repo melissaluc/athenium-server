@@ -43,7 +43,7 @@ const getStrengthRecords = async (userId) => {
         // Raw sql query
         const sqlQuery = `
             SELECT
-                sl.calculated_on AS date_calculated,
+                sl.created_on AS date_calculated,
                 sl.exercise_name,
                 ex.img_url,
                 sl.category,
