@@ -8,6 +8,9 @@ const userController = require('../controller/userController');
 router.route('/')
     .get(authenticateToken, userController.getUser)
 
+router.route('/settings')
+    .put(authenticateToken, userController.updateUser)
+
 
 
 
