@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const updateUserUom= async (userId, newUomData) => {
     //  Setting update (preferred uoms) and personal information
+
     const updates = [
         {
             uom_name: 'body_mass',
@@ -37,18 +38,27 @@ const updateUserUom= async (userId, newUomData) => {
         }
     ];
     try {
-        for (const update of updates) {
-            await knex('user_uom')
-                .where({ user_id: userId, uom_name: update.uom_name })
-                .update({
-                    ...update,
-                    updated_on: new Date().toISOString(), // Update the timestamp
-                });
-        }
+        const updatedRecords = [];
+        await knex.transaction(async trx => {
+            for (const update of updates) {
+                const [updatedRecord] = await trx('user_uom')
+                    .where({ user_id: userId, uom_name: update.uom_name })
+                    .update({
+                        ...update,
+                        updated_on: new Date().toISOString(), // Update the timestamp
+                    })
+                    .returning('*');
+                    
+                    if (updatedRecord) {
+                        updatedRecords.push(updatedRecord);
+                    }
+            }
+        });
 
-        console.log(`User with ID ${userId} has been updated.`);
+        console.log(`User with ID ${userId} UOM has been updated.`);
+        return updatedRecords;
 
-        return {success: true}
+        
 
     } catch (error) {
         console.error(error);

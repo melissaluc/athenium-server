@@ -103,14 +103,14 @@ const getStrengthRecords = async (userId) => {
         latestRecords.map(exercise => {
             let normalizedScore
             if(exercise.strength_bounds) {
-
                 const strength_bounds = exercise.strength_bounds
                 const current_strength_level = exercise.strength_level
                 const next_strength_level = exercise.next_strength_level
                 // Values
                 const strengthLevel = strength_bounds[current_strength_level]
                 const proficiencyScore = proficiencyLevels[current_strength_level]
-                if(strength_bounds[next_strength_level]){
+                console.log(strength_bounds, current_strength_level)
+                if(strength_bounds[next_strength_level] && current_strength_level!='elite'){
                     const nextStrengthLevel = strength_bounds[next_strength_level]
                     // const score = proficiencyScore*((exercise.one_rep_max - strengthLevel)/(nextStrengthLevel-strengthLevel))
                     normalizedScore = proficiencyScore + ((exercise.one_rep_max - strengthLevel)/(nextStrengthLevel-strengthLevel))
@@ -122,7 +122,7 @@ const getStrengthRecords = async (userId) => {
                     //     \n nextstrengthlevel: ${next_strength_level}
                     //     `)
                 } else {
-                    normalizedScore = 5 + (exercise.one_rep_max/strength_bounds[current_strength_level])
+                    normalizedScore = 5 + (exercise.one_rep_max/strengthLevel)
                 }
                 exercise.score = normalizedScore
                 
@@ -163,10 +163,10 @@ const createStrengthRecord = async (userId, data, trx) => {
                                             data.gender, 
                                             data.age, 
                                             data.body_weight, 
-                                            data.body_mass_uom, 
+                                            'lb',// data.body_mass_uom, 
                                             data.exercise_name, 
                                             lift,
-                                            data.lift_uom,
+                                            'lb',// data.lift_uom,
                                             data.sets || 0,
                                             data.reps,
                                             data?.variation || null,
