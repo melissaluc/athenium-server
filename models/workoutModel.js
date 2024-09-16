@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 
 const getWorkouts = async (userId, workoutId) => {
-    console.log(workoutId)
+
     try {
         const workouts = await knex('workouts_log')
         .select(
@@ -26,70 +26,106 @@ const getWorkouts = async (userId, workoutId) => {
             if (workoutId) {
                 builder.andWhere({ uid: workoutId });
             }
-        });
-            
-            const exercises = await knex('workout_exercises')
-            .select(
-                'uid',
-                'workout_id',
-                'exercise_name',
-                'category',
-                'group',
-                'weight',
-                'reps',
-                'sets',
-                'duration',
-                'distance',
-                'img_url',
-                "created_on",
-                "updated_on"
-            )
-            
-            // Combine workouts with their exercises
-            const combinedData = workouts.map(workout => {
-                return {
-                    workout_id: workout.uid,
-                    last_completed: workout.last_completed,
-                    created_on: workout.created_on,
-                    frequency: workout.frequency,
-                    workout_name: workout.workout_name,
-                    description: workout.description,
-                    tags: workout.tags,
-                    exercises : exercises.filter(exercise => (exercise.workout_id === workout.uid))
+        })
+        .orderBy(knex.raw("EXTRACT(epoch FROM last_completed)::int"), 'desc');
+
+        const exercises = await knex('workout_exercises as we')
+                            .join(
+                                knex('strength_log as sl')
+                                    .select('exercise_name')
+                                    .max('created_on as latest_created_on')
+                                    .where('sl.user_id', userId)
+                                    .groupBy('exercise_name')
+                                    .as('latest_strength'),
+                                'we.exercise_name', 'latest_strength.exercise_name'
+                            )
+                            .join('strength_log as sl', function() {
+                                this.on('sl.exercise_name', '=', 'latest_strength.exercise_name')
+                                    .andOn('sl.created_on', '=', 'latest_strength.latest_created_on');
+                            })
+                            .select(
+                                'we.uid as uid',
+                                'we.workout_id as workout_id',
+                                'we.exercise_name as exercise_name',
+                                'we.category as category',
+                                'we.group as group',
+                                'we.weight as weight',
+                                'we.reps as reps',
+                                'we.sets as sets',
+                                'we.duration as duration',
+                                'we.distance as distance',
+                                'we.img_url as img_url',
+                                'we.created_on as created_on',
+                                'we.updated_on as updated_on',
+                                'sl.strength_level as strength_level',
+                                'sl.next_strength_level as next_strength_level',
+                                'sl.one_rep_max as one_rep_max',
+                                'sl.strength_bounds as strength_bounds'
+                            )
+                            .where({ 'sl.user_id': userId })
+
+        const proficiencyLevels = {
+            "beginner": 1,
+            "novice": 2,
+            "intermediate": 3,
+            "advanced": 4,
+            "elite": 5
+        };
+
+        // Combine workouts with their exercises
+        const combinedData = workouts.map(workout => {
+            return {
+                workout_id: workout.uid,
+                last_completed: workout.last_completed,
+                created_on: workout.created_on,
+                frequency: workout.frequency,
+                workout_name: workout.workout_name,
+                description: workout.description,
+                tags: workout.tags,
+                exercises: exercises
+                    .filter(exercise => exercise.workout_id === workout.uid)
                     .map(exercise => {
-                        console.log({
-                            id: exercise.uid,
-                            img_url: exercise.img_url,
-                            category:exercise.category,
-                            group:exercise.group,
-                            exercise_name: exercise.exercise_name,
-                            weight: exercise.weight,
-                            reps: exercise.reps,
-                            sets: exercise.sets,
-                            duration: exercise.duration,
-                            distance: exercise.distance
-                        })
+
+                        //  From strength model
+                        let normalizedScore;
+                        if (exercise.strength_bounds) {
+                            const strength_bounds = exercise.strength_bounds;
+                            const current_strength_level = exercise.strength_level;
+                            const next_strength_level = exercise.next_strength_level;
+                            const strengthLevel = strength_bounds[current_strength_level];
+                           
+                            const proficiencyScore = proficiencyLevels[current_strength_level];
+                            if(strength_bounds[next_strength_level] && current_strength_level!='elite') {
+                                const nextStrengthLevel = strength_bounds[next_strength_level];
+                                normalizedScore = proficiencyScore + ((exercise.one_rep_max - strengthLevel) / (nextStrengthLevel - strengthLevel));
+                            } else if (current_strength_level==='elite') {
+                                normalizedScore = 5 + (exercise.one_rep_max/strengthLevel);
+                            }
+    
+                        }
                         return {
                             id: exercise.uid,
                             img_url: exercise.img_url,
-                            category:exercise.category,
-                            group:exercise.group,
+                            category: exercise.category,
+                            group: exercise.group,
                             exercise_name: exercise.exercise_name,
                             weight: exercise.weight,
                             reps: exercise.reps,
                             sets: exercise.sets,
                             duration: exercise.duration,
-                            distance: exercise.distance
-                        }
+                            distance: exercise.distance,
+                            score: normalizedScore,
+                            strength_level: exercise.strength_level,
+                        };
                     })
-                }
-            })
-            return combinedData;
-        } catch (err) {
-            console.error('Error fetching workouts data:', err);
-            throw err;
-        }
+            };
+        });
+        return combinedData;
+    } catch (err) {
+        console.error('Error fetching workouts data:', err);
+        throw err;
     }
+}
     
 const createWorkout = async (userId, workout) => {
     try {
