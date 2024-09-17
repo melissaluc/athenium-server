@@ -1,4 +1,3 @@
-// models/mealModel.js
 const mealService = require('../services/mealsServices');
 
 const getMealsByUserId = async (req,res) => {
