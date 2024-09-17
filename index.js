@@ -64,6 +64,9 @@ app.use('/api/v1/user', usersRouter);
 const dashboardRouter = require('./routes/dashboard.js');
 app.use('/api/v1/dashboard', dashboardRouter);
 
+const bodyCompositionRouter = require('./routes/bodyComposition.js');
+app.use('/api/v1/body-composition', bodyCompositionRouter);
+
 const exercisesRouter = require('./routes/trends.js');
 app.use('/api/v1/trends', exercisesRouter);
 
