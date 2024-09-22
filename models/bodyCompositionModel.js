@@ -14,7 +14,6 @@ const updateRecord = async (userId, newRecord) => {
 const addRecord= async (userId, newRecord) => {
     const {body_fat, body_weight, bmr, bmi, ffmi, lean_muscle_mass} = newRecord
     try {
-
         const id = uuidv4();
 
         // Insert new measurement with previous values

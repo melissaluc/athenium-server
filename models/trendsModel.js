@@ -61,32 +61,39 @@ const getTrendsByUserId = async (userId) => {
             .orderBy('planned_on');
             
             
-            const strength = await knex('strength_log')
-            .select(
-                'exercise_name',
-                'group',
-                'one_rep_max',
-                'lift',
-                knex.raw('lift * COALESCE(reps, 1) AS product_lift_reps'),
-                knex.raw('lift / body_weight AS relative_strength'),
-                knex.raw("EXTRACT(epoch FROM calculated_on)::int AS timestamp")
-            )
-            .where({ user_id: userId })
-            .orderBy('group', 'asc')
-            .orderBy('exercise_name', 'asc')
-            .orderBy('timestamp', 'asc');
-        
-        
+            const strength = await knex.raw(`
+                SELECT exercise_name, "group", timestamp, lift, reps, sets, product_lift_reps, relative_strength
+                FROM (
+                    SELECT 
+                        exercise_name, 
+                        "group", 
+                        EXTRACT(epoch FROM calculated_on)::int AS timestamp,
+                        lift,
+                        reps,
+                        sets,
+                        lift * COALESCE(reps, 1) AS product_lift_reps,
+                        lift / body_weight AS relative_strength,
+                        ROW_NUMBER() OVER (PARTITION BY exercise_name, DATE_TRUNC('day', calculated_on) ORDER BY calculated_on DESC) AS row_num
+                    FROM strength_log
+                    WHERE user_id = ?
+                ) AS subquery
+                WHERE row_num = 1
+                ORDER BY "group" ASC, exercise_name ASC, timestamp ASC
+            `, [userId]);
+
+            console.log('strength: ', Object.keys(strength))
         
             const strengthTransformed = {}
             const strengthOptions = {}
-            strength.forEach(exercise => {
+            strength.rows.forEach(exercise => {
                 const { group, exercise_name, timestamp, lift, reps, sets, product_lift_reps, relative_strength, strength_level, one_rep_max } = exercise;
+            
+                const date = new Date(timestamp * 1000).toLocaleDateString(); // Convert timestamp to date string
             
                 if (!strengthTransformed[group]) {
                     strengthTransformed[group] = {};
                 }
-                
+            
                 if (!strengthTransformed[group][exercise_name]) {
                     strengthTransformed[group][exercise_name] = [];
                 }
@@ -100,14 +107,10 @@ const getTrendsByUserId = async (userId) => {
                 }
             
                 strengthTransformed[group][exercise_name].push({
-                    timestamp,
+                    timestamp: new Date(date).getTime(),
                     lift,
-                    reps,
-                    sets,
                     work_volume: product_lift_reps,
-                    relative_strength,
-                    strength_level,
-                    one_rep_max
+                    relative_strength
                 });
             });
 
