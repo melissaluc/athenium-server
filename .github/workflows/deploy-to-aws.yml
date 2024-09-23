@@ -1,12 +1,12 @@
-name: Deploy to AWS Elastic Beanstalk with Docker
+name: Deploy to Elastic Beanstalk
 
 on:
   push:
     branches:
-      - develop
+      - develop  # or the branch you want to trigger the deployment from
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,54 +16,25 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
-
-      - name: Clear npm cache
-        run: npm cache clean --force
+          node-version: '18'  # Use your Node.js version
 
       - name: Install dependencies
-        run: npm install --verbose
+        run: npm install
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Build the application
+        run: npm run build  # Adjust according to your build process
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
+      - name: Package the application
+        run: zip -r app.zip .  # Change to the correct zip command
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v20
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and push Docker image
-        env:
-          IMAGE_TAG: "${{ secrets.DOCKER_USERNAME }}/athenium-node-app:latest"
-        run: |
-          docker buildx build --platform linux/amd64 -t $IMAGE_TAG . --push --progress plain
-
-      - name: Create application zip
-        run: zip -r node-app.zip .  # Creates a zip file containing all files in the current directory
-
-      - name: Upload application zip to S3
-        run: aws s3 cp node-app.zip s3://elasticbeanstalk-us-east-2-767398068141/athenium/
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
-
-      - name: Deploy to AWS Elastic Beanstalk
-        run: |
-          aws elasticbeanstalk create-application-version \
-            --application-name Athenium \
-            --version-label $GITHUB_SHA \
-            --source-bundle S3Bucket=elasticbeanstalk-us-east-2-767398068141,S3Key=athenium/node-app.zip \
-            --auto-create-application \
-            --process
-
-      - name: Deployment Complete
-        run: |
-          echo "App deployed to AWS Elastic Beanstalk"
+          application_name: athenium-node-app
+          environment_name: athenium-node-app
+          version_label: ${{ github.sha }}
+          bucket_name: athenium-server-code-bucket
+          bucket_key: my-app.zip
+          aws_access_key_id: ${{ secrets.ELASTIC_BEANSTALK_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.ELASTIC_BEANSTALK_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.MY_AWS_REGION}}   # Change to your AWS region
