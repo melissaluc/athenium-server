@@ -4,7 +4,6 @@ function logger(req, res, next) {
     next()
 }
 
-const AWS = require('aws-sdk');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -47,29 +46,6 @@ app.use(
 app.use(passport.session());
 app.use(passport.authenticate("session"));
 // app.use(passport.initialize());
-
-
-// Initialize the S3 client
-const s3 = new AWS.S3();
-
-// Get env object, move to a util file
-try {
-    const getObjectFromS3Bucket = async (bucketName, key) => {
-      try {
-        const data = await s3.getObject({ Bucket: bucketName, Key: key }).promise();
-        console.log(data.Body.toString('utf-8'));
-        fs.writeFileSync('.env', envContent);
-      } catch (error) {
-        console.error('Error getting object from S3:', error);
-      }
-    };
-    
-    getObjectFromS3Bucket('athenium-server-code-bucket', '.env');
-
-} catch (error) {
-    console.error(error)
-}
-
 
 //  Routers
 const authRouter = require("./routes/auth.js")
