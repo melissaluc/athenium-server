@@ -11,7 +11,7 @@ const helmet = require("helmet")
 const passport = require('passport')
 const session = require('express-session')
 const bodyParser = require('body-parser');
-const fs = require('fs');
+
 
 const port = process.env.PORT || 8080; 
 const host = process.env.HOST
