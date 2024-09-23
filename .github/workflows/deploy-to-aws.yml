@@ -30,8 +30,8 @@ jobs:
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v20
         with:
-          application_name: athenium-node-app
-          environment_name: athenium-node-app
+          application_name: atheniumNodeApp
+          environment_name: AtheniumNodeApp-env
           version_label: ${{ github.sha }}
           bucket_name: athenium-server-code-bucket
           bucket_key: my-app.zip
