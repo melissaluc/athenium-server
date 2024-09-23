@@ -29,6 +29,7 @@ const addNewUser = async (userData) => {
         dob,
         first_name,
         last_name,
+        gender,
         country,
         google_id,
         current_body_weight,
@@ -65,7 +66,8 @@ const addNewUser = async (userData) => {
         first_name, 
         last_name, 
         country, 
-        height_cm: Number(height_cm) 
+        height_cm: Number(height_cm),
+        gender: gender.toLowerCase()
     };
 
     console.log('UserData: ', user)
