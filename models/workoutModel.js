@@ -30,40 +30,42 @@ const getWorkouts = async (userId, workoutId) => {
         .orderBy(knex.raw("EXTRACT(epoch FROM last_completed)::int"), 'desc');
 
         const exercises = await knex('workout_exercises as we')
-                            .join(
-                                knex('strength_log as sl')
-                                    .select('exercise_name')
-                                    .max('created_on as latest_created_on')
-                                    .where('sl.user_id', userId)
-                                    .groupBy('exercise_name')
-                                    .as('latest_strength'),
-                                'we.exercise_name', 'latest_strength.exercise_name'
-                            )
-                            .join('strength_log as sl', function() {
-                                this.on('sl.exercise_name', '=', 'latest_strength.exercise_name')
-                                    .andOn('sl.created_on', '=', 'latest_strength.latest_created_on');
-                            })
-                            .select(
-                                'we.uid as uid',
-                                'we.workout_id as workout_id',
-                                'we.exercise_name as exercise_name',
-                                'we.category as category',
-                                'we.group as group',
-                                'we.weight as weight',
-                                'we.reps as reps',
-                                'we.sets as sets',
-                                'we.duration as duration',
-                                'we.distance as distance',
-                                'we.img_url as img_url',
-                                'we.created_on as created_on',
-                                'we.updated_on as updated_on',
-                                'sl.strength_level as strength_level',
-                                'sl.next_strength_level as next_strength_level',
-                                'sl.one_rep_max as one_rep_max',
-                                'sl.strength_bounds as strength_bounds'
-                            )
-                            .where({ 'sl.user_id': userId })
-
+                .leftJoin(
+                    knex('strength_log as sl')
+                        .select('exercise_name')
+                        .max('created_on as latest_created_on')
+                        .where('sl.user_id', userId)
+                        .groupBy('exercise_name')
+                        .as('latest_strength'),
+                    'we.exercise_name', 'latest_strength.exercise_name'
+                )
+                .leftJoin('strength_log as sl', function() {
+                    this.on('sl.exercise_name', '=', 'latest_strength.exercise_name')
+                        .andOn('sl.created_on', '=', 'latest_strength.latest_created_on');
+                })
+                .select(
+                    'we.uid as uid',
+                    'we.workout_id as workout_id',
+                    'we.exercise_name as exercise_name',
+                    'we.category as category',
+                    'we.group as group',
+                    'we.weight as weight',
+                    'we.reps as reps',
+                    'we.sets as sets',
+                    'we.duration as duration',
+                    'we.distance as distance',
+                    'we.img_url as img_url',
+                    'we.created_on as created_on',
+                    'we.updated_on as updated_on',
+                    'sl.strength_level as strength_level',
+                    'sl.next_strength_level as next_strength_level',
+                    'sl.one_rep_max as one_rep_max',
+                    'sl.strength_bounds as strength_bounds'
+                )
+                .where({ 'sl.user_id': userId })
+                .orWhereNull('sl.user_id');
+    
+        console.log('exercises: ',exercises)
         const proficiencyLevels = {
             "beginner": 1,
             "novice": 2,
@@ -85,24 +87,25 @@ const getWorkouts = async (userId, workoutId) => {
                 exercises: exercises
                     .filter(exercise => exercise.workout_id === workout.uid)
                     .map(exercise => {
-
-                        //  From strength model
-                        let normalizedScore;
+                        const strengthLevel = exercise.strength_level || "unknown";
+                        let normalizedScore = 0;
+        
                         if (exercise.strength_bounds) {
                             const strength_bounds = exercise.strength_bounds;
-                            const current_strength_level = exercise.strength_level;
+                            const current_strength_level = strengthLevel;
                             const next_strength_level = exercise.next_strength_level;
-                            const strengthLevel = strength_bounds[current_strength_level];
-                           
-                            const proficiencyScore = proficiencyLevels[current_strength_level];
-                            if(strength_bounds[next_strength_level] && current_strength_level!='elite') {
+        
+                            const strengthValue = strength_bounds[current_strength_level];
+                            const proficiencyScore = proficiencyLevels[current_strength_level] || 0; 
+        
+                            if (strength_bounds[next_strength_level] && current_strength_level !== 'elite') {
                                 const nextStrengthLevel = strength_bounds[next_strength_level];
-                                normalizedScore = proficiencyScore + ((exercise.one_rep_max - strengthLevel) / (nextStrengthLevel - strengthLevel));
-                            } else if (current_strength_level==='elite') {
-                                normalizedScore = 5 + (exercise.one_rep_max/strengthLevel);
+                                normalizedScore = proficiencyScore + ((exercise.one_rep_max - strengthValue) / (nextStrengthLevel - strengthValue));
+                            } else if (current_strength_level === 'elite') {
+                                normalizedScore = 5 + (exercise.one_rep_max / strengthValue);
                             }
-    
                         }
+        
                         return {
                             id: exercise.uid,
                             img_url: exercise.img_url,
@@ -114,12 +117,14 @@ const getWorkouts = async (userId, workoutId) => {
                             sets: exercise.sets,
                             duration: exercise.duration,
                             distance: exercise.distance,
-                            score: normalizedScore,
-                            strength_level: exercise.strength_level,
+                            score: normalizedScore, 
+                            strength_level: strengthLevel, 
                         };
                     })
             };
         });
+        
+        console.log('User Workout Data: ', combinedData)
         return combinedData;
     } catch (err) {
         console.error('Error fetching workouts data:', err);
@@ -247,11 +252,10 @@ const updateWorkout = async (userId, workoutId, updateData) => {
         });
 
         // Return updated workout data if needed
-        const updatedWorkout = await knex('workouts_log')
-            .where({ user_id: userId, uid: workoutId })
-            .first();
-        
-        return updatedWorkout; // Return the updated workout
+        const updatedWorkout = await getWorkouts(userId, workoutId)
+        console.log("Updated Workout Data:", updatedWorkout[0])
+        return updatedWorkout[0]; // Return the updated workout
+
     } catch (error) {
         console.error('Error updating workout:', error);
         throw error; // Ensure error is propagated

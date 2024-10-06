@@ -28,7 +28,7 @@ const updateWorkout = async (req, res) => {
         const updateData = req.body;
         const workout= await workoutsService.updateWorkout(userId, workoutId, updateData);
         console.log(workout)
-        res.status(200).json({success:true})
+        res.status(200).json({success:true, data:workout})
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
