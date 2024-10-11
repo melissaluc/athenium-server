@@ -14,7 +14,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
-const port = process.env.PORT || 8080; 
+const port = process.env.PORT || 80; 
 const host = process.env.HOST
 
 const app = express();
