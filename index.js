@@ -13,21 +13,25 @@ const s3 = new AWS.S3();
 
 // use .env from S3 bucket
 const loadEnvFromS3 = () => {
-    s3.getObject({ Bucket: 'athenium-server-code-bucket', Key: '.env' }, (error, data) => {
-        if (error) {
-            console.error('Error loading .env from S3:', error);
-            return;
-        }
-
-        const envContent = data.Body.toString('utf-8');
-        envContent.split('\n').forEach(line => {
-            const [key, value] = line.split('=');
-            if (key && value) {
-                process.env[key.trim()] = value.trim();
+    return new Promise((resolve, reject) => {
+        s3.getObject({ Bucket: 'athenium-server-code-bucket', Key: '.env' }, (error, data) => {
+            if (error) {
+                console.error('Error loading .env from S3:', error);
+                reject(error);
+                return;
             }
-        });
 
-        console.log('Environment variables loaded from S3');
+            const envContent = data.Body.toString('utf-8');
+            envContent.split('\n').forEach(line => {
+                const [key, value] = line.split('=');
+                if (key && value) {
+                    process.env[key.trim()] = value.trim();
+                }
+            });
+
+            console.log('Environment variables loaded from S3');
+            resolve();
+        });
     });
 };
 
@@ -45,7 +49,8 @@ loadEnvFromS3().then(() => {
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static('public'));
     app.use(bodyParser.json());
-    const port = process.env.PORT || 8080; 
+    const port = 1000; 
+    // const port = process.env.PORT || 8080; 
     const host = process.env.HOST;
 
 
