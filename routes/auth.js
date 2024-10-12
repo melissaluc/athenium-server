@@ -6,10 +6,11 @@ const knex = require("../utils/db");
 const bcrypt = require("bcrypt");
 const { sendVerificationCode } = require("../utils/verifyEmail");
 const { addNewUser } = require("../utils/signup");
+const {s3EnvVars} = require('../utils/aws')
 
 async function authenticateUser(req, res) {
   const { google_id, email, username, password } = req.body;
-
+  console.log('s3EnvVars: ',s3EnvVars?.JWT_SECRET)
   try {
     let userCheck;
 
@@ -22,7 +23,7 @@ async function authenticateUser(req, res) {
       if (userCheck) {
         const authToken = jwt.sign(
           { userId: userCheck.user_id, email: userCheck.email_address },
-          process.env.JWT_SECRET,
+          s3EnvVars?.JWT_SECRET,
           { algorithm: "HS256", expiresIn: "1h" }
         );
 
@@ -51,7 +52,7 @@ async function authenticateUser(req, res) {
         if (isPasswordValid) {
           const authToken = jwt.sign(
             { userId: userCheck.user_id, email: userCheck.email_address },
-            process.env.JWT_SECRET,
+            s3EnvVars?.JWT_SECRET,
             { algorithm: "HS256", expiresIn: "1h" }
           );
 

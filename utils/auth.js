@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const {s3EnvVars} = require('../utils/aws')
+
 
 function authenticateToken(req, res, next) {
 
@@ -10,7 +12,7 @@ function authenticateToken(req, res, next) {
     }
 
     // Verify the token
-    jwt.verify(token, process.env.JWT_SECRET, { ignoreExpiration: true }, (err, user) => {
+    jwt.verify(token, s3EnvVars?.JWT_SECRET, { ignoreExpiration: true }, (err, user) => {
         if (err) {
             return res.sendStatus(403); 
         }

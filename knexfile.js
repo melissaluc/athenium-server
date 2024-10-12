@@ -1,7 +1,7 @@
 
 require('dotenv').config();
-const fs = require('fs');
 const path = require('path');
+const {s3EnvVars} = require('./utils/aws.js')
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -11,19 +11,19 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      database: process.env.DEV_DB_NAME,
-      user: process.env.DEV_DB_USER,
-      password: process.env.DEV_DB_PASSWORD,
-      host: process.env.DEV_DB_HOST,
-      port: process.env.DEV_DB_PORT
+      database: s3EnvVars?.DEV_DB_NAME,
+      user: s3EnvVars?.DEV_DB_USER,
+      password: s3EnvVars?.DEV_DB_PASSWORD,
+      host: s3EnvVars?.DEV_DB_HOST,
+      port: s3EnvVars?.DEV_DB_PORT
     }
   },
   staging: {
     client: 'pg',
     connection: {
-      database: process.env.STAGING_DB_NAME,
-      user: process.env.STAGING_DB_USER,
-      password: process.env.STAGING_DB_PASSWORD
+      database: s3EnvVars?.STAGING_DB_NAME,
+      user: s3EnvVars?.STAGING_DB_USER,
+      password: s3EnvVars?.STAGING_DB_PASSWORD
     },
     pool: {
       min: 2,
@@ -37,16 +37,16 @@ module.exports = {
     // client: 'pg',
     client: 'cockroachdb',
     connection: {
-      connectionString:process.env.DATABASE_URL,
-      // database: process.env.PRODUCTION_DB_NAME,
-      // user: process.env.PRODUCTION_DB_USER,
-      // password: process.env.PRODUCTION_DB_PASSWORD,
-      // host: process.env.PRODUCTION_DB_HOST,
-      // port: process.env.PRODUCTION_DB_PORT,
+      connectionString:s3EnvVars?.DATABASE_URL,
+      // database: s3EnvVars?.PRODUCTION_DB_NAME,
+      // user: s3EnvVars?.PRODUCTION_DB_USER,
+      // password: s3EnvVars?.PRODUCTION_DB_PASSWORD,
+      // host: s3EnvVars?.PRODUCTION_DB_HOST,
+      // port: s3EnvVars?.PRODUCTION_DB_PORT,
       charset: "utf8",
       // ssl: { rejectUnauthorized: false } for render.com
       ssl: {
-        rejectUnauthorized: true, 
+        rejectUnauthorized: false,  // change to true 
         ca: path.join(__dirname, 'certs', 'root.crt').toString()
       }
     },

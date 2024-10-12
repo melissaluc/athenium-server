@@ -1,6 +1,8 @@
 const puppeteer = require('puppeteer');
 require('dotenv').config();
 const fs = require("fs");
+const {s3EnvVars} = require('../../utils/aws.js')
+
 
 // Define an async function to use async/await syntax
 (async () => {
@@ -11,7 +13,7 @@ const fs = require("fs");
     const page = await browser.newPage();
 
     // Navigate to a URL
-    await page.goto(process.env.StrengthCalc_URL);
+    await page.goto(s3EnvVars?.StrengthCalc_URL);
 
     // Set the viewport size
     await page.setViewport({ width: 900, height: 1200 });

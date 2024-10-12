@@ -1,4 +1,3 @@
-const AWS = require('aws-sdk');
 const express = require('express');
 const cors = require('cors');
 const helmet = require("helmet");
@@ -6,34 +5,9 @@ const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const {loadEnvFromS3, s3EnvVars} = require('./utils/aws.js')
 
 
-// Initialize the S3 client
-const s3 = new AWS.S3();
-
-// use .env from S3 bucket
-const loadEnvFromS3 = () => {
-    return new Promise((resolve, reject) => {
-        s3.getObject({ Bucket: 'athenium-server-code-bucket', Key: '.env' }, (error, data) => {
-            if (error) {
-                console.error('Error loading .env from S3:', error);
-                reject(error);
-                return;
-            }
-
-            const envContent = data.Body.toString('utf-8');
-            envContent.split('\n').forEach(line => {
-                const [key, value] = line.split('=');
-                if (key && value) {
-                    process.env[key.trim()] = value.trim();
-                }
-            });
-
-            console.log('Environment variables loaded from S3');
-            resolve();
-        });
-    });
-};
 
 // Load environment variables from S3 before setting up other middleware
 loadEnvFromS3().then(() => {
@@ -42,7 +16,7 @@ loadEnvFromS3().then(() => {
     app.use(logger);
     app.use(cors({
         credentials: true,
-        origin: process.env.CLIENT_URL
+        origin: s3EnvVars?.CLIENT_URL
     }));
     app.use(helmet());
     app.use(express.json());
@@ -50,18 +24,18 @@ loadEnvFromS3().then(() => {
     app.use(express.static('public'));
     app.use(bodyParser.json());
     const port = 1000; 
-    // const port = process.env.PORT || 8080; 
-    const host = process.env.HOST;
+    // const port = s3EnvVars?.PORT || 8080; 
+    const host = s3EnvVars?.HOST;
 
 
     app.use(
         session({
             resave: false,
             saveUninitialized: false,
-            secret: process.env.SESSION_SECRET,
+            secret: s3EnvVars?.SESSION_SECRET,
             cookie: {
-                secure: process.env.NODE_ENV === "production" ? "true" : "auto",
-                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+                secure: s3EnvVars?.NODE_ENV === "production" ? "true" : "auto",
+                sameSite: s3EnvVars?.NODE_ENV === "production" ? "none" : "lax",
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             },
         })
@@ -124,4 +98,6 @@ function logger(req, res, next) {
     console.log(req.originalUrl);
     next();
 }
+
+
 

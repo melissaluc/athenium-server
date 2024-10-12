@@ -2,13 +2,15 @@ const nodemailer = require("nodemailer");
 const knex = require('./db');
 const bcrypt = require('bcrypt');
 const {updateUser} = require('../models/userModel')
+const {s3EnvVars} = require('../utils/aws')
+
 
 // Create the transporter for sending emails
 const transporter = nodemailer.createTransport({
     service: 'gmail', // Use appropriate email service
     auth: {
-        user: process.env.NOREPLY_EMAIL,
-        pass: process.env.NOREPLY_EMAIL_PASSWORD,
+        user: s3EnvVars?.NOREPLY_EMAIL,
+        pass: s3EnvVars?.NOREPLY_EMAIL_PASSWORD,
     },
 });
 
@@ -40,11 +42,11 @@ const sendPasswordResetEmail = async (email_address, token) => {
     const first_name = await storeToken(email_address, token)
 
     if(first_name!==undefined){
-        const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}/${email_address}`;
+        const resetLink = `${s3EnvVars?.CLIENT_URL}/reset-password/${token}/${email_address}`;
     
         try {
             const mailOptions = {
-                from: process.env.NOREPLY_EMAIL,
+                from: s3EnvVars?.NOREPLY_EMAIL,
                 to: email_address,
                 subject: 'Athenium Password Reset 🦉🔱',
                 html: `

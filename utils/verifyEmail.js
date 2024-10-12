@@ -3,12 +3,14 @@ const knex = require('./db');
 const { v4: uuidv4 } = require('uuid')
 const {addNewUser} = require('../utils/signup')
 const crypto = require('crypto');
+const {s3EnvVars} = require('../utils/aws')
+
 // Create the transporter for sending emails
 const transporter = nodemailer.createTransport({
     service: 'gmail', // Use appropriate email service
     auth: {
-        user: process.env.NOREPLY_EMAIL,
-        pass: process.env.NOREPLY_EMAIL_PASSWORD,
+        user: s3EnvVars?.NOREPLY_EMAIL,
+        pass: s3EnvVars?.NOREPLY_EMAIL_PASSWORD,
     },
 });
 
@@ -48,7 +50,7 @@ const sendVerificationEmail = async (first_name, email_address, code) => {
     console.log(`send verification code ${code} email to send to: ${email_address}`)
     try {
         const mailOptions = {
-            from: process.env.NOREPLY_EMAIL,
+            from: s3EnvVars?.NOREPLY_EMAIL,
             to: email_address,
             subject: 'Your Athenium Verification Code 🦉🔱',
             html: `
@@ -84,7 +86,7 @@ const sendConfirmationEmail = async (first_name, email_address) => {
     console.log(`send confirmation email to: ${email_address}`)
     try {
         const mailOptions = {
-            from: process.env.NOREPLY_EMAIL,
+            from: s3EnvVars?.NOREPLY_EMAIL,
             to: email_address,
             subject: `🌟Welcome to Athenium 🦉🔱! 🌟`,
             html: `
