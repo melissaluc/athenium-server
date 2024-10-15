@@ -83,7 +83,7 @@ jobs:
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       run: |
-          sed "s/ACCOUNT_NUMBER/${{ secrets.AWS_ACCOUNT_NUMBER }}/g; s/YOUR_IMAGE_PLACEHOLDER/${{ secrets.ECR_IMAGE }}/g" .aws/athenium-node-task-definition-template.json > .aws/athenium-node-task-definition.json
+        sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" .aws/athenium-node-task-definition-template.json > .aws/athenium-node-task-definition.json
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
