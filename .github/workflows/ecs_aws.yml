@@ -56,11 +56,6 @@ jobs:
       with:
         ref: develop
 
-    - name: Check environment variables
-      run: |
-        echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
-        echo "ECS_SERVICE: ${{ env.ECS_SERVICE }}"
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -88,7 +83,7 @@ jobs:
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       run: |
-          sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" .aws/athenium-node-task-definition-template.json > .aws/athenium-node-task-definition.json
+          sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" ${{ env.ECS_TASK_DEFINITION }} > ${{ env.ECS_TASK_DEFINITION }}
           echo "task-def=$(cat .aws/athenium-node-task-definition.json)" >> $GITHUB_ENV
       
     - name: Deploy Amazon ECS task definition
