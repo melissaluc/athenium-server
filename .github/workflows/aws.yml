@@ -56,6 +56,11 @@ jobs:
       with:
         ref: develop
 
+    - name: Check environment variables
+      run: |
+        echo "ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}"
+        echo "ECS_SERVICE: ${{ env.ECS_SERVICE }}"
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
