@@ -88,13 +88,13 @@ jobs:
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       run: |
-        sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" .aws/athenium-node-task-definition-template.json > .aws/athenium-node-task-definition.json
-
+          sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" .aws/athenium-node-task-definition-template.json > .aws/athenium-node-task-definition.json
+          echo "task-def=$(cat .aws/athenium-node-task-definition.json)" >> $GITHUB_ENV
+      
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ${{ steps.task-def.outputs.task-definition }}
-        # task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        task-definition: ${{ env.task-def }}
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
-        wait-for-service-stability: true
+    
