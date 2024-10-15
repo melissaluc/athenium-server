@@ -83,15 +83,18 @@ jobs:
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       run: |
-          sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" ${{ env.ECS_TASK_DEFINITION }} > ${{ env.ECS_TASK_DEFINITION }}
-          echo "task-def=${{ env.ECS_TASK_DEFINITION }}" >> $GITHUB_ENV
-      
+        sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" ${{ env.ECS_TASK_DEFINITION }} > .aws/updated-task-definition.json
+        echo "TASK_DEF_FILE=.aws/updated-task-definition.json" >> $GITHUB_ENV
+    
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: task-def
+        task-definition: ${{ env.TASK_DEF_FILE }}
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
+        wait-for-service-stability: true
+    
     - name: Clean up
       run: rm .aws/updated-task-definition.json
+
     
