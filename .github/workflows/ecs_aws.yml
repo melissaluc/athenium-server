@@ -84,7 +84,7 @@ jobs:
       id: task-def
       run: |
           sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" ${{ env.ECS_TASK_DEFINITION }} > ${{ env.ECS_TASK_DEFINITION }}
-          echo "task-def=$(cat .aws/athenium-node-task-definition.json)" >> $GITHUB_ENV
+          echo "task-def=${{ env.ECS_TASK_DEFINITION }}" >> $GITHUB_ENV
       
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
