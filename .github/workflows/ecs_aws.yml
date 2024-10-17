@@ -114,7 +114,7 @@ jobs:
       shell: bash
     
     - name: Display fetched ARN for debugging
-      run: echo 
+      run: echo "Fetched Task Definition ARN: ${{ env.TASK_DEF_ARN }}"
       
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
