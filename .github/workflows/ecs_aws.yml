@@ -80,48 +80,23 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-    # - name: Fill in the new image ID in the Amazon ECS task definition
-    #   id: task-def
-    #   run: |
-    #     sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" ${{ env.ECS_TASK_DEFINITION }} > .aws/updated-task-definition.json
-    #     echo "TASK_DEF_FILE=.aws/updated-task-definition.json" >> $GITHUB_ENV
-    
-    # - name: Deploy Amazon ECS task definition
-    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-    #   with:
-    #     task-definition: ${{ env.TASK_DEF_FILE }}
-    #     service: ${{ env.ECS_SERVICE }}
-    #     cluster: ${{ env.ECS_CLUSTER }}
-    #     wait-for-service-stability: true
-    
-    # - name: Clean up
-    #   run: rm .aws/updated-task-definition.json
-
-    
-    # - name: Update task definition image
-    #   id: task-def
-    #   run: |
-    #     aws ecs describe-task-definition --task-definition athenium-backend --query taskDefinition > task-definition.json
-    #     sed -i 's#YOUR_IMAGE_PLACEHOLDER#'${{ secrets.ECR_IMAGE }}'#' task-definition.json
-    #     aws ecs register-task-definition --cli-input-json file://task-definition.json
-    #     rm task-definition.json
-
-    - name: Get latest task definition ARN
-      id: get-task-def-arn
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
       run: |
-        arn=$(aws ecs describe-task-definition --task-definition athenium-backend --query taskDefinition.taskDefinitionArn --output text)
-        echo "TASK_DEF_ARN=$arn" >> $GITHUB_ENV
-      shell: bash
+        sed "s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g; s|YOUR_IMAGE_PLACEHOLDER|${{ secrets.ECR_IMAGE }}|g" ${{ env.ECS_TASK_DEFINITION }} > .aws/updated-task-definition.json
+        echo "TASK_DEF_FILE=.aws/updated-task-definition.json" >> $GITHUB_ENV
     
-    - name: Display fetched ARN for debugging
-      run: echo "Fetched Task Definition ARN:${{ env.TASK_DEF_ARN }}"
-      
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ${{ env.TASK_DEF_ARN }}
+        task-definition: ${{ env.TASK_DEF_FILE }}
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
+    
+    - name: Clean up
+      run: rm .aws/updated-task-definition.json
+
+    
 
     
