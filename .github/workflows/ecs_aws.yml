@@ -112,7 +112,10 @@ jobs:
         arn=$(aws ecs describe-task-definition --task-definition athenium-backend --query taskDefinition.taskDefinitionArn --output text)
         echo "TASK_DEF_ARN=$arn" >> $GITHUB_ENV
       shell: bash
-
+    
+    - name: Display fetched ARN for debugging
+      run: echo 
+      
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
