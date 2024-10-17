@@ -1,8 +1,9 @@
 const AWS = require('aws-sdk');
+const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+
 
 // Initialize the S3 client
-const s3 = new AWS.S3();
-
+const s3 = new S3Client({ region: 'us-east-2' })
 const s3EnvVars = {};
 
 
@@ -21,8 +22,8 @@ const streamToString = (stream) => {
 const loadEnvFromS3 = async () => {
     try {
         const data = await s3.send(new GetObjectCommand({ Bucket: 'athenium-server-code-bucket', Key: '.env' }));
-        const envContent = (await streamToString(data.Body)).toString('utf-8');
-        
+        const envContent = await streamToString(data.Body);
+
         envContent.split('\n').forEach(line => {
             const [key, value] = line.split('=');
             if (key && value) {
@@ -33,8 +34,9 @@ const loadEnvFromS3 = async () => {
     } catch (error) {
         console.error('Error loading .env from S3:', error);
         throw error;
+    
     }
-};
+}
 
 module.exports = {
     loadEnvFromS3,
