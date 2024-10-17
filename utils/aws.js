@@ -27,7 +27,7 @@ const loadEnvFromS3 = async () => {
                 s3EnvVars[key.trim()] = value.trim();
             }
         });
-        console.log('Environment variables loaded from S3:',s3EnvVar);
+        console.log('Environment variables loaded from S3:', s3EnvVars);
     } catch (error) {
         console.error('Error loading .env from S3:', error);
         throw error;
