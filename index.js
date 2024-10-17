@@ -23,8 +23,8 @@ loadEnvFromS3().then(() => {
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static('public'));
     app.use(bodyParser.json());
-    const port = 1000; 
-    // const port = s3EnvVars?.PORT || 8080; 
+
+    const port = s3EnvVars?.PORT || 8080; 
     const host = s3EnvVars?.HOST;
 
 
