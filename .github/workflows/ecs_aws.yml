@@ -110,12 +110,12 @@ jobs:
       id: get-task-def-arn
       run: |
         arn=$(aws ecs describe-task-definition --task-definition athenium-backend --query taskDefinition.taskDefinitionArn --output text)
-        echo "::set-output name=task-def-arn::$arn"
+        echo "TASK_DEF_ARN=$arn" >> $GITHUB_ENV
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ${{ steps.get-task-def-arn.outputs.task-def-arn }}
+        task-definition: ${{ env.TASK_DEF_ARN }}
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
