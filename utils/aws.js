@@ -1,13 +1,10 @@
-const AWS = require('aws-sdk');
 const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
 
-
 // Initialize the S3 client
-const s3 = new S3Client({ region: 'us-east-2' })
+const s3 = new S3Client({ region: 'us-east-2' });
 const s3EnvVars = {};
 
-
-// function to convert stream to string resolving ReferenceError: ReadableStream is not defined
+// Function to convert stream to string, resolving ReferenceError: ReadableStream is not defined
 const streamToString = (stream) => {
     return new Promise((resolve, reject) => {
         const chunks = [];
@@ -17,12 +14,12 @@ const streamToString = (stream) => {
     });
 };
 
-
-// use .env from S3 bucket
+// Use .env from S3 bucket
 const loadEnvFromS3 = async () => {
     try {
         const data = await s3.send(new GetObjectCommand({ Bucket: 'athenium-server-code-bucket', Key: '.env' }));
         const envContent = await streamToString(data.Body);
+        console.log('env content:', envContent)
 
         envContent.split('\n').forEach(line => {
             const [key, value] = line.split('=');
@@ -30,16 +27,14 @@ const loadEnvFromS3 = async () => {
                 s3EnvVars[key.trim()] = value.trim();
             }
         });
-        console.log('Environment variables loaded from S3');
+        console.log('Environment variables loaded from S3:',s3EnvVar);
     } catch (error) {
         console.error('Error loading .env from S3:', error);
         throw error;
-    
     }
-}
+};
 
 module.exports = {
     loadEnvFromS3,
     s3EnvVars
 };
-
