@@ -19,7 +19,7 @@ const loadEnvFromS3 = async () => {
     try {
         const data = await s3.send(new GetObjectCommand({ Bucket: 'athenium-server-code-bucket', Key: '.env' }));
         const envContent = await streamToString(data.Body);
-        console.log('env content:', envContent)
+
 
         envContent.split('\n').forEach(line => {
             const [key, value] = line.split('=');
@@ -27,7 +27,7 @@ const loadEnvFromS3 = async () => {
                 s3EnvVars[key.trim()] = value.trim();
             }
         });
-        console.log('Environment variables loaded from S3:', s3EnvVars);
+        console.log('Environment variables loaded from S3');
     } catch (error) {
         console.error('Error loading .env from S3:', error);
         throw error;
