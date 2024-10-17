@@ -77,11 +77,12 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
-    - name: Fill in the new image ID in the Amazon ECS task definition
+    - name: Fill in the new image ID and account number in the Amazon ECS task definition
       id: task-def
       run: |
-        sed "s|IMAGE_PLACEHOLDER|${{ env.IMAGE_URI }}|g" ${{ env.ECS_TASK_DEFINITION }} > .aws/updated-task-definition.json
+        sed "s|IMAGE_PLACEHOLDER|${{ env.IMAGE_URI }}|g; s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g" ${{ env.ECS_TASK_DEFINITION }} > .aws/updated-task-definition.json
         echo "TASK_DEF_FILE=.aws/updated-task-definition.json" >> $GITHUB_ENV
+
     
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
