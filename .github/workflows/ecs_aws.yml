@@ -87,10 +87,16 @@ jobs:
       run: |
         aws ecs register-task-definition --cli-input-json file://.aws/updated-task-definition.json
   
+    - name: Get Task Definition ARN
+      id: get-task-def-arn
+      run: |
+        TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json file://.aws/updated-task-definition.json --query 'taskDefinition.taskDefinitionArn' --output text)
+        echo "TASK_DEF_ARN=$TASK_DEF_ARN" >> $GITHUB_ENV
+    
     - name: Update ECS service with new task definition
       run: |
-        aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --task-definition ${{ env.TASK_DEF_FILE }}
-    
+        aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --task-definition ${{ env.TASK_DEF_ARN }}
+      
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
