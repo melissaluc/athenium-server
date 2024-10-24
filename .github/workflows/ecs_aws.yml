@@ -83,6 +83,13 @@ jobs:
         sed "s|IMAGE_PLACEHOLDER|${{ env.IMAGE_URI }}|g; s|ACCOUNT_NUMBER|${{ secrets.AWS_ACCOUNT_NUMBER }}|g" ${{ env.ECS_TASK_DEFINITION }} > .aws/updated-task-definition.json
         echo "TASK_DEF_FILE=.aws/updated-task-definition.json" >> $GITHUB_ENV
 
+    - name: Register new task definition
+      run: |
+        aws ecs register-task-definition --cli-input-json file://.aws/updated-task-definition.json
+  
+    - name: Update ECS service with new task definition
+      run: |
+        aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --task-definition ${{ env.TASK_DEF_FILE }}
     
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
@@ -91,6 +98,9 @@ jobs:
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
+
+
+  
     
     - name: Clean up
       run: rm .aws/updated-task-definition.json
