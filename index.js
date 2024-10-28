@@ -16,7 +16,7 @@ loadEnvFromS3().then(() => {
     app.use(logger);
     app.use(cors({
         credentials: true,
-        origin: s3EnvVars?.CLIENT_URL
+        origin: s3EnvVars?.CLIENT_PROD_URL
     }));
     app.use(helmet());
     app.use(express.json());
