@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 const knex = require('./db');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const {updateUser} = require('../models/userModel')
 
 // Create the transporter for sending emails

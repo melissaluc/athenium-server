@@ -21,13 +21,14 @@ const app = express();
 app.use(logger);
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
+    origin: [process.env.CLIENT_URL, 'http://localhost:3000']
 }));
 app.use(helmet())
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
 app.use(express.static('public'));
 app.use(bodyParser.json())
+
 //  Google OAuth
 // Express session
 app.use(
@@ -47,42 +48,8 @@ app.use(passport.session());
 app.use(passport.authenticate("session"));
 // app.use(passport.initialize());
 
-//  Routers
-const authRouter = require("./routes/auth.js")
-app.use("/api/v1/auth", authRouter);
-
-const verifyEmailRouter = require("./routes/verifyEmail.js");
-app.use("/api/v1/verify-email", verifyEmailRouter);
-
-const resetPassword = require("./routes/resetPassword.js");
-app.use("/api/v1/reset-password", resetPassword);
-
-const usersRouter = require('./routes/users.js');
-app.use('/api/v1/user', usersRouter);
-
-const dashboardRouter = require('./routes/dashboard.js');
-app.use('/api/v1/dashboard', dashboardRouter);
-
-const bodyCompositionRouter = require('./routes/bodyComposition.js');
-app.use('/api/v1/body-composition', bodyCompositionRouter);
-
-const exercisesRouter = require('./routes/trends.js');
-app.use('/api/v1/trends', exercisesRouter);
-
-const workoutsRouter = require('./routes/workouts.js');
-app.use('/api/v1/workouts', workoutsRouter);
-
-const goalsRouter = require('./routes/goals.js');
-app.use('/api/v1/goals', goalsRouter);
-
-const mealsRouter = require('./routes/meals.js');
-app.use('/api/v1/nutrition', mealsRouter);
-
-const measurementsRouter = require('./routes/measurements.js');
-app.use('/api/v1/measurements', measurementsRouter);
-
-const strengthRouter = require('./routes/strength.js');
-app.use('/api/v1/strength', strengthRouter);
+// Routers
+require("./routes/index.js")(app);
 
 
 // Define route handler for the root URL
@@ -98,7 +65,7 @@ const serverHTML = `
 </html>
 `
 
-app.get('/', (req, res) => {
+app.get('/api/v1', (req, res) => {
     res.send(serverHTML); 
 });
 

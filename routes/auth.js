@@ -3,7 +3,7 @@ const router = express.Router();
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const knex = require("../utils/db");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { sendVerificationCode } = require("../utils/verifyEmail");
 const { addNewUser } = require("../utils/signup");
 
@@ -81,9 +81,9 @@ async function authenticateUser(req, res) {
 }
 
 // Auth Routes
-router.route("/login").post(async (req, res) => {
-  authenticateUser({ body: req.body }, res);
-});
+router.route("/login").post((req, res) =>
+  authenticateUser({ body: req.body ?? {} }, res)
+);
 
 router.route("/google/login").post(async (req, res) => {
   const { token } = req.body;

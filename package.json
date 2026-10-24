@@ -16,7 +16,7 @@
   "dependencies": {
     "aws-sdk": "^2.1691.0",
     "axios": "^1.7.5",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.3",
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

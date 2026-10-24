@@ -2,7 +2,7 @@ const { createMeasurement } = require('../models/measurementModel');
 const { createUser } = require('../models/userModel');
 const { createBodyComposition } = require('../models/logModel');
 const { addUOM } = require('../models/settingsModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const knex = require('../utils/db'); 
 
 async function hashPassword(password) {
